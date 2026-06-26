@@ -1,0 +1,62 @@
+table AGENTS
+	lineageTag: 5d919c25-21d2-4cc1-9d33-446c2fa9afa3
+
+	column VendorID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7ea7b6dc-077e-43dc-b372-9408890d09a2
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: VendorID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendor
+		dataType: string
+		lineageTag: 9979342f-f589-4c30-bcdc-942462adf9a4
+		summarizeBy: none
+		sourceColumn: Vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agent Type'
+		dataType: string
+		lineageTag: bd9e6588-e43a-458e-8efd-c12ec288dd99
+		summarizeBy: none
+		sourceColumn: Agent Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agent Name'
+		dataType: string
+		lineageTag: a69ab7bb-57d4-4f20-9716-08892ca9d59c
+		summarizeBy: none
+		sourceColumn: Agent Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'In-House Agent Status'
+		dataType: string
+		lineageTag: d2909538-7792-4570-9be5-2a2aa0c1b154
+		summarizeBy: none
+		sourceColumn: In-House Agent Status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AGENTS = m
+		mode: import
+		queryGroup: dim_Tables
+		source =
+				let
+				    Source = Sql.Database(Server_Name, DB_Name, [Query="SELECT#(lf)    [APVendors].[VendorID],#(lf)    [APVendors].[Vendor],#(lf)    CASE#(lf)        WHEN [APVendors].[VendorType] <> 2 THEN 'Outside'#(lf)        ELSE 'In-House'#(lf)    END AS 'Agent Type',#(lf)    CASE#(lf)        WHEN [APVendors].[VendorType] <> 2 THEN [Vendor]#(lf)        ELSE [Salesmen].[SortName]#(lf)    END AS 'Agent Name',#(lf)    CASE#(lf)        WHEN [APVendors].[VendorType] <> 2 THEN 'Outside'#(lf)        WHEN [Salesmen].[Active] = 0 THEN 'Inactive'#(lf)        ELSE 'Active'#(lf)    END AS 'In-House Agent Status'#(lf)FROM [APVendors]#(lf)LEFT JOIN [Salesmen] on [APVendors].[VendorID] = [Salesmen].[VendorID]"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Agent Name] <> ", "))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

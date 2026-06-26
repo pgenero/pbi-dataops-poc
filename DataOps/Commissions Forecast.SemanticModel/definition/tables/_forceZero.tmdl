@@ -1,0 +1,71 @@
+table _forceZero
+	lineageTag: 405b2a97-4d24-4436-9088-95c7ca462e30
+
+	calculationGroup
+		precedence: 1
+
+		calculationItem Forecast = ```
+				
+				VAR _forecastMinDate =
+				    CALCULATE ( 
+				        MIN(Invoice_Distribution[Invoice Date] ),
+				        INVOICES[Invoice Forecast] = "Forecast", 
+				        ALL ( 'CALENDAR' ) 
+				        )
+				VAR _forecastMaxDate =
+				    CALCULATE ( 
+				        MAX(Invoice_Distribution[Invoice Date] ),
+				        INVOICES[Invoice Forecast] = "Forecast", 
+				        ALL ( 'CALENDAR' ) 
+				        )
+				VAR _currentDate = MIN ( 'CALENDAR'[Date] )
+				VAR _forceZero = 
+				    SWITCH( 
+				        TRUE(),
+				        ISBLANK(_forecastMinDate), BLANK(),
+				        ISINSCOPE('CALENDAR'[Month_Year]), _forecastMinDate <= _currentDate && _forecastMaxDate >= _currentDate 
+				        )
+				VAR _return = SELECTEDMEASURE() + IF ( _forceZero, 0 )
+				RETURN
+				    SWITCH(
+				        TRUE(),
+				        ISSELECTEDMEASURE( 
+				            [TAG001 Forecast Period],
+				            [TAG002 Current Period],
+				            [TAG003 Previous Period],
+				            [TAG004 Variance Text]
+				          ), SELECTEDMEASURE(),
+				        _return
+				    )
+				```
+
+		calculationItem Overdue = ```
+				
+				SWITCH(
+				    TRUE(),
+				    SELECTEDVALUE('CALENDAR'[Date]) >= TODAY(), BLANK(),
+				    ISINSCOPE('CALENDAR'[Month_Name]) 
+				    && ISBLANK( SELECTEDMEASURE() ) 
+				    && SELECTEDVALUE( 'CALENDAR'[Month_Offset] ) < 0, 0,
+				    SELECTEDMEASURE()
+				    )
+				```
+
+	column TimeState
+		dataType: string
+		lineageTag: 210ffa96-36fa-499d-8ef7-d5e85253e19a
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 26425d5c-c6b9-4764-ae9d-0263dd73c1c9
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

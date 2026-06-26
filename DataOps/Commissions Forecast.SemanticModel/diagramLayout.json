@@ -1,0 +1,164 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 532.72792965630163,
+        "y": 140.93331472388931
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 700.95479283344844,
+            "y": 830.467124973111
+          },
+          "nodeIndex": "Invoice_Distribution",
+          "nodeLineageTag": "3f180572-1ae6-4373-8b68-83bd769ce253",
+          "size": {
+            "height": 389.87883063585923,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 26.397435604836303,
+            "y": 0
+          },
+          "nodeIndex": "CALENDAR",
+          "nodeLineageTag": "8d3b74be-4a36-47e4-8ce5-47f19003babe",
+          "size": {
+            "height": 260,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1272.97959980214,
+            "y": 832.78239785639391
+          },
+          "nodeIndex": "Invoice_Payment",
+          "nodeLineageTag": "c1d78c01-845e-4dca-b8b7-38b33e9db0a8",
+          "size": {
+            "height": 330.76222526814638,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 726.50488945280983,
+            "y": 0
+          },
+          "nodeIndex": "DEALS",
+          "nodeLineageTag": "efb9c5e3-ab3c-4d4a-a4f8-ddae0ddd6f27",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1360.988447427294,
+            "y": 0
+          },
+          "nodeIndex": "INVOICES",
+          "nodeLineageTag": "6dec9608-c7a6-4e51-8266-f93003d40af3",
+          "size": {
+            "height": 301.554659595078,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 2065.8762272098311,
+            "y": 270.92778944937493
+          },
+          "nodeIndex": "Metrics",
+          "nodeLineageTag": "c9f924fc-8be9-4713-bcda-a12bafbeb243",
+          "size": {
+            "height": 461.49154622404785,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1795.7250079885919,
+            "y": 276.21707738057751
+          },
+          "nodeIndex": "_stateView",
+          "nodeLineageTag": "29504828-0e19-41a7-927b-b4f15b32f588",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1800.511388615419,
+            "y": 432.64709108723588
+          },
+          "nodeIndex": "_forceZero",
+          "nodeLineageTag": "405b2a97-4d24-4436-9088-95c7ca462e30",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1794.2370612023815,
+            "y": 595.39750938810266
+          },
+          "nodeIndex": "_timeIntelligence",
+          "nodeLineageTag": "f23959dd-c186-4c42-809b-7f589fc2f6e6",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1034.1049771112864,
+            "y": 0
+          },
+          "nodeIndex": "COM_CATEGORY",
+          "nodeLineageTag": "9168ae06-7366-43d7-9c10-e92fc8dade61",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 384.54104141999829,
+            "y": 0
+          },
+          "nodeIndex": "AGENTS",
+          "size": {
+            "height": 260.10378390552006,
+            "width": 234
+          },
+          "zIndex": 12
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.955543900968934,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

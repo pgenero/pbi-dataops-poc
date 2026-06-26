@@ -1,0 +1,106 @@
+table Invoice_Distribution
+	lineageTag: 3f180572-1ae6-4373-8b68-83bd769ce253
+
+	column 'Deal ID'
+		dataType: string
+		isHidden
+		lineageTag: 64c6baa3-6f4a-43b2-88c9-25c00f221e37
+		summarizeBy: none
+		sourceColumn: Deal ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 04d52090-3138-4107-a53c-2bbb6211877b
+		summarizeBy: none
+		sourceColumn: VendorID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 461e4856-36f0-49b8-9529-ab1595c5b117
+		summarizeBy: none
+		sourceColumn: Invoice Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Due Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 1fef1d79-7994-4889-8966-f89f33136867
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Invoice Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4fd98590-6307-49b9-bafb-0841c6eeb861
+		summarizeBy: none
+		sourceColumn: Invoice Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column VendorType
+		dataType: int64
+		formatString: 0
+		lineageTag: 9db1b4df-fcbc-4339-88ca-b34050165a54
+		summarizeBy: sum
+		sourceColumn: VendorType
+
+		annotation SummarizationSetBy = Automatic
+
+	column ComCatID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cc18ad43-d9a0-4014-9826-1784c3701938
+		summarizeBy: none
+		sourceColumn: ComCatID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Commission Amount'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a9bfaa2e-413a-4699-9209-6f1616b7047a
+		summarizeBy: sum
+		sourceColumn: Commission Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Invoice_Distribution = m
+		mode: import
+		queryGroup: fact_Tables
+		source =
+				let
+				    Source = Sql.Database(Server_Name, DB_Name, [Query="WITH#(lf)    brokerInfo AS (#(lf)        SELECT#(lf)            [Deals].[DealID],#(lf)            [APVendors].[VendorID],#(lf)            [APVendors].[VendorType]#(lf)        FROM #(lf)            [Deals]#(lf)            LEFT JOIN [Distributions] ON [Deals].[DealID] = [Distributions].[DealID]#(lf)            LEFT JOIN [APVendors] ON [Distributions].[VendorID] = [APVendors].[VendorID]#(lf)        ),#(lf)#(lf)    brokerShare AS (#(lf)        SELECT#(lf)            [DistributionsInvoice].[DealID],#(lf)            -- Total PV Amount when vendor is not a 3rd Party#(lf)            SUM(#(lf)                CASE #(lf)                    WHEN [APVendors].[VendorType] <> 0 THEN [DistributionsInvoice].[PVAmount] #(lf)                    ELSE 0 #(lf)                END#(lf)                ) OVER ( PARTITION BY [DistributionsInvoice].[DealID], [DistributionsInvoice].[InvNum]  ) AS 'TotalPVAmount',#(lf)            [DistributionsInvoice].[PVAmount],#(lf)            [DistributionsInvoice].[Amount],#(lf)            [DistributionsInvoice].[VendorID],#(lf)            [DistributionsInvoice].[InvNum]#(lf)        FROM #(lf)            [DistributionsInvoice]#(lf)            LEFT JOIN [APVendors] ON [DistributionsInvoice].[VendorID] = [APVendors].[VendorID]#(lf)        )#(lf)#(lf)SELECT#(lf)#(tab)[Deals].[DealID] AS 'Deal ID',#(lf)    [brokerInfo].[VendorID],#(lf)    [brokerInfo].[VendorType],#(lf)    [Invoice].[InvNum] AS 'Invoice Number',#(lf)    CAST( [Invoice].[DateDue] AS DATE ) AS 'Due Date',#(lf)#(tab)CAST( [Invoice].[InvoiceDate] AS DATE ) AS 'Invoice Date',#(lf)    [commisionCategory].[ComCatID],#(lf)    [commisionCategory].[CommissionAmt] AS 'Commission Amount'#(lf)FROM #(lf)    [Deals]#(lf)    LEFT JOIN [Invoice] ON [Deals].[DealID] = [Invoice].[DealID]#(lf)    LEFT JOIN [brokerInfo] ON [Deals].[DealID] = [brokerInfo].[DealID]#(lf)    LEFT JOIN [brokerShare] ON #(lf)        [Deals].[DealID] = [brokerShare].[DealID]#(lf)        AND [Invoice].[InvNum] = [brokerShare].[InvNum]#(lf)        AND [brokerInfo].[VendorID] = [brokerShare].[VendorID]#(lf)    CROSS APPLY (#(lf)        VALUES#(lf)            (   #(lf)                1,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] <> 2 THEN [brokerShare].[Amount]#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [brokerShare].[PVAmount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                2,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] <> 2 THEN [brokerShare].[Amount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                3,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [brokerShare].[PVAmount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                4,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [brokerShare].[Amount]#(lf)                    ELSE 0 #(lf)                END#(lf)            ),#(lf)            (#(lf)                5,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [brokerShare].[PVAmount] - [brokerShare].[Amount]#(lf)                    ELSE 0 #(lf)                END #(lf)            )#(lf)    ) AS commisionCategory( ComCatID, CommissionAmt )#(lf)WHERE#(lf)    YEAR( [Invoice].[InvoiceDate]  ) >= 2021#(lf)    AND [commisionCategory].[CommissionAmt] > 0"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Due Date", type date}, {"Invoice Date", type date}, {"Commission Amount", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,71 @@
+table _stateView
+	lineageTag: 29504828-0e19-41a7-927b-b4f15b32f588
+
+	calculationGroup
+		precedence: 2
+
+		calculationItem Invoice =
+				
+				SWITCH(
+				    TRUE(),
+				    ISSELECTEDMEASURE( [TAG001 Forecast Period] ), [TAG001 Forecast Period],
+				    ISSELECTEDMEASURE( [$01_GrossLease] ), [INV001 Gross Lease Comm],
+				    ISSELECTEDMEASURE( [$02_AdjustedGross] ), [INV003 KWP Gross] ,
+				    ISSELECTEDMEASURE( [$03_NetHouse] ), [INV005 KWP Net] ,
+				    ISSELECTEDMEASURE( [$04_BrokerShare] ), [INV004 In-House Agents]
+				)
+
+		calculationItem Payment = ```
+				
+				SWITCH(
+				    TRUE(),
+				    ISSELECTEDMEASURE( [TAG001 Forecast Period] ), [TAG001 Forecast Period],
+				    ISSELECTEDMEASURE( [$01_GrossLease] ), [PAY001 Gross Lease Comm] ,
+				    ISSELECTEDMEASURE( [$02_AdjustedGross] ), [PAY003 KWP Gross] ,
+				    ISSELECTEDMEASURE( [$03_NetHouse] ), [PAY005 KWP Net] ,
+				    ISSELECTEDMEASURE( [$04_BrokerShare] ), [PAY004 In-House Agents] 
+				)
+				```
+
+		calculationItem Balance = ```
+				
+				SWITCH(
+				    TRUE(),
+				    ISSELECTEDMEASURE( [$01_GrossLease] ), [BAL001 Gross Lease Comm] ,
+				    ISSELECTEDMEASURE( [$02_AdjustedGross] ), [BAL003 KWP Gross] ,
+				    ISSELECTEDMEASURE( [$03_NetHouse] ), [BAL005 KWP Net] ,
+				    ISSELECTEDMEASURE( [$04_BrokerShare] ), [BAL004 In-House Agents],
+				    ISSELECTEDMEASURE( [$05_GrossLease_DueDate] ), [BAL006 Gross Lease Comm (DueDate)] ,
+				    ISSELECTEDMEASURE( [$06_AdjustedGross_DueDate] ), [BAL008 KWP Gross (DueDate)] ,
+				    ISSELECTEDMEASURE( [$07_NetHouse_DueDate] ), [BAL010 KWP Net (DueDate)] ,
+				    ISSELECTEDMEASURE( [$08_BrokerShare_DueDate] ), [BAL009 In-House Agents (DueDate)],
+				    ISSELECTEDMEASURE( 
+				        [TAG001 Forecast Period], 
+				        [PAY11 KWP Net SPLY],
+				        [PAY12 Broker Share SPLY],
+				        [FVP03 KWP Net SPLY Var $],
+				        [FVP04 Broker Share SPLY Var $],
+				        [FVP07 KPW Net SPLY Var %],
+				        [FVP08 Broker Share SPLY Var %]
+				        ), SELECTEDMEASURE()
+				)
+				```
+
+	column States
+		dataType: string
+		lineageTag: f190326c-a8b0-453c-bf49-9de1a5efc3c0
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b673a22-84f0-4420-9099-c05f6a28291a
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

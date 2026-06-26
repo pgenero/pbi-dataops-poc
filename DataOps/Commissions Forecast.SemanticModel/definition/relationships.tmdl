@@ -1,0 +1,45 @@
+relationship AutoDetected_f1fdfcbc-673b-4691-b7d8-4440ccada105
+	fromColumn: Invoice_Distribution.VendorID
+	toColumn: AGENTS.VendorID
+
+relationship AutoDetected_d9f6406c-984e-4406-8dca-fbbc8367eea7
+	fromColumn: Invoice_Payment.VendorID
+	toColumn: AGENTS.VendorID
+
+relationship 1e173683-5c5b-f738-7d4f-2a3749dede1d
+	fromColumn: Invoice_Payment.'Full Payment Date'
+	toColumn: CALENDAR.Date
+
+relationship AutoDetected_d40044ad-a89d-43ac-9b95-93f8d0f07667
+	fromColumn: Invoice_Distribution.'Deal ID'
+	toColumn: DEALS.'Deal ID'
+
+relationship AutoDetected_10bf16ad-4d15-476b-8bfe-70f0895c4cf9
+	fromColumn: Invoice_Payment.'Deal ID'
+	toColumn: DEALS.'Deal ID'
+
+relationship 8fc9f80b-0652-b134-65b6-12ae8bbc23fc
+	fromColumn: Invoice_Payment.'Invoice Number'
+	toColumn: INVOICES.'Invoice Number'
+
+relationship 9e8d4f3c-adce-a407-f241-bb6fb36941b0
+	fromColumn: Invoice_Distribution.'Invoice Number'
+	toColumn: INVOICES.'Invoice Number'
+
+relationship 06fc9eb1-2335-64bf-2aad-96210fd28ccf
+	isActive: false
+	fromColumn: Invoice_Payment.'Due Date'
+	toColumn: CALENDAR.Date
+
+relationship AutoDetected_fd47349d-0d25-47a1-8144-0227b6a5f487
+	fromColumn: Invoice_Distribution.ComCatID
+	toColumn: COM_CATEGORY.ComCatID
+
+relationship 17623d00-35d6-46d5-dac0-66778d0da658
+	fromColumn: Invoice_Distribution.'Invoice Date'
+	toColumn: CALENDAR.Date
+
+relationship AutoDetected_0f846fef-94ce-4fc2-a76d-b2168af2e289
+	fromColumn: Invoice_Payment.ComCatID
+	toColumn: COM_CATEGORY.ComCatID
+

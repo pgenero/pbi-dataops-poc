@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Commissions Forecast"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3973aea4-43a6-48da-b4a4-8cf615782ba2"
+  }
+}

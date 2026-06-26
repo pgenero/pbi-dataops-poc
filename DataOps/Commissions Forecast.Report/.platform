@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Commissions Forecast"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7bdddf49-acef-4a1a-9dac-4394df29268e"
+  }
+}

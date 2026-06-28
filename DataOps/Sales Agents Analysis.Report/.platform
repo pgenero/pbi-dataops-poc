@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sales Agents Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "559c379e-0bdb-9751-4f0d-461f667c1085"
+  }
+}

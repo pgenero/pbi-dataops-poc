@@ -1,0 +1,139 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "9fcb5d5bd02a148f3f29",
+  "position": {
+    "x": 51.089355900738227,
+    "y": 35.643736674933649,
+    "z": 0,
+    "height": 642.77538470463685,
+    "width": 474.06169777661751
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AGENTS"
+                    }
+                  },
+                  "Property": "Agent Name"
+                }
+              },
+              "queryRef": "AGENTS.Agent Name",
+              "nativeQueryRef": "Agent Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AGENTS"
+                    }
+                  },
+                  "Property": "Agent Type"
+                }
+              },
+              "queryRef": "AGENTS.Agent Type",
+              "nativeQueryRef": "Agent Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AGENTS"
+                    }
+                  },
+                  "Property": "In-House Agent Status"
+                }
+              },
+              "queryRef": "AGENTS.In-House Agent Status",
+              "nativeQueryRef": "In-House Agent Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AGENTS"
+                    }
+                  },
+                  "Property": "Vendor"
+                }
+              },
+              "queryRef": "AGENTS.Vendor",
+              "nativeQueryRef": "Vendor"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2b6edec62fd4fe1c4e4a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AGENTS"
+              }
+            },
+            "Property": "Agent Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2093efac08a577d84a96",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AGENTS"
+              }
+            },
+            "Property": "Agent Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "07a4c455bb1ac1fb6ce1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AGENTS"
+              }
+            },
+            "Property": "In-House Agent Status"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "38f3605ee345f6919796",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AGENTS"
+              }
+            },
+            "Property": "Vendor"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

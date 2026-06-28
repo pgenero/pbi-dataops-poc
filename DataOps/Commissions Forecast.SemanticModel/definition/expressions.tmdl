@@ -1,0 +1,160 @@
+expression CalendarEndDate =
+		let
+		    Source = Table.SelectColumns(Invoice_Distribution,{"Due Date"}),
+		    #"Filtered Rows" = Table.SelectRows(Source, let latest = List.Max(Source[Due Date]) in each [Due Date] = latest),
+		    #"Calculated End of Year" = Table.TransformColumns(#"Filtered Rows",{{"Due Date", Date.EndOfYear, type date}}),
+		    #"Due Date" = #"Calculated End of Year"{0}[Due Date]
+		in
+		    #"Due Date"
+	lineageTag: 968c54cc-7746-4c03-93ef-4aa1343ee902
+	queryGroup: Transform\Calendar
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression ForecastStart =
+		let
+		    Source = Table.SelectColumns(INVOICES,{"Due Date", "Invoice Past Due", "Invoice Payment"}),
+		    #"Filtered Not Due Balance" = Table.SelectRows(Source, each ([Invoice Payment] = "No" or [Invoice Payment] = "Partial") and ([Invoice Past Due] = "Not Due")),
+		    #"Filtered Rows" = Table.SelectRows(#"Filtered Not Due Balance", let latest = List.Min(#"Filtered Not Due Balance"[Due Date]) in each [Due Date] = latest),
+		    #"Due Date" = #"Filtered Rows"{0}[Due Date]
+		in
+		    #"Due Date"
+	lineageTag: 46b7db57-3722-42d6-91de-1ac8dbd1acda
+	queryGroup: Transform\Calendar
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression FilesFolder = "C:\Users\pablo\Documents\KWP\02.Report\History_Files" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 60f4197f-afcd-48ff-a493-1fefc80dc06a
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression fxHistoryFiles =
+		let
+		    Source = (_fileBinary as binary, _fileName as text) =>
+		let
+		    Source = _fileBinary,
+		    #"Imported CSV" = Csv.Document(Source,[Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	lineageTag: 84c09731-93a4-49ed-8577-03c26c1ab48f
+	queryGroup: Transform\History_Invoices
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression Last_History_Update =
+		let
+		    Source = Folder.Files(FilesFolder),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Name"}),
+		    #"Extracted First Characters" = Table.TransformColumns(#"Removed Other Columns", {{"Name", each Text.Start(_, 10), type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Extracted First Characters","_","-",Replacer.ReplaceText,{"Name"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",{{"Name", type date}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Changed Type", let latest = List.Max(#"Changed Type"[Name]) in each [Name] = latest),
+		    Name = #"Filtered Rows"{0}[Name]
+		in
+		    Name
+	lineageTag: 89e62b2f-d592-410d-acd4-9233945e5f73
+	queryGroup: Transform\History_Invoices
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression History_InvoiceDist_Consolidated =
+		let
+		    Source = Folder.Files(FilesFolder),
+		    #"Invoked Custom Function" = Table.AddColumn(Source, "Data", each fxHistoryFiles([Content], [Name])),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Invoked Custom Function",{"Name", "Data"}),
+		    #"Extracted First Characters" = Table.TransformColumns(#"Removed Other Columns", {{"Name", each Text.Start(_, 10), type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Extracted First Characters","_","-",Replacer.ReplaceText,{"Name"}),
+		    #"Expanded Data" = Table.ExpandTableColumn(#"Replaced Value", "Data", {"Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}, {"Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}),
+		    // First group by Invoice, with the distinct count of DueDate and InvoiceDate
+		    #"Grouped by Invoice" = Table.Group(#"Expanded Data", {"Invoice Number"}, {{"DueDateCheck", each List.Count(List.Distinct([Due Date])), Int64.Type},{"InvoiceDateCheck", each List.Count(List.Distinct([Invoice Date])), Int64.Type}, {"Data", each _, type table [Name=text, Deal ID=text, VendorID=text, Invoice Number=text, Due Date=text, Invoice Date=text, Gross Lease Comm=text, #"KWP Adjusted Gross (House)"=text, #"KWP Net (House)"=text, Broker Share=text, #"Broker Share %"=text, #"KWP Gross (House) %"=text, BrokerRoleID=text]}}),
+		    // If the dates columns are greather than 1, it means that the dates were updated. We keep only the rows updated
+		    #"Filtered Dates > 1" = Table.SelectRows(#"Grouped by Invoice", each [DueDateCheck] > 1 or [InvoiceDateCheck] > 1),
+		    // All the data is stored in the Data column
+		    #"Keep Data" = Table.SelectColumns(#"Filtered Dates > 1",{"Data"}),
+		    #"Expanded Filtered Data" = Table.ExpandTableColumn(#"Keep Data", "Data", {"Name", "Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}, {"Name", "Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}),
+		    #"Changed Type Name to Date" = Table.TransformColumnTypes(#"Expanded Filtered Data",{{"Name", type date}, {"Due Date", type date}, {"Invoice Date", type date}, {"Deal ID", Int64.Type}, {"VendorID", Int64.Type}, {"Invoice Number", Int64.Type}, {"BrokerRoleID", Int64.Type}, {"Gross Lease Comm", Currency.Type}, {"KWP Adjusted Gross (House)", Currency.Type}, {"KWP Net (House)", Currency.Type}, {"Broker Share", Currency.Type}, {"Broker Share %", Percentage.Type}, {"KWP Gross (House) %", Percentage.Type}}),
+		    // Remove the records that belongs to the last update, since those are the current version located in Distribution_Invoices (fact table)
+		    #"Remove Current State" = Table.SelectRows(#"Changed Type Name to Date", each [Name] <> Last_History_Update),
+		    // Group by Invoice + DueDate + InvoiceDate, adding a column with the latest date from the Name column (date the records were captured). We don't want the entire history; we only want to retain the version prior to the change.
+		    #"Grouped History" = Table.Group(#"Remove Current State", {"Invoice Number", "Due Date", "Invoice Date"}, {{"Data", each _, type table [Name=nullable date, Deal ID=nullable number, VendorID=nullable number, Invoice Number=nullable number, Due Date=nullable date, Invoice Date=nullable date, Gross Lease Comm=nullable number, #"KWP Adjusted Gross (House)"=nullable number, #"KWP Net (House)"=nullable number, Broker Share=nullable number, #"Broker Share %"=nullable number, #"KWP Gross (House) %"=nullable number, BrokerRoleID=nullable number]}, {"Snapshot", each List.Max(List.Distinct([Name])), type date}}),
+		    #"Keep Data and Snapshot" = Table.SelectColumns(#"Grouped History",{"Data", "Snapshot"}),
+		    #"Expanded Data and Snapshot" = Table.ExpandTableColumn(#"Keep Data and Snapshot", "Data", {"Name", "Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}, {"Name", "Deal ID", "VendorID", "Invoice Number", "Due Date", "Invoice Date", "Gross Lease Comm", "KWP Adjusted Gross (House)", "KWP Net (House)", "Broker Share", "Broker Share %", "KWP Gross (House) %", "BrokerRoleID"}),
+		    // Remove the history records with no changes and leave the records from the snapshot date before the update
+		    #"Filtered by Snapshot" = Table.SelectRows(#"Expanded Data and Snapshot", each [Name] = [Snapshot]),
+		    #"Removed Name" = Table.RemoveColumns(#"Filtered by Snapshot",{"Name"})
+		in
+		    #"Removed Name"
+	lineageTag: 40aca608-113d-4257-946d-f76907010db5
+	queryGroup: Transform\History_Invoices
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression History_InvoiceDist_Index =
+		let
+		    Source = History_InvoiceDist_Consolidated,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Invoice Number", "Snapshot"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Grouped Rows" = Table.Group(#"Removed Duplicates", {"Invoice Number"}, {{"Dates", each _, type table [Invoice Number=nullable number, Snapshot=date]}}),
+		    #"Added Indexed" = Table.AddColumn(#"Grouped Rows", "Indexed", each  Table.AddIndexColumn(Table.Sort([Dates],{{"Invoice Number", Order.Ascending}, {"Snapshot", Order.Descending}}), "Index", 0, 1)),
+		    #"Keep Indexed" = Table.SelectColumns(#"Added Indexed",{"Indexed"}),
+		    #"Expanded Indexed" = Table.ExpandTableColumn(#"Keep Indexed", "Indexed", {"Invoice Number", "Snapshot", "Index"}, {"Invoice Number", "Snapshot", "Index"})
+		in
+		    #"Expanded Indexed"
+	lineageTag: 56e5b9c2-2725-4fa2-800f-123fc9da13d1
+	queryGroup: Transform\History_Invoices
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression History_InvoiceDist =
+		let
+		    Source = History_InvoiceDist_Consolidated,
+		    #"Merged Queries" = Table.NestedJoin(Source, {"Invoice Number", "Snapshot"}, History_InvoiceDist_Index, {"Invoice Number", "Snapshot"}, "ChangeIndex", JoinKind.LeftOuter),
+		    #"Expanded History_Files_Index" = Table.ExpandTableColumn(#"Merged Queries", "ChangeIndex", {"Index"}, {"Index"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded History_Files_Index",{{"VendorID", Int64.Type}, {"Invoice Number", Int64.Type}, {"BrokerRoleID", Int64.Type}, {"Index", Int64.Type}, {"Deal ID", type text}, {"Gross Lease Comm", Currency.Type}, {"KWP Adjusted Gross (House)", Currency.Type}, {"KWP Net (House)", Currency.Type}, {"Broker Share", Currency.Type}, {"Broker Share %", Percentage.Type}, {"KWP Gross (House) %", Percentage.Type}}),
+		    #"Added Prefix DealID" = Table.TransformColumns(#"Changed Type", {{"Deal ID", each "0000" & _, type text}})
+		in
+		    #"Added Prefix DealID"
+	lineageTag: 7879c4ad-bd33-40e9-a3e4-cd2fcdc795eb
+	queryGroup: fact_Tables
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Server_Name = "216.55.179.36,25001\NLT" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a68b4aa7-d1d0-42c8-8a8a-8f2952919c53
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression DB_Name = "Tcc5_KW" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: db9ba963-8384-44fd-a5eb-56b01338bba6
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,81 @@
+table DEALS
+	lineageTag: efb9c5e3-ab3c-4d4a-a4f8-ddae0ddd6f27
+
+	column 'Deal ID'
+		dataType: string
+		isKey
+		lineageTag: d9a6766d-a3e7-4b89-89f6-f52d7c018917
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: Deal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deal Type'
+		dataType: string
+		lineageTag: 793a007a-de0b-4b8b-bce7-31b7af4e491c
+		summarizeBy: none
+		sourceColumn: Deal Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deal Enter Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b4c446df-5a3b-4a22-8be8-0dc610c0c2de
+		summarizeBy: none
+		sourceColumn: Deal Enter Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'First Invoice Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 6557a7d7-8b1a-4bc7-95fb-91ccf3db07a2
+		summarizeBy: none
+		sourceColumn: First Invoice Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Invoiced
+		dataType: string
+		lineageTag: 3ae60f00-44a2-46d2-9804-8b2c9147df8a
+		summarizeBy: none
+		sourceColumn: Invoiced
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tenant
+		dataType: string
+		lineageTag: a8aa9c2d-183e-4c30-848c-8d7414955aec
+		summarizeBy: none
+		sourceColumn: Tenant
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		lineageTag: ae4f9411-6187-416d-94b6-d899baafec33
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DEALS = m
+		mode: import
+		queryGroup: dim_Tables
+		source =
+				let
+				    Source = Sql.Database(Server_Name, DB_Name, [Query="WITH#(lf)#(tab)firstInvoice AS (#(lf)#(tab)#(tab)SELECT#(lf)#(tab)#(tab)#(tab)[Invoice].[DealID],#(lf)#(tab)#(tab)#(tab)MIN( [Invoice].[InvoiceDate] ) as 'FirstInvoiceDate'#(lf)#(tab)#(tab)FROM [Invoice]#(lf)#(tab)#(tab)GROUP BY [Invoice].[DealID]#(lf)#(tab)#(tab))#(lf)#(lf)SELECT DISTINCT#(lf)#(tab)[Deals].[DealID] AS 'Deal ID',#(lf)#(tab)[Clients].ClientName AS 'Tenant',#(lf)#(tab)[AddressTable].Address1 AS 'Address',#(lf)#(tab)[Deals].[DealType] AS 'Deal Type',#(lf)#(tab)CAST( [Deals].[DateEntered] AS DATE ) AS 'Deal Enter Date',#(lf)#(tab)CAST( [firstInvoice].[FirstInvoiceDate] AS DATE ) AS 'First Invoice Date',#(lf)#(tab)CASE#(lf)#(tab)#(tab)WHEN [firstInvoice].[FirstInvoiceDate] IS NULL THEN 'No'#(lf)#(tab)#(tab)ELSE 'Yes'#(lf)#(tab)END AS 'Invoiced'#(lf)FROM [Deals]#(lf)LEFT JOIN [firstInvoice] ON [Deals].[DealID] = [firstInvoice].[DealID]#(lf)LEFT JOIN [LesseeBuyerIDs] ON [Deals].DealID = [LesseeBuyerIDs].DealID#(lf)LEFT JOIN [Clients] ON [LesseeBuyerIDs].LBID = [Clients].ClientID#(lf)LEFT JOIN [PropertyInfo] ON [Deals].DealID = [PropertyInfo].DealID#(lf)LEFT JOIN [AddressTable] ON [PropertyInfo].AddressID = [AddressTable].AddressID#(lf)WHERE EXISTS (#(lf)#(tab)SELECT 1#(lf)#(tab)#(tab)FROM [Invoice]#(lf)#(tab)#(tab)WHERE [Invoice].[DealID] = [Deals].[DealID]#(lf)#(tab)#(tab)AND CAST( [Invoice].[InvoiceDate] AS DATE ) >= '2021-01-01'#(lf)#(tab)#(tab))"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Deal Enter Date", type date}, {"First Invoice Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,69 @@
+table _timeIntelligence
+	lineageTag: f23959dd-c186-4c42-809b-7f589fc2f6e6
+
+	calculationGroup
+
+		calculationItem 'SPLY Var $' = ```
+				
+				VAR _sply = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        SAMEPERIODLASTYEAR('CALENDAR'[Date])
+				    )
+				VAR _result =
+				    SELECTEDMEASURE() - 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        SAMEPERIODLASTYEAR('CALENDAR'[Date])
+				    )
+				RETURN
+				    _result
+				```
+
+		calculationItem 'SPLY Var %' = ```
+				
+				VAR _sply = 
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        SAMEPERIODLASTYEAR('CALENDAR'[Date])
+				    )
+				VAR _current = SELECTEDMEASURE()
+				VAR _result= DIVIDE( _current - _sply, _sply )
+				RETURN
+				    _result
+				```
+
+		calculationItem 'Current Month' = ```
+				
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        DATESMTD( 'CALENDAR'[Date] )
+				    )
+				```
+
+		calculationItem 'Year to Date' = ```
+				
+				    CALCULATE(
+				        SELECTEDMEASURE(),
+				        DATESYTD( 'CALENDAR'[Date] )
+				    )
+				```
+
+	column _timeView
+		dataType: string
+		lineageTag: c40383ca-5b75-417b-aab8-da4d361df749
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 00928edd-db9e-4146-843d-83d892a934b9
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

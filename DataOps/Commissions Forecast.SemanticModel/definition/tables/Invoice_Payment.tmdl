@@ -1,0 +1,109 @@
+table Invoice_Payment
+	lineageTag: c1d78c01-845e-4dca-b8b7-38b33e9db0a8
+
+	column 'Deal ID'
+		dataType: string
+		isHidden
+		lineageTag: 4c51a77a-c7ef-4080-85c2-dd18738654db
+		summarizeBy: none
+		sourceColumn: Deal ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a1dccf26-3b6f-4684-8484-98f938ca51f0
+		summarizeBy: none
+		sourceColumn: VendorID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 39b6603a-abf0-4347-987a-3171d4dd7659
+		summarizeBy: none
+		sourceColumn: Invoice Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Payment Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1a18db1e-c33d-40c5-a0e2-59df0f67a7f4
+		summarizeBy: none
+		sourceColumn: Full Payment Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Due Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: de3a52ea-2c97-4621-9f9c-2ed92ed8091e
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column VendorType
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d8170c3-5db8-4d54-91f0-74a0e9ade5d4
+		summarizeBy: sum
+		sourceColumn: VendorType
+
+		annotation SummarizationSetBy = Automatic
+
+	column ComCatID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dbe64fbe-a997-4bb9-898e-e9e478329895
+		summarizeBy: none
+		sourceColumn: ComCatID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Amount'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 95e3ae7c-89ca-4f7b-ba61-56d02d02987a
+		summarizeBy: sum
+		sourceColumn: Payment Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Invoice_Payment = m
+		mode: import
+		queryGroup: fact_Tables
+		source =
+				let
+				    Source = Sql.Database(Server_Name, DB_Name, [Query="WITH#(lf)    brokerInfo AS (#(lf)        SELECT#(lf)            [Deals].[DealID],#(lf)            [APVendors].[VendorID],#(lf)            [APVendors].[VendorType]#(lf)        FROM #(lf)            [Deals]#(lf)            LEFT JOIN [Distributions] ON [Deals].[DealID] = [Distributions].[DealID]#(lf)            LEFT JOIN [APVendors] ON [Distributions].[VendorID] = [APVendors].[VendorID]#(lf)        ),#(lf)#(lf)    brokerShare AS (#(lf)        SELECT#(lf)            [DistributionsInvoice].[DealID],#(lf)            -- Total PV Amount when vendor is not a 3rd Party#(lf)            SUM(#(lf)                CASE #(lf)                    WHEN [APVendors].[VendorType] <> 0 THEN [DistributionsInvoice].[PVAmount] #(lf)                    ELSE 0 #(lf)                END#(lf)                ) OVER ( PARTITION BY [DistributionsInvoice].[DealID], [DistributionsInvoice].[InvNum]  ) AS 'TotalPVAmount',#(lf)            [DistributionsInvoice].[PVAmount],#(lf)            [DistributionsInvoice].[Amount],#(lf)            [DistributionsInvoice].[VendorID],#(lf)            [DistributionsInvoice].[InvNum]#(lf)        FROM [DistributionsInvoice]#(lf)        LEFT JOIN [APVendors] ON [DistributionsInvoice].[VendorID] = [APVendors].[VendorID]#(lf)        ),#(lf)#(lf)    paymentDetail AS (#(lf)        SELECT#(lf)            [DistributionsVoucher].[VendorID],#(lf)            [DistributionsVoucher].[DealID],#(lf)            [DistributionsVoucher].[InvNum],#(lf)            SUM( [DistributionsVoucher].[PVAmount] ) AS 'PVAmount',#(lf)            SUM( [DistributionsVoucher].[Amount] ) AS 'Amount',#(lf)            MAX( [ARPayments].[PmtDate] ) AS 'FullPaymentDate'#(lf)        FROM [DistributionsVoucher]#(lf)        LEFT JOIN [ARPayments] ON [DistributionsVoucher].[PmtID] = [ARPayments].[PmtID]#(lf)        GROUP BY [DistributionsVoucher].[VendorID],[DistributionsVoucher].[DealID],[DistributionsVoucher].[InvNum]#(lf)        )#(lf)#(lf)SELECT#(lf)#(tab)[Deals].[DealID] AS 'Deal ID',#(lf)    [brokerInfo].[VendorID],#(lf)    [brokerInfo].[VendorType],#(lf)    [Invoice].[InvNum] AS 'Invoice Number',#(lf)    CAST( [Invoice].[DateDue] AS DATE ) AS 'Due Date',#(lf)    CAST( [paymentDetail].[FullPaymentDate] AS DATE ) AS 'Full Payment Date',#(lf)    [commisionCategory].[ComCatID],#(lf)    [commisionCategory].[PaymentAmt] AS 'Payment Amount'    #(lf)FROM [Deals]#(lf)LEFT JOIN [Invoice] ON [Deals].[DealID] = [Invoice].[DealID]#(lf)LEFT JOIN [brokerInfo] ON [Deals].[DealID] = [brokerInfo].[DealID]#(lf)LEFT JOIN [paymentDetail] ON#(lf)    [Deals].[DealID] = [paymentDetail].[DealID]#(lf)    AND [Invoice].[InvNum] = [paymentDetail].[InvNum]#(lf)    AND [brokerInfo].[VendorID] = [paymentDetail].[VendorID]#(lf)CROSS APPLY (#(lf)        VALUES#(lf)            (   #(lf)                1,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] <> 2 THEN [paymentDetail].[Amount]#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [paymentDetail].[PVAmount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                2,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] <> 2 THEN [paymentDetail].[Amount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                3,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [paymentDetail].[PVAmount]#(lf)                    ELSE 0 #(lf)                END #(lf)            ),#(lf)            (   #(lf)                4,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN [paymentDetail].[Amount]#(lf)                    ELSE 0 #(lf)                END#(lf)            ),#(lf)            (#(lf)                5,#(lf)                CASE#(lf)                    WHEN [brokerInfo].[VendorType] = 2 THEN COALESCE( [paymentDetail].[PVAmount], 0 ) - COALESCE( [paymentDetail].[Amount], 0)#(lf)                    ELSE 0 #(lf)                END #(lf)            )#(lf)    ) AS commisionCategory( ComCatID, PaymentAmt )#(lf)WHERE#(lf)    YEAR( [Invoice].[InvoiceDate] ) >= 2021#(lf)    AND [commisionCategory].[PaymentAmt] > 0"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Full Payment Date", type date}, {"Due Date", type date}, {"Payment Amount", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

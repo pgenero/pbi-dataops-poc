@@ -1,0 +1,133 @@
+table INVOICES
+	lineageTag: 6dec9608-c7a6-4e51-8266-f93003d40af3
+
+	column 'Invoice Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f458494-3b40-4763-8ecd-13a5db4628b2
+		summarizeBy: none
+		sourceColumn: Invoice Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3e842229-0de6-4292-ab25-ac1b277a9a3d
+		summarizeBy: none
+		sourceColumn: Invoice Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Due Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b84f01fe-e531-4011-98bc-953865ab595c
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Past Due Days'
+		dataType: int64
+		formatString: 0
+		lineageTag: 006ce282-2bd9-49bb-8af6-9c1f97984fc1
+		summarizeBy: sum
+		sourceColumn: Past Due Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Past Due'
+		dataType: string
+		lineageTag: c4153de5-36f2-4b41-9acd-612bf14158bf
+		summarizeBy: none
+		sourceColumn: Invoice Past Due
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Payment'
+		dataType: string
+		lineageTag: aae03e38-808b-4633-92e3-84b2018bb3a6
+		summarizeBy: none
+		sourceColumn: Invoice Payment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gross Invoice Amount'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a536e8d7-f4b5-4c61-91b9-ff5ebfb88329
+		summarizeBy: sum
+		sourceColumn: Gross Invoice Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Gross Payment'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 230955d5-5b7c-49c8-ad8d-fe33f54b949e
+		summarizeBy: sum
+		sourceColumn: Gross Payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Balance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 784eb750-b6c2-424e-9320-5446397746bb
+		summarizeBy: sum
+		sourceColumn: Balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Last Payment Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 09c511b6-ee1f-4ef9-a5ae-7ea4b8c94295
+		summarizeBy: none
+		sourceColumn: Last Payment Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Invoice Forecast'
+		dataType: string
+		lineageTag: 195b2d87-fce7-47f2-a8e0-bafb0051a9fe
+		summarizeBy: none
+		sourceColumn: Invoice Forecast
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Order'
+		dataType: string
+		lineageTag: 19701901-ea94-4d4b-a140-df754588fb0a
+		summarizeBy: none
+		sourceColumn: Invoice Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INVOICES = m
+		mode: import
+		queryGroup: dim_Tables
+		source =
+				let
+				    Source = Sql.Database(Server_Name, DB_Name, [Query="DECLARE @TodayPST DATETIME;#(lf)DECLARE @CurrentMonthStart DATE;#(lf)DECLARE @CurrentMonthEnd DATE;#(lf)-- Server located in US Mountain ST#(lf)-- Substract 1 hour to the current server date to return PST#(lf)SET @TodayPST = DATEADD(HOUR, -1, GETDATE());#(lf)SET @CurrentMonthStart = CAST( DATEADD(MONTH, DATEDIFF(MONTH, 0, @TodayPST), 0) AS DATE);#(lf)SET @CurrentMonthEnd = CAST(EOMONTH(@TodayPST) AS DATE);#(lf)#(lf)WITH#(lf)    invoiceDetail AS (#(lf)        SELECT#(lf)            [DistributionsInvoice].[DealID],#(lf)            [DistributionsInvoice].[InvNum],#(lf)            [Invoice].[InvoiceDate],#(lf)            [Invoice].[DateDue],#(lf)            SUM(#(lf)                CASE #(lf)                    WHEN [APVendors].[VendorType] = 2 THEN [DistributionsInvoice].[PVAmount] #(lf)                    ELSE [DistributionsInvoice].[Amount]#(lf)                END#(lf)                ) AS 'Gross Invoice Amount',#(lf)            [Calculation].[InvoiceDateDif] AS 'Past Due Days',#(lf)            CASE#(lf)                WHEN [Calculation].[InvoiceDateDif] < 0 THEN 'Due'#(lf)                ELSE 'Not Due'#(lf)            END AS 'Invoice Past Due',#(lf)            CASE#(lf)                WHEN [Invoice].[InvoiceDate] < @CurrentMonthStart THEN 'Past'#(lf)                WHEN [Invoice].[InvoiceDate] <= @CurrentMonthEnd THEN 'Current'#(lf)                ELSE 'Forecast'#(lf)            END AS 'Invoice Forecast'#(lf)        FROM [DistributionsInvoice]#(lf)        LEFT JOIN [APVendors] ON [DistributionsInvoice].[VendorID] = [APVendors].[VendorID]#(lf)        LEFT JOIN [Invoice] ON [DistributionsInvoice].[InvNum] = [Invoice].[InvNum]#(lf)        CROSS APPLY( #(lf)            SELECT DATEDIFF( DAY, CAST(GETDATE() AS DATE), [Invoice].[DateDue] ) AS 'InvoiceDateDif' #(lf)        ) AS Calculation#(lf)        GROUP BY [DistributionsInvoice].[DealID], [DistributionsInvoice].[InvNum], [Invoice].[DateDue], [Calculation].[InvoiceDateDif], [Invoice].[InvoiceDate]#(lf)        ),#(lf)#(lf)    paymentDetail AS (#(lf)        SELECT#(lf)            [DistributionsVoucher].[InvNum],#(lf)            MAX( [ARPayments].[PmtDate] ) AS 'LastPaymentDate',#(lf)            SUM(#(lf)                CASE #(lf)                    WHEN [APVendors].[VendorType] = 2 THEN [DistributionsVoucher].[PVAmount] #(lf)                    ELSE [DistributionsVoucher].[Amount]#(lf)                END#(lf)                ) AS 'Gross Payment'#(lf)        FROM [DistributionsVoucher]#(lf)        LEFT JOIN [ARPayments] ON [DistributionsVoucher].[PmtID] = [ARPayments].[PmtID]#(lf)        LEFT JOIN [APVendors] ON [DistributionsVoucher].[VendorID] = [APVendors].[VendorID]#(lf)        GROUP BY [DistributionsVoucher].[InvNum]#(lf)        )#(lf)#(lf)SELECT#(lf)    [invoiceDetail].[InvNum] AS 'Invoice Number',#(lf)#(tab)CAST( [invoiceDetail].[InvoiceDate] AS DATE ) AS 'Invoice Date',#(lf)    CAST( [invoiceDetail].[DateDue] AS DATE ) AS 'Due Date',#(lf)    CAST( [paymentDetail].[LastPaymentDate] AS DATE ) AS 'Last Payment Date',#(lf)    [invoiceDetail].[Gross Invoice Amount],#(lf)    [paymentDetail].[Gross Payment],#(lf)    [Calc].[Balance],#(lf)    [invoiceDetail].[Past Due Days],#(lf)    [invoiceDetail].[Invoice Past Due],#(lf)    [invoiceDetail].[Invoice Forecast],#(lf)    -- Use 1 as a parameter for payment. Values between 1 and 0 or -1 and 0 are not considered as balance.#(lf)    CASE #(lf)        WHEN [paymentDetail].[LastPaymentDate] IS NULL THEN 'No' -- No payment when payment date is null#(lf)        WHEN [Calc].[Balance] < -1 THEN 'Overpay' -- Overpayment when balace is negative#(lf)        WHEN [Calc].[Balance] > 1 THEN 'Partial' -- Partial when balance is positive#(lf)        WHEN ABS([Calc].[Balance]) < 1 THEN 'Yes' -- Paid when balance absolute value is less than 1#(lf)        ELSE 'No'#(lf)    END AS 'Invoice Payment',#(lf)    CONCAT(#(lf)        RANK() OVER( PARTITION BY [Deals].[DealID] ORDER BY  [invoiceDetail].[InvNum] ASC) ,#(lf)        ' of ',#(lf)        COUNT(*) OVER( PARTITION BY [Deals].[DealID] )#(lf)        ) AS 'Invoice Order'#(lf)FROM [invoiceDetail]#(lf)LEFT JOIN [Deals] ON [invoiceDetail].[DealID] = [Deals].[DealID]#(lf)LEFT JOIN [paymentDetail] ON [invoiceDetail].[InvNum] = [paymentDetail].[InvNum]#(lf)-- This block generates and define the Balance to be used in the script#(lf)CROSS APPLY (#(lf)    SELECT  COALESCE([invoiceDetail].[Gross Invoice Amount], 0) - #(lf)            COALESCE([paymentDetail].[Gross Payment], 0) AS Balance#(lf)) AS Calc#(lf)WHERE #(lf)    YEAR( [invoiceDetail].[InvoiceDate] ) >= 2021"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Invoice Date", type date}, {"Due Date", type date}, {"Last Payment Date", type date}, {"Gross Invoice Amount", Currency.Type}, {"Gross Payment", Currency.Type}, {"Balance", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

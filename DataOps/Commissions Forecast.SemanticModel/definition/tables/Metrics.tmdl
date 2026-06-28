@@ -1,0 +1,867 @@
+table Metrics
+	lineageTag: c9f924fc-8be9-4713-bcda-a12bafbeb243
+
+	measure 'INV001 Gross Lease Comm' =
+			
+			CALCULATE(
+			    [INV000 Base Commission Sum],
+			    COM_CATEGORY[ComCatID] = 1
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: c4f5f2e3-c6a3-4ec4-aef0-2499233c46d1
+
+	measure 'INV003 KWP Gross' =
+			
+			CALCULATE(
+			    [INV000 Base Commission Sum],
+			    COM_CATEGORY[ComCatID] = 3
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 531c2439-29e6-4a94-a185-1765d92e4492
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV004 In-House Agents' =
+			
+			CALCULATE(
+			    [INV000 Base Commission Sum],
+			    COM_CATEGORY[ComCatID] = 4
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 49066b4d-1966-4ad5-ab2f-168796ec5a97
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV005 KWP Net' =
+			
+			CALCULATE(
+			    [INV000 Base Commission Sum],
+			    COM_CATEGORY[ComCatID] = 5
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: a07d9d98-a4be-4eef-8bfe-165017b8eb6e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY001 Gross Lease Comm' = ```
+			
+			    CALCULATE(
+			        [PAY000 Base Payment Sum],
+			        COM_CATEGORY[ComCatID] = 1
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 6e3489ee-4343-4317-bae8-3f13abd0c6e5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY003 KWP Gross' = ```
+			
+			    CALCULATE(
+			        [PAY000 Base Payment Sum],
+			        COM_CATEGORY[ComCatID] = 3
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 70ae32e1-02c5-4e2f-a716-f83c49ad297b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY005 KWP Net' = ```
+			
+			    CALCULATE(
+			        [PAY000 Base Payment Sum],
+			        COM_CATEGORY[ComCatID] = 5
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 70435212-dddb-4e35-b224-8451056d0ca9
+
+	measure 'PAY004 In-House Agents' = ```
+			
+			    CALCULATE(
+			        [PAY000 Base Payment Sum],
+			        COM_CATEGORY[ComCatID] = 4
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: cb0cb353-7d4f-45a9-ac24-b47b3392cb29
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL001 Gross Lease Comm' =
+			
+			[INV001 Gross Lease Comm] - [PAY001 Gross Lease Comm]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 0dd2eff6-2def-4ba1-8bb0-64a70700a01c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL003 KWP Gross' =
+			
+			[INV003 KWP Gross] - [PAY003 KWP Gross]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: c4666953-9444-42bb-9b55-c5db581754cb
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL005 KWP Net' =
+			
+			[INV005 KWP Net] - [PAY005 KWP Net]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 45eb5c44-1de5-40d2-98d3-5cce8869a010
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL004 In-House Agents' =
+			
+			[INV004 In-House Agents] - [PAY004 In-House Agents]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 2ccf30b6-f793-4bf8-a702-eb5396114067
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure $01_GrossLease = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: 90944547-df76-44eb-894c-b06545e6226f
+
+	measure $02_AdjustedGross = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: 0e19740e-e78c-47c6-866a-12823121c96a
+
+	measure $03_NetHouse = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: b4effdf8-5197-4e0c-9dbd-9cf370ff4575
+
+	measure $04_BrokerShare = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: 9ed4d6ae-3c24-476b-b690-fd0e5e8be979
+
+	measure 'PAY010 KWP Net (DueDate)' =
+			
+			CALCULATE(
+			    [PAY005 KWP Net],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 64046830-cc65-4da2-b5e5-fbdf3f669d4e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL010 KWP Net (DueDate)' = [INV005 KWP Net] - [PAY010 KWP Net (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 11f7e2c3-c127-452c-ac94-b611fd49ee5d
+
+	measure $07_NetHouse_DueDate = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: f902e0ae-ba79-4c5d-8c0b-23e7aadecc38
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY006 Gross Lease Comm (DueDate)' =
+			
+			CALCULATE(
+			    [PAY001 Gross Lease Comm],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 8f2fd890-32a4-4f1f-bb71-d0e0d6e7c1de
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY008 KWP Gross (DueDate)' =
+			
+			CALCULATE(
+			    [PAY003 KWP Gross],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: db9ba1b0-5086-4c28-9f4d-884042688a8f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY009 In-House Agents (DueDate)' =
+			
+			CALCULATE(
+			    [PAY004 In-House Agents],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: b09e16a6-3ccc-49b7-8c97-549d05e96cec
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'BAL006 Gross Lease Comm (DueDate)' = [INV001 Gross Lease Comm] - [PAY006 Gross Lease Comm (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 0203b484-3653-40ed-a07c-76682e50a157
+
+	measure 'BAL008 KWP Gross (DueDate)' = [INV003 KWP Gross] - [PAY008 KWP Gross (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 13572b03-9a6f-4d7f-8d6f-a203406a09c7
+
+	measure 'BAL009 In-House Agents (DueDate)' = [INV004 In-House Agents] - [PAY009 In-House Agents (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 08a94494-b1ad-4deb-8866-2809b5136a71
+
+	measure $05_GrossLease_DueDate = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: 1294cb4d-e6f0-4d08-8f63-99f84fb48ebb
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure $06_AdjustedGross_DueDate = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: 2348089b-c2c2-4507-98b1-b9521e9e05e8
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure $08_BrokerShare_DueDate = 1
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 99.BaseMeasures
+		lineageTag: db36d826-055d-4c19-8907-943a2a3aa258
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'TAG001 Forecast Period' =
+			
+			var _firstMonth =
+			CALCULATE(
+			    MIN('CALENDAR'[Month_First_Day]),
+			    'CALENDAR'[Month_Offset] >= 0
+			)
+			RETURN
+			"» Forecast period from " & _firstMonth & " to " & MAX('CALENDAR'[Month_Last_Day] )
+		displayFolder: 99.TAGs
+		lineageTag: 87f34afd-87a4-4539-980e-fda71a714670
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PAY11 KWP Net SPLY' = ```
+			
+			    CALCULATE(
+			        [PAY005 KWP Net],
+			        SAMEPERIODLASTYEAR('CALENDAR'[Date]),
+			        ALL( INVOICES[Invoice Past Due], INVOICES[Invoice Payment] )
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 60ca7e11-0322-4a47-9d39-a8972dd5ac9e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'FVP03 KWP Net SPLY Var $' =
+			
+			[BAL005 KWP Net] - [PAY11 KWP Net SPLY]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 04.Forecast_vs_Past
+		lineageTag: 526426aa-70e1-4cb1-ab35-8fa33f29a37a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'FVP07 KPW Net SPLY Var %' = ```
+			
+			VAR _sply = [PAY11 KWP Net SPLY]
+			VAR _result = 
+			    DIVIDE( [BAL005 KWP Net] - _sply, _sply )
+			RETURN
+			    _result
+			```
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		displayFolder: 04.Forecast_vs_Past
+		lineageTag: 61776217-f757-4cd7-bb47-f1df792e6f2d
+
+	measure 'PAY12 Broker Share SPLY' = ```
+			
+			    CALCULATE(
+			        [PAY004 In-House Agents],
+			        SAMEPERIODLASTYEAR('CALENDAR'[Date]),
+			        ALL( INVOICES[Invoice Past Due], INVOICES[Invoice Payment] )
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 77773d79-a3da-43b5-b790-c26baa553dd1
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'FVP04 Broker Share SPLY Var $' =
+			
+			[BAL004 In-House Agents] - [PAY12 Broker Share SPLY]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 04.Forecast_vs_Past
+		lineageTag: 116dc6ee-a74b-4599-b348-fd99efeaf6cc
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'FVP08 Broker Share SPLY Var %' = ```
+			
+			VAR _sply = [PAY12 Broker Share SPLY]
+			VAR _result = 
+			    DIVIDE( [BAL004 In-House Agents] - _sply, _sply )
+			RETURN
+			    _result
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 04.Forecast_vs_Past
+		lineageTag: 5ecfdc4f-ecdc-4aef-a3dd-e169de460800
+
+	measure 'TAG000 Column Width' =
+			
+			"-Gross Lease Comm-"
+		displayFolder: 99.TAGs
+		lineageTag: 485b49d9-9b73-4463-bc0c-e433a77eb158
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'INV000 Base Commission Sum' =
+			
+			SUM( Invoice_Distribution[Commission Amount] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 212c8124-85ea-4cb4-811c-49dbd5bda4f4
+
+	measure 'INV002 Outside Agents' =
+			
+			CALCULATE(
+			    [INV000 Base Commission Sum],
+			    COM_CATEGORY[ComCatID] = 2
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 7c33bf1b-b9ed-48e0-a70e-2c6518a56c15
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV006 KWP Gross Weight %' =
+			
+			VAR _baseCommission = [INV000 Base Commission Sum]
+			VAR _kwpGrossALL =
+			    CALCULATE(
+			        [INV003 KWP Gross],
+			        ALL( COM_CATEGORY[Commission Category] )
+			    )
+			VAR _percentage =
+			    DIVIDE(
+			        _baseCommission,
+			        _kwpGrossALL
+			    )
+			VAR _result =
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE( COM_CATEGORY[ComCatID] ) IN {1,2}, BLANK(),
+			        _percentage
+			    )
+			RETURN
+			    _result
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		displayFolder: 01.Invoice
+		lineageTag: ebfe9a94-f8db-4815-8443-31e3d57551c1
+
+	measure 'INV011 KWP Gross Agent %' = ```
+			
+			VAR _allAgentName =
+			    CALCULATE(
+			        [INV003 KWP Gross],
+			        ALL( AGENTS[Agent Name] )
+			    )
+			VAR _result = 
+			    DIVIDE(
+			        [INV003 KWP Gross],
+			        _allAgentName,
+			        0
+			    )
+			RETURN
+			    _result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: 12e75d66-28c1-46c2-9ea4-da934a6be5db
+
+	measure 'INV008 KWP Gross SPLY Forecast' =
+			
+			VAR _maxOffset = MAX('CALENDAR'[Month_Offset])
+			VAR _result =
+			    CALCULATE(
+			        [INV007 KWP Gross SPLY],
+			        AND( 'CALENDAR'[Month_Offset] >= 0, 'CALENDAR'[Month_Offset] <= _maxOffset)
+			    )
+			RETURN
+			    _result
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 5fce4bea-21d0-4e98-8f79-307a71943e34
+
+	measure 'INV009 KWP Gross Var Forecast' =
+			
+			[INV003 KWP Gross] - [INV008 KWP Gross SPLY Forecast]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: d640035c-cfdd-4585-a38c-c5cc86e1e5e2
+
+	measure 'INV007 KWP Gross SPLY' = ```
+			
+			    CALCULATE(
+			        [INV003 KWP Gross],
+			        SAMEPERIODLASTYEAR('CALENDAR'[Date]),
+			        ALL( INVOICES[Invoice Forecast] )
+			    )
+			```
+		formatString: 0.00
+		displayFolder: 01.Invoice
+		lineageTag: 14967896-a1f7-413f-87df-f7a9b10d9aaf
+
+	measure 'INV010 KWP Gross Var % Forecast' =
+			
+			DIVIDE(
+			    [INV009 KWP Gross Var Forecast],
+			    [INV008 KWP Gross SPLY Forecast],
+			    1
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01.Invoice
+		lineageTag: 9ac74592-3039-4129-8d6b-316e67d42129
+
+	measure 'TAG002 Current Period' = ```
+			
+			VAR _start = MIN('CALENDAR'[Month_Offset])
+			VAR _end = MAX('CALENDAR'[Month_Offset])
+			VAR _firstMonth = 
+			    CALCULATE(
+			        SELECTEDVALUE( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Offset] = 1
+			    )
+			VAR __lastMonth = 
+			    CALCULATE(
+			        SELECTEDVALUE( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Offset] = _end
+			    )
+			RETURN
+			_firstMonth & " - " & __lastMonth
+			```
+		displayFolder: 99.TAGs
+		lineageTag: 0c4b09c0-776c-47e4-8ca5-0ad4521c30a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TAG003 Previous Period' = ```
+			
+			VAR _start = MIN('CALENDAR'[Month_Offset])
+			VAR _end = MAX('CALENDAR'[Month_Offset]) - 12
+			VAR _firstMonth = 
+			    CALCULATE(
+			        SELECTEDVALUE( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Offset] = ( 1 - 12 )
+			    )
+			VAR _lastMonth = 
+			    CALCULATE(
+			        SELECTEDVALUE( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Offset] IN {_end}
+			    )
+			RETURN
+			_firstMonth & " - " & _lastMonth
+			```
+		displayFolder: 99.TAGs
+		lineageTag: 47e1c0cc-c3f2-4bb0-9123-c09af677f387
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TAG004 Variance Text' =
+			
+			"Forecast vs Prev"
+		displayFolder: 99.TAGs
+		lineageTag: 0bf3e354-620a-4209-b6b1-5c909b2b9975
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'INV012 KWP Gross Agent % SPLY Forecast' = ```
+			
+			VAR _allAgentName =
+			    CALCULATE(
+			        [INV008 KWP Gross SPLY Forecast],
+			        ALL( AGENTS[Agent Name] )
+			    )
+			VAR _result = 
+			    DIVIDE(
+			        [INV008 KWP Gross SPLY Forecast],
+			        _allAgentName,
+			        0
+			    )
+			RETURN
+			    _result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: cd8ef7c6-2b52-4a00-bc32-8b8b4c6f5e8c
+
+	measure 'INV013 KWP Net SPLY' = ```
+			
+			    CALCULATE(
+			        [INV005 KWP Net],
+			        SAMEPERIODLASTYEAR('CALENDAR'[Date]),
+			        ALL( INVOICES[Invoice Forecast] )
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 47d61282-6cf7-4d4e-9ed2-5522e4624cc4
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV014 KWP Net SPLY Forecast' =
+			
+			VAR _maxOffset = MAX('CALENDAR'[Month_Offset])
+			VAR _result =
+			    CALCULATE(
+			        [INV013 KWP Net SPLY],
+			        AND( 'CALENDAR'[Month_Offset] >= 0, 'CALENDAR'[Month_Offset] <= _maxOffset)
+			    )
+			RETURN
+			    _result
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 93f391d3-f0ed-4fd3-90da-e4cf153b84d9
+
+	measure 'INV015 KWP Net Var Forecast' =
+			
+			[INV005 KWP Net] - [INV014 KWP Net SPLY Forecast]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 8cf10db0-bb38-42d5-808d-0977182f96db
+
+	measure 'INV016 KWP Net Var % Forecast' =
+			
+			DIVIDE(
+			    [INV015 KWP Net Var Forecast],
+			    [INV014 KWP Net SPLY Forecast],
+			    1
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01.Invoice
+		lineageTag: c30f96c8-3aee-42b8-ab1e-b9a6f85154de
+
+	measure 'INV017 KWP Net Agent %' = ```
+			
+			VAR _allAgentName =
+			    CALCULATE(
+			        [INV005 KWP Net],
+			        ALL( AGENTS[Agent Name] )
+			    )
+			VAR _result = 
+			    DIVIDE(
+			        [INV005 KWP Net],
+			        _allAgentName,
+			        0
+			    )
+			RETURN
+			    _result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: a47bed50-a47b-445a-a35f-d4b0ec0b6f16
+
+	measure 'INV018 KWP Net Agent % SPLY Forecast' = ```
+			
+			VAR _allAgentName =
+			    CALCULATE(
+			        [INV014 KWP Net SPLY Forecast],
+			        ALL( AGENTS[Agent Name] )
+			    )
+			VAR _result = 
+			    DIVIDE(
+			        [INV014 KWP Net SPLY Forecast],
+			        _allAgentName,
+			        0
+			    )
+			RETURN
+			    _result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: 175cb625-3023-4459-b32e-d8874732eec9
+
+	measure 'INV019 In-House Agents SPLY' = ```
+			
+					CALCULATE(
+						[INV004 In-House Agents],
+						SAMEPERIODLASTYEAR('CALENDAR'[Date]),
+						ALL(INVOICES[Invoice Forecast])
+					)
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: b5349bfc-362e-4e63-8f56-76dcf25f3dd1
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV019 In-House Agents SPLY Forecast' = ```
+			
+					VAR _maxOffset = MAX('CALENDAR'[Month_Offset])
+					VAR _result =
+					CALCULATE(
+						[INV019 In-House Agents SPLY],
+						AND(
+							'CALENDAR'[Month_Offset] >= 0,
+							'CALENDAR'[Month_Offset] <= _maxOffset
+						)
+					)
+					RETURN
+						_result
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: ebee0cdf-b517-44bb-aa6c-c443e98da478
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV020 In-House Agents Var Forecast' = ```
+			
+					[INV004 In-House Agents] - [INV019 In-House Agents SPLY Forecast]
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 01.Invoice
+		lineageTag: 271c5988-90a9-44bb-9aa5-247386d2e81b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'INV021 In-House Agents Var % Forecast' = ```
+			
+					DIVIDE(
+						[INV020 In-House Agents Var Forecast],
+						[INV019 In-House Agents SPLY Forecast],
+						1
+					)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01.Invoice
+		lineageTag: c5d6bdea-dd5c-4ffd-86bf-cbd0270ce3a2
+
+	measure 'INV022 In-House Agent %' = ```
+			
+					VAR _allAgentName =
+						CALCULATE(
+							[INV004 In-House Agents],
+							ALL(AGENTS[Agent Name])
+						)
+					VAR _result =
+						DIVIDE(
+							[INV004 In-House Agents],
+							_allAgentName,
+							0
+						)
+					RETURN
+						_result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: 5bf6945d-73dc-45e3-8e73-3ea1cbb6a208
+
+	measure 'INV023 In-House Agent % SPLY Forecast' = ```
+			
+					VAR _allAgentName =
+						CALCULATE(
+							[INV019 In-House Agents SPLY Forecast] ,
+							ALL(AGENTS[Agent Name])
+						)
+					VAR _result =
+						DIVIDE(
+							[INV019 In-House Agents SPLY Forecast] ,
+							_allAgentName,
+							0
+						)
+					RETURN
+						_result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01.Invoice
+		lineageTag: be4cb5a3-73ed-4e12-a1af-0aced43ed241
+
+	measure 'TAG005 Current Month' =
+			
+			VAR _maxMonth = MAX( 'CALENDAR'[Month_Number] )
+			RETURN
+			    CALCULATE(
+			        MAX( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Number] = _maxMonth)
+		displayFolder: 99.TAGs
+		lineageTag: e578a3c6-57ca-4ac2-a88b-c640401ab38a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PAY000 Base Payment Sum' =
+			
+			SUM( Invoice_Payment[Payment Amount] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: b4fc15f3-dd86-4f17-89ba-8066c96dd785
+
+	measure 'PAY002 Outside Agents' = ```
+			
+			    CALCULATE(
+			        [PAY000 Base Payment Sum],
+			        COM_CATEGORY[ComCatID] = 2
+			    )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: c66644ce-4721-4b2b-964f-5a371c9a313a
+
+	measure 'BAL000 Base Balance Sum' =
+			
+			[INV000 Base Commission Sum] - [PAY000 Base Payment Sum]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: e892f5f0-e2a1-4f24-9e69-ec2f0fdda229
+
+	measure 'BAL002 Outside Agents' =
+			
+			[INV002 Outside Agents] - [PAY002 Outside Agents]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 03b85804-0eec-4820-a56e-dd2b96865bbd
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'PAY007 Outsede Agents (DueDate)' =
+			
+			CALCULATE(
+			    [PAY002 Outside Agents],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: a32f0b41-99bc-4813-a6ff-30d53caeb999
+
+	measure 'BAL007 Outside Agents (DueDate)' = [INV002 Outside Agents] - [PAY007 Outsede Agents (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 6224f0b1-9ce4-4142-a2f2-c78dd83a1efd
+
+	measure 'PAY013 Base Payment (DueDate)' =
+			
+			CALCULATE(
+			    [PAY000 Base Payment Sum],
+			    USERELATIONSHIP( 'CALENDAR'[Date], Invoice_Payment[Due Date] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 02.Payment
+		lineageTag: 95d594a9-bea6-4d43-af94-43835561ff53
+
+	measure 'BAL011 Base Balance (DueDate)' =
+			
+			[INV000 Base Commission Sum] - [PAY013 Base Payment (DueDate)]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 03.Balance
+		lineageTag: 7f3fc4f2-af8d-4892-9b53-c116b636a612
+
+	measure 'TAG006 Comm Category Selected' =
+			
+			"Values for " & SELECTEDVALUE(COM_CATEGORY[Commission Category])
+		displayFolder: 99.TAGs
+		lineageTag: 7f2e791b-ae45-4b33-8e07-b30a53329272
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TAG007 Comm Curr Month' = ```
+			
+			VAR _currMonth = 
+			    CALCULATE(
+			        MAX( 'CALENDAR'[Month_Year] ),
+			        'CALENDAR'[Month_Offset] = 0
+			    )
+			VAR _result = "Current Month Commissions | " & _currMonth
+			RETURN
+			    _result
+			```
+		displayFolder: 99.TAGs
+		lineageTag: 64a7ca20-7224-4dab-80d6-9eb7c04b55d7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TAG008 YTD Period' = ```
+			
+			VAR _startOfYear = FORMAT( DATE(SELECTEDVALUE( 'CALENDAR'[Year] ), 1, 1), "MMM-yy" )
+			RETURN
+			    _startOfYear & " to " & [TAG005 Current Month] 
+			```
+		displayFolder: 99.TAGs
+		lineageTag: 19de5047-5f89-4ec8-ba5a-78e9a9b3c3dd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'INV024 PV%' = ```
+			
+			VAR _grossComAllAgents = 
+			    CALCULATE(
+			        [INV001 Gross Lease Comm],
+			        AGENTS[Agent Type] = "In-House",
+			        ALL( AGENTS[Agent Name] )
+			    )
+			VAR _rate =
+			    DIVIDE(
+			        [INV003 KWP Gross],
+			        _grossComAllAgents
+			        )
+			VAR _result = 
+			    IF( ISINSCOPE( DEALS[Deal ID] ), _rate, BLANK() )
+			RETURN
+			    _result
+			```
+		formatString: 0%;-0%;0%
+		displayFolder: 01.Invoice
+		lineageTag: 7d883fb9-ed72-41d0-a377-24ff2a3b4b99
+
+	measure 'INV025 Net Rate %' = ```
+			
+			VAR _rate =
+			    DIVIDE(
+			        [INV004 In-House Agents],
+			        [INV003 KWP Gross]
+			    )
+			VAR _result = 
+			    IF( ISINSCOPE( DEALS[Deal ID] ), _rate, BLANK() )
+			RETURN
+			    _result
+			```
+		formatString: 0%;-0%;0%
+		displayFolder: 01.Invoice
+		lineageTag: 83ea9bff-a9a5-4e3e-8f1b-7328f213b07b
+
+	partition Metrics = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

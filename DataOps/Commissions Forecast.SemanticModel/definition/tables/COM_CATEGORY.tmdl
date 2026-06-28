@@ -1,0 +1,50 @@
+table COM_CATEGORY
+	lineageTag: 9168ae06-7366-43d7-9c10-e92fc8dade61
+
+	column ComCatID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7da3bb1a-6525-4ab4-b28f-421ca2b368ff
+		summarizeBy: none
+		sourceColumn: ComCatID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Commission Category'
+		dataType: string
+		lineageTag: 1368729b-335a-46c3-b62c-9c4f753f0e3a
+		summarizeBy: none
+		sourceColumn: Commission Category
+		sortByColumn: ComCatID
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition COM_CATEGORY = m
+		mode: import
+		queryGroup: dim_Tables
+		source = ```
+				let
+				  Source = #table(
+				    {"ComCatID", "Commission Category"}, 
+				    {
+				      {1, "Gross Lease Comm"}, 
+				      {2, "Outside Agents"}, 
+				      {3, "KWP Gross"}, 
+				      {4, "In-House Agents"}, 
+				      {5, "KWP Net"}
+				    }
+				  ), 
+				  #"Changed Type" = Table.TransformColumnTypes(
+				    Source, 
+				    {{"ComCatID", Int64.Type}, {"Commission Category", type text}}
+				  )
+				in
+				  #"Changed Type"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

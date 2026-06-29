@@ -2,3 +2,7 @@ relationship 5ac255c4-69f6-cfe0-f957-5124156e08ad
 	fromColumn: oil_gas_2026.date
 	toColumn: Calendar.Date
 
+relationship AutoDetected_e941ef0e-eb67-4a1e-9da8-e5bdf1f4c473
+	fromColumn: oil_gas_2026.tipo_de_recurso
+	toColumn: type.tipo_de_recurso
+

@@ -8,12 +8,13 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["oil_gas_2026","WorkspaceID","DataflowID"]
+annotation PBI_QueryOrder = ["oil_gas_2026","WorkspaceID","DataflowID","type"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table oil_gas_2026
 ref table Calendar
+ref table type
 
 ref cultureInfo en-US
 

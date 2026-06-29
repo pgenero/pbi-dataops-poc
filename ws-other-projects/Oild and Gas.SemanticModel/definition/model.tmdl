@@ -10,11 +10,21 @@ annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_QueryOrder = ["oil_gas_2026"]
 
+<<<<<<< HEAD
+annotation PBI_ProTooling = ["DevMode","TMDL-Extension"]
+
+ref table oil_gas_2026
+ref table Calendar
+=======
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table oil_gas_2026
 ref table Calendar
+<<<<<<< HEAD
+=======
 ref table 'Field Parameter'
+>>>>>>> fad45db26bf7c201c2520cda4194ad58f54b60fd
 
+>>>>>>> a941df57dafe17e5f442d2144af5a669c31ad206
 ref cultureInfo en-US
 

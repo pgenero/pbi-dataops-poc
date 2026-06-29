@@ -72,9 +72,15 @@ table oil_gas_2026
 				let
 				    Source = PowerPlatform.Dataflows(null),
 				    Workspaces = Source{[Id="Workspaces"]}[Data],
+<<<<<<< HEAD
+				    #"91a851c6-a93e-422c-a353-d4507a456b0a" = Workspaces{[workspaceId="91a851c6-a93e-422c-a353-d4507a456b0a"]}[Data],
+				    #"1687c360-bd47-43fe-a2f7-e217d2132793" = #"91a851c6-a93e-422c-a353-d4507a456b0a"{[dataflowId="1687c360-bd47-43fe-a2f7-e217d2132793"]}[Data],
+				    oil_gas_2026_ = #"1687c360-bd47-43fe-a2f7-e217d2132793"{[entity="oil_gas_2026",version=""]}[Data],
+=======
 				    #"77fa1d16-3f26-4e90-a648-d3388d6e6ee5" = Workspaces{[workspaceId="77fa1d16-3f26-4e90-a648-d3388d6e6ee5"]}[Data],
 				    #"9206d60e-0e00-449c-9c37-e6202a948d23" = #"77fa1d16-3f26-4e90-a648-d3388d6e6ee5"{[dataflowId="9206d60e-0e00-449c-9c37-e6202a948d23"]}[Data],
 				    oil_gas_2026_ = #"9206d60e-0e00-449c-9c37-e6202a948d23"{[entity="oil_gas_2026",version=""]}[Data],
+>>>>>>> fad45db26bf7c201c2520cda4194ad58f54b60fd
 				    #"Inserted Merged Column" = Table.AddColumn(oil_gas_2026_, "date", each Text.Combine({Text.From([year], "en-US"), Text.From([month], "en-US")}, "-"), type text),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"date", type date}})
 				in

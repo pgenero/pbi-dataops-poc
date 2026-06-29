@@ -14,6 +14,10 @@ annotation PBI_ProTooling = ["DevMode"]
 
 ref table oil_gas_2026
 ref table Calendar
+<<<<<<< HEAD
+=======
+ref table 'Field Parameter'
+>>>>>>> fad45db26bf7c201c2520cda4194ad58f54b60fd
 
 ref cultureInfo en-US
 

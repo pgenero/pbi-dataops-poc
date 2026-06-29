@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "4890459c620dcf486e8b",
+  "position": {
+    "x": 141.36524371269343,
+    "y": 79.9524739030807,
+    "z": 0,
+    "height": 533.01649268720473,
+    "width": 1004.6202155647967,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AGENTS"
+                    }
+                  },
+                  "Property": "In-House Agent Status"
+                }
+              },
+              "queryRef": "AGENTS.In-House Agent Status",
+              "nativeQueryRef": "In-House Agent Status",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metrics"
+                    }
+                  },
+                  "Property": "INV001 Gross Lease Comm"
+                }
+              },
+              "queryRef": "Metrics.INV001 Gross Lease Comm",
+              "nativeQueryRef": "INV001 Gross Lease Comm"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Metrics"
+                  }
+                },
+                "Property": "INV001 Gross Lease Comm"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e19b6e55ee3b2eb2ca1e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AGENTS"
+              }
+            },
+            "Property": "In-House Agent Status"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "58fdc1c088581dec9e68",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Metrics"
+              }
+            },
+            "Property": "INV001 Gross Lease Comm"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

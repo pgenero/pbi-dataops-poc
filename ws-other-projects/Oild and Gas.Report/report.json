@@ -1,0 +1,69 @@
+{
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU05",
+            "path": "BaseThemes/CY26SU05.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "d942da852ed037b2cd52",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"4037df891fb6f831c3bb\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":385.16717325227967,\"z\":2,\"width\":612.7659574468086,\"height\":334.58966565349544}}],\"singleVisual\":{\"visualType\":\"hundredPercentStackedAreaChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Month\",\"active\":true}],\"Series\":[{\"queryRef\":\"oil_gas_2026.tipo_de_recurso\"}],\"Y\":[{\"queryRef\":\"Sum(oil_gas_2026.oil)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"},\"Name\":\"Calendar.Month\",\"NativeReferenceName\":\"Month\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"},\"Name\":\"oil_gas_2026.tipo_de_recurso\",\"NativeReferenceName\":\"tipo_de_recurso\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"oil\"}},\"Function\":0},\"Name\":\"Sum(oil_gas_2026.oil)\",\"NativeReferenceName\":\"Sum of oil\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"oil\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[{\"name\":\"43bcf9a8f55b31b4f863\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"oil_gas_2026\"}},\"Property\":\"tipo_de_recurso\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONVENCIONAL'\"}}],[{\"Literal\":{\"Value\":\"'NO CONVENCIONAL'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false},{\"name\":\"62e7bbdb09cbe90262be\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}],[{\"Literal\":{\"Value\":\"2L\"}}],[{\"Literal\":{\"Value\":\"3L\"}}],[{\"Literal\":{\"Value\":\"4L\"}}],[{\"Literal\":{\"Value\":\"5L\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 334.59,
+          "width": 612.77,
+          "x": 640.00,
+          "y": 385.17,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"c0cbc0a924a831a3bbf6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":4.86322188449848,\"y\":377.38601823708206,\"z\":0,\"width\":612.7659574468086,\"height\":334.58966565349544}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Month\",\"active\":true}],\"Series\":[{\"queryRef\":\"oil_gas_2026.tipo_de_recurso\"}],\"Y\":[{\"queryRef\":\"Sum(oil_gas_2026.oil)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"},\"Name\":\"Calendar.Month\",\"NativeReferenceName\":\"Month\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"},\"Name\":\"oil_gas_2026.tipo_de_recurso\",\"NativeReferenceName\":\"tipo_de_recurso\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"oil\"}},\"Function\":0},\"Name\":\"Sum(oil_gas_2026.oil)\",\"NativeReferenceName\":\"Sum of oil\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"oil\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[{\"name\":\"43bcf9a8f55b31b4f863\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"oil_gas_2026\"}},\"Property\":\"tipo_de_recurso\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONVENCIONAL'\"}}],[{\"Literal\":{\"Value\":\"'NO CONVENCIONAL'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false},{\"name\":\"62e7bbdb09cbe90262be\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}],[{\"Literal\":{\"Value\":\"2L\"}}],[{\"Literal\":{\"Value\":\"3L\"}}],[{\"Literal\":{\"Value\":\"4L\"}}],[{\"Literal\":{\"Value\":\"5L\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 334.59,
+          "width": 612.77,
+          "x": 4.86,
+          "y": 377.39,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"c4240cfc361aad95d032\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":13.617021276595745,\"z\":3,\"width\":612.7659574468086,\"height\":346.26139817629183}}],\"singleVisual\":{\"visualType\":\"hundredPercentStackedAreaChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Month\",\"active\":true}],\"Series\":[{\"queryRef\":\"oil_gas_2026.tipo_de_recurso\"}],\"Y\":[{\"queryRef\":\"Sum(oil_gas_2026.gas)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"},\"Name\":\"Calendar.Month\",\"NativeReferenceName\":\"Month\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"},\"Name\":\"oil_gas_2026.tipo_de_recurso\",\"NativeReferenceName\":\"tipo_de_recurso\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"gas\"}},\"Function\":0},\"Name\":\"Sum(oil_gas_2026.gas)\",\"NativeReferenceName\":\"Sum of gas\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"gas\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[{\"name\":\"43bcf9a8f55b31b4f863\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"oil_gas_2026\"}},\"Property\":\"tipo_de_recurso\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONVENCIONAL'\"}}],[{\"Literal\":{\"Value\":\"'NO CONVENCIONAL'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false},{\"name\":\"62e7bbdb09cbe90262be\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}],[{\"Literal\":{\"Value\":\"2L\"}}],[{\"Literal\":{\"Value\":\"3L\"}}],[{\"Literal\":{\"Value\":\"4L\"}}],[{\"Literal\":{\"Value\":\"5L\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 346.26,
+          "width": 612.77,
+          "x": 640.00,
+          "y": 13.62,
+          "z": 3.00
+        },
+        {
+          "config": "{\"name\":\"f8bd7ccdfbd7a7c952ed\",\"layouts\":[{\"id\":0,\"position\":{\"x\":4.86322188449848,\"y\":13.617021276595745,\"z\":1,\"width\":612.7659574468086,\"height\":346.26139817629183}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.Month\",\"active\":true}],\"Series\":[{\"queryRef\":\"oil_gas_2026.tipo_de_recurso\"}],\"Y\":[{\"queryRef\":\"Sum(oil_gas_2026.gas)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"},\"Name\":\"Calendar.Month\",\"NativeReferenceName\":\"Month\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"},\"Name\":\"oil_gas_2026.tipo_de_recurso\",\"NativeReferenceName\":\"tipo_de_recurso\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"gas\"}},\"Function\":0},\"Name\":\"Sum(oil_gas_2026.gas)\",\"NativeReferenceName\":\"Sum of gas\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"gas\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[{\"name\":\"43bcf9a8f55b31b4f863\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"oil_gas_2026\"}},\"Property\":\"tipo_de_recurso\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"o\",\"Entity\":\"oil_gas_2026\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"o\"}},\"Property\":\"tipo_de_recurso\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'CONVENCIONAL'\"}}],[{\"Literal\":{\"Value\":\"'NO CONVENCIONAL'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false},{\"name\":\"62e7bbdb09cbe90262be\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendar\"}},\"Property\":\"Month\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Month\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}],[{\"Literal\":{\"Value\":\"2L\"}}],[{\"Literal\":{\"Value\":\"3L\"}}],[{\"Literal\":{\"Value\":\"4L\"}}],[{\"Literal\":{\"Value\":\"5L\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 346.26,
+          "width": 612.77,
+          "x": 4.86,
+          "y": 13.62,
+          "z": 1.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

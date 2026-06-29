@@ -72,9 +72,9 @@ table oil_gas_2026
 				let
 				    Source = PowerPlatform.Dataflows(null),
 				    Workspaces = Source{[Id="Workspaces"]}[Data],
-				    Select_Workspace = Workspaces{[workspaceId=WorkspaceID]}[Data],
-				    Select_Dataflow = Select_Workspace{[dataflowId=DataflowID]}[Data],
-				    oil_gas_2026_ = Select_Dataflow{[entity="oil_gas_2026",version=""]}[Data],
+				    #"91a851c6-a93e-422c-a353-d4507a456b0a" = Workspaces{[workspaceId="91a851c6-a93e-422c-a353-d4507a456b0a"]}[Data],
+				    #"f4d32b67-1d8e-4808-be55-6223d1ac572d" = #"91a851c6-a93e-422c-a353-d4507a456b0a"{[dataflowId="f4d32b67-1d8e-4808-be55-6223d1ac572d"]}[Data],
+				    oil_gas_2026_ = #"f4d32b67-1d8e-4808-be55-6223d1ac572d"{[entity="oil_gas_2026",version=""]}[Data],
 				    #"Inserted Merged Column" = Table.AddColumn(oil_gas_2026_, "date", each Text.Combine({Text.From([year], "en-US"), Text.From([month], "en-US")}, "-"), type text),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"date", type date}})
 				in

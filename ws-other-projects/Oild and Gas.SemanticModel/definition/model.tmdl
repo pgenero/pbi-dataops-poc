@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["oil_gas_2026","WorkspaceID","DataflowID","type"]
+annotation PBI_QueryOrder = ["oil_gas_2026","type"]
 
 annotation PBI_ProTooling = ["DevMode"]
 

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Oild and Gas"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6c2efe4b-8524-479e-9db9-d25022145077"
+  }
+}

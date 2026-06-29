@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Oild and Gas"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a26d6744-d5d6-9661-48e3-5b9315c09be9"
+  }
+}

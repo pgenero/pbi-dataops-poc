@@ -1,0 +1,86 @@
+table oil_gas_2026
+	lineageTag: a94a9c6c-2d78-4b81-a026-a0f2115f9ea5
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 5444113a-2d5f-4150-83b1-f095d7731e6f
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: e46b8053-347a-478e-8b7d-25caa762aa55
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column provincia
+		dataType: string
+		lineageTag: 4216f146-15bd-43ba-8c6d-53b10f4d6628
+		summarizeBy: none
+		sourceColumn: provincia
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_de_recurso
+		dataType: string
+		lineageTag: 46a90c20-ae46-4bc2-a286-ddd58d0330d7
+		summarizeBy: none
+		sourceColumn: tipo_de_recurso
+
+		annotation SummarizationSetBy = Automatic
+
+	column oil
+		dataType: double
+		lineageTag: 9141075e-4888-4109-885d-32bc223b5959
+		summarizeBy: sum
+		sourceColumn: oil
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gas
+		dataType: double
+		lineageTag: 0cabfe9a-7639-4744-954f-b09baa6cd509
+		summarizeBy: sum
+		sourceColumn: gas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 72d61662-fd2c-4f3a-9871-4eb82fe52659
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition oil_gas_2026 = m
+		mode: import
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"91a851c6-a93e-422c-a353-d4507a456b0a" = Workspaces{[workspaceId="91a851c6-a93e-422c-a353-d4507a456b0a"]}[Data],
+				    #"1687c360-bd47-43fe-a2f7-e217d2132793" = #"91a851c6-a93e-422c-a353-d4507a456b0a"{[dataflowId="1687c360-bd47-43fe-a2f7-e217d2132793"]}[Data],
+				    oil_gas_2026_ = #"1687c360-bd47-43fe-a2f7-e217d2132793"{[entity="oil_gas_2026",version=""]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(oil_gas_2026_, "date", each Text.Combine({Text.From([year], "en-US"), Text.From([month], "en-US")}, "-"), type text),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

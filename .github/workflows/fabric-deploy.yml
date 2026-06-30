@@ -1,0 +1,158 @@
+
+name: Fabric CICD
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:   # Para deploy a PROD manual
+    inputs:
+      deployToProd:
+        description: "Trigger Test to Prod deployment"
+        required: true
+        default: "yes"
+
+env:
+  PIPELINE_ID: "9127a12d-4aa8-4032-b25c-b59bcd6180f9"
+  DEV_STAGE_ID: "536db314-05fb-4bf4-93a9-a9be66dbac61"
+  TEST_STAGE_ID: "1781c23f-2c97-4aa2-922f-1d3bf8cbe1a0"
+  PROD_STAGE_ID: "6d0210b4-e7ec-43cb-ade8-881cb76cb177"
+
+jobs:
+
+  deploy_to_test:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Fabric token
+        run: |
+          TOKEN=$(curl -s -X POST https://login.microsoftonline.com/${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}/oauth2/v2.0/token \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          -d "client_id=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}" \
+          -d "client_secret=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}" \
+          -d "grant_type=client_credentials" \
+          -d "scope=https://api.fabric.microsoft.com/.default" \
+          | jq -r .access_token)
+
+          echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Deploy DEV → TEST
+        run: |
+          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{
+                \"sourceStageId\": \"$DEV_STAGE_ID\",
+                \"targetStageId\": \"$TEST_STAGE_ID\"
+              }")
+
+          echo "$response"
+
+          OPERATION_ID=$(echo $response | jq -r .operationId)
+          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
+
+      - name: Wait for deployment result
+        run: |
+          for i in {1..10}
+          do
+            response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/operations/$OPERATION_ID \
+              -H "Authorization: Bearer $TOKEN")
+
+            echo "$response"
+
+            status=$(echo $response | jq -r .status)
+
+            if [ "$status" == "Succeeded" ]; then
+              echo "Deploy to TEST succeeded"
+              exit 0
+            fi
+
+            if [ "$status" == "Failed" ]; then
+              echo "Deploy failed"
+              exit 1
+            fi
+
+            sleep 10
+          done
+
+          echo "Timeout"
+          exit 1
+
+      - name: Deployment Summary
+        run: |
+          echo "### Dev → Test Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- Pipeline: $PIPELINE_ID" >> $GITHUB_STEP_SUMMARY
+          echo "- Operation: $OPERATION_ID" >> $GITHUB_STEP_SUMMARY
+
+  deploy_to_prod:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Fabric token
+        run: |
+          TOKEN=$(curl -s -X POST https://login.microsoftonline.com/${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}/oauth2/v2.0/token \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          -d "client_id=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}" \
+          -d "client_secret=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}" \
+          -d "grant_type=client_credentials" \
+          -d "scope=https://api.fabric.microsoft.com/.default" \
+          | jq -r .access_token)
+
+          echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Deploy TEST → PROD
+        run: |
+          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{
+                \"sourceStageId\": \"$TEST_STAGE_ID\",
+                \"targetStageId\": \"$PROD_STAGE_ID\"
+              }")
+
+          echo "$response"
+
+          OPERATION_ID=$(echo $response | jq -r .operationId)
+          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
+
+      - name: Wait for deployment result
+        run: |
+          for i in {1..10}
+          do
+            response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/operations/$OPERATION_ID \
+              -H "Authorization: Bearer $TOKEN")
+
+            echo "$response"
+
+            status=$(echo $response | jq -r .status)
+
+            if [ "$status" == "Succeeded" ]; then
+              echo "Deploy to PROD succeeded"
+              exit 0
+            fi
+
+            if [ "$status" == "Failed" ]; then
+              echo "Deploy failed"
+              exit 1
+            fi
+
+            sleep 10
+          done
+
+          echo "Timeout"
+          exit 1
+
+      - name: Deployment Summary
+        run: |
+          echo "### Test → Prod Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- Pipeline: $PIPELINE_ID" >> $GITHUB_STEP_SUMMARY
+          echo "- Operation: $OPERATION_ID" >> $GITHUB_STEP_SUMMARY

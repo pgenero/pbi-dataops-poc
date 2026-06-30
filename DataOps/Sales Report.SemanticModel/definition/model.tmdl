@@ -1,0 +1,19 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["SalesSupermarket"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table SalesSupermarket
+ref table Calendar
+
+ref cultureInfo en-US
+

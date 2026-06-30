@@ -1,0 +1,19 @@
+# == Power BI Desktop / Project (.pbib) ==
+# Ignore users cache local data (it stores data imported)
+**/cache/
+**/.pbi/
+
+# Ignore local user config files
+**/user.config
+*.pbix.user
+
+# Ignore temp auto backups from Power BI Desktop
+*.tmp
+*.backup
+
+# Ignore semantic model local data
+**/localSettings.json
+
+# == System ==
+.DS_Store
+Thumbs.db

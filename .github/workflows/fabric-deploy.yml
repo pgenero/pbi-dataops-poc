@@ -109,14 +109,22 @@ jobs:
 
           echo "$response"
 
-          changes=$(echo "$response" | jq -r '.hasChanges // "unknown"')
+          response_clean=$(echo "$response")
 
-          if [ "$changes" != "true" ]; then
-            echo "No changes detected → skipping deploy"
-            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
-          else
+          error=$(echo "$response_clean" | jq -r '.errorCode // empty')
+          changes=$(echo "$response_clean" | jq -r '.hasChanges // empty')
+
+          if [ "$error" == "EntityNotFound" ]; then
+            echo "First deployment detected → forcing deploy"
+            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
+
+          elif [ "$changes" == "true" ]; then
             echo "Changes detected → proceeding"
             echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
+
+          else
+            echo "No changes detected → skipping deploy"
+            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
           fi
 
       - name: Deploy DEV → TEST
@@ -267,14 +275,22 @@ jobs:
 
           echo "$response"
 
-          changes=$(echo "$response" | jq -r '.hasChanges // "unknown"')
+          response_clean=$(echo "$response")
 
-          if [ "$changes" != "true" ]; then
-            echo "No changes detected → skipping deploy"
-            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
-          else
+          error=$(echo "$response_clean" | jq -r '.errorCode // empty')
+          changes=$(echo "$response_clean" | jq -r '.hasChanges // empty')
+
+          if [ "$error" == "EntityNotFound" ]; then
+            echo "First deployment detected → forcing deploy"
+            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
+
+          elif [ "$changes" == "true" ]; then
             echo "Changes detected → proceeding"
             echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
+
+          else
+            echo "No changes detected → skipping deploy"
+            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
           fi
 
       - name: Deploy TEST → PROD

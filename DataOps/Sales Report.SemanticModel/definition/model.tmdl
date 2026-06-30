@@ -8,12 +8,13 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SalesSupermarket"]
+annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table SalesSupermarket
 ref table Calendar
+ref table dimCategory
 
 ref cultureInfo en-US
 

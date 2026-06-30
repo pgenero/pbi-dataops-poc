@@ -61,13 +61,11 @@ jobs:
 
       - name: Set pipeline configuration
         run: |
-          TARGET="${{ github.event.inputs.target }}"
-
-          if [ -z "$TARGET" ]; then
+          if [ -n "${{ github.event.inputs.target }}" ]; then
+            TARGET="${{ github.event.inputs.target }}"
+          elif [ -n "$TARGET" ]; then
             TARGET="$TARGET"
-          fi
-
-          if [ -z "$TARGET" ]; then
+          else
             TARGET="finance"
           fi
 

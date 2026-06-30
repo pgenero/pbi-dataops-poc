@@ -43,21 +43,37 @@ jobs:
 
       - name: Deploy DEV → TEST
         run: |
-          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
-          -H "Authorization: Bearer $TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{
-                \"sourceStageId\": \"$DEV_STAGE_ID\",
-                \"targetStageId\": \"$TEST_STAGE_ID\"
-              }")
+          echo "Starting deployment..."
 
+          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+                  \"sourceStageId\": \"$DEV_STAGE_ID\",
+                  \"targetStageId\": \"$TEST_STAGE_ID\"
+                }")
+
+          echo "Response:"
           echo "$response"
 
-          OPERATION_ID=$(echo $response | jq -r .operationId)
-          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
+          OPERATION_ID=$(echo "$response" | jq -r '.operationId // empty')
+
+          if [ -z "$OPERATION_ID" ]; then
+            echo "No operationId returned → possible no changes or immediate deployment"
+            echo "OPERATION_ID=" >> $GITHUB_ENV
+          else
+            echo "Operation ID: $OPERATION_ID"
+            echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
+          fi
+
 
       - name: Wait for deployment result
         run: |
+          if [ -z "$OPERATION_ID" ]; then
+            echo "No operation to track. Skipping monitoring."
+            exit 0
+          fi
+
           for i in {1..10}
           do
             response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/operations/$OPERATION_ID \
@@ -65,15 +81,15 @@ jobs:
 
             echo "$response"
 
-            status=$(echo $response | jq -r .status)
+            status=$(echo "$response" | jq -r .status)
 
             if [ "$status" == "Succeeded" ]; then
-              echo "Deploy to TEST succeeded"
+              echo "Deployment succeeded"
               exit 0
             fi
 
             if [ "$status" == "Failed" ]; then
-              echo "Deploy failed"
+              echo "Deployment failed"
               exit 1
             fi
 

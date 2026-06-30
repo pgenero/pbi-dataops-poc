@@ -1,0 +1,4 @@
+relationship 80d0c3db-fa92-12fc-d8bc-5db3d5f86bfc
+	fromColumn: SalesSupermarket.indice_tiempo
+	toColumn: Calendar.Date
+

@@ -1,0 +1,32 @@
+table Calendar
+	lineageTag: 271321bb-14f0-4a89-8ac0-a75a4637f923
+
+	column Date
+		formatString: Short Date
+		lineageTag: 8aa8d159-de26-4240-b6dc-cb5177d2857d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR = YEAR( 'Calendar'[Date] )
+		formatString: 0
+		lineageTag: 45e68fd5-5afe-40fc-9b67-8e2b603fe2e1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTH_NUM = MONTH( 'Calendar'[Date] )
+		formatString: 0
+		lineageTag: 44864e6a-690c-4fd3-a365-a89064de6242
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source = CALENDARAUTO()
+
+	annotation PBI_Id = b9a4e4078b0f470ca1f9eaa8d0aba34e
+

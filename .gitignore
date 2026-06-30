@@ -1,4 +1,5 @@
-# == Power BI Desktop / Project (.pbib) ==
+**/.pbi/localSettings.json
+**/.pbi/cache.abf# == Power BI Desktop / Project (.pbib) ==
 # Ignore users cache local data (it stores data imported)
 **/cache/
 **/.pbi/

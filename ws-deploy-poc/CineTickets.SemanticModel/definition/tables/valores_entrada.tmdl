@@ -1,0 +1,53 @@
+table valores_entrada
+	lineageTag: e30b9630-6c0d-44a4-8635-b8c7ece5fc89
+
+	column periodo_inicio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8c3babd3-abf1-411e-a648-60f0a7fdab48
+		summarizeBy: none
+		sourceColumn: periodo_inicio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column periodo_fin
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8a1e0fc4-000e-4f92-ad5f-f573d1800b9c
+		summarizeBy: none
+		sourceColumn: periodo_fin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column valor
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8dac5e6f-5961-478a-9fec-df2bfda1b89b
+		summarizeBy: sum
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition valores_entrada = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://www.incaa.gob.ar/.cvs-datos/valores_entrada.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{"anio"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"valor", Currency.Type}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Changed Type",{"vigencia_inicio", "vigencia_fin"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns1",{{"periodo_inicio", type date}, {"periodo_fin", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

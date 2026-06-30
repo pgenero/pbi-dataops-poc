@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "CineTickets"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a6dd3299-7995-4b49-8c36-f8520a95f1a0"
+  }
+}

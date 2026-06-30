@@ -1,0 +1,4 @@
+relationship 409ab733-ca09-62fe-5efa-bea76824b9ea
+	fromColumn: valores_entrada.periodo_inicio
+	toColumn: Calendar.Date
+

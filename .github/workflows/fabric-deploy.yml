@@ -76,18 +76,21 @@ jobs:
             echo "DEV_STAGE_ID=${{ vars.FINANCE_DEV_STAGE_ID }}" >> $GITHUB_ENV
             echo "TEST_STAGE_ID=${{ vars.FINANCE_TEST_STAGE_ID }}" >> $GITHUB_ENV
             echo "PROD_STAGE_ID=${{ vars.FINANCE_PROD_STAGE_ID }}" >> $GITHUB_ENV
+            echo "WORKSPACE_ID=${{ vars.FINANCE_WORKSPACE_ID }}" >> $GITHUB_ENV
 
           elif [ "$TARGET" == "sales" ]; then
             echo "PIPELINE_ID=${{ vars.SALES_PIPELINE_ID }}" >> $GITHUB_ENV
             echo "DEV_STAGE_ID=${{ vars.SALES_DEV_STAGE_ID }}" >> $GITHUB_ENV
             echo "TEST_STAGE_ID=${{ vars.SALES_TEST_STAGE_ID }}" >> $GITHUB_ENV
             echo "PROD_STAGE_ID=${{ vars.SALES_PROD_STAGE_ID }}" >> $GITHUB_ENV
+            echo "WORKSPACE_ID=${{ vars.SALES_WORKSPACE_ID }}" >> $GITHUB_ENV
 
           elif [ "$TARGET" == "operations" ]; then
             echo "PIPELINE_ID=${{ vars.OPERATIONS_PIPELINE_ID }}" >> $GITHUB_ENV
             echo "DEV_STAGE_ID=${{ vars.OPERATIONS_DEV_STAGE_ID }}" >> $GITHUB_ENV
             echo "TEST_STAGE_ID=${{ vars.OPERATIONS_TEST_STAGE_ID }}" >> $GITHUB_ENV
             echo "PROD_STAGE_ID=${{ vars.OPERATIONS_PROD_STAGE_ID }}" >> $GITHUB_ENV
+            echo "WORKSPACE_ID=${{ vars.OPERATIONS_WORKSPACE_ID }}" >> $GITHUB_ENV
           fi
 
       - name: Get Fabric token
@@ -101,6 +104,25 @@ jobs:
           | jq -r .access_token)
 
           echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+    
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Sync workspace
+        run: |
+          python ci/scripts/sync_workspace.py
 
       - name: Check changes before deploy
         run: |

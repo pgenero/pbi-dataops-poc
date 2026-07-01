@@ -52,10 +52,17 @@ print("Sync response:", sync_response.text)
 # ✅ 4. WAIT
 for i in range(10):
     status_check = requests.get(status_url, headers=headers).json()
-    print("Sync state:", status_check)
 
-    if status_check.get("status") == "Completed":
-        print("✅ Sync completed")
+    workspace_head = status_check.get("workspaceHead")
+    remote_head = status_check.get("remoteCommitHash")
+    changes = status_check.get("changes", [])
+
+    # ✅ Mostrar SOLO transición relevante
+    print(f"[Check {i+1}] workspaceHead={workspace_head} vs remote={remote_head}")
+
+    # ✅ condición de fin clara
+    if workspace_head == remote_head:
+        print("✅ Sync completed (commits are aligned)")
         break
 
     time.sleep(5)

@@ -17,7 +17,7 @@ headers = {
 cred_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/myGitCredentials"
 
 cred_payload = {
-    "type": "ConfiguredConnection",
+    "source": "ConfiguredConnection",
     "connectionId": connection_id
 }
 

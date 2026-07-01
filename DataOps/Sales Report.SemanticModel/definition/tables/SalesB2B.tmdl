@@ -1,0 +1,50 @@
+table SalesB2B
+	lineageTag: f4f696da-ec15-416b-a86c-628f4c62fe41
+
+	column indice_tiempo
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7de6f4a1-1120-496a-be9e-15c7e6f14efe
+		summarizeBy: none
+		sourceColumn: indice_tiempo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Value
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5b190713-78de-409d-8acb-43b518610dce
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Category
+		dataType: string
+		lineageTag: 58b62a31-a774-459e-9894-fcb2bcc4a45e
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SalesB2B = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/sspm/dataset/456/distribution/456.1/download/ventas-totales-autoservicios-mayoristas.csv"),[Delimiter=",", Columns=26, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Promoted Headers", {"indice_tiempo"}, "Attribute", "Value"),
+				    #"Inserted Replaced Text" = Table.AddColumn(#"Unpivoted Other Columns", "Category", each Text.Replace(Text.Proper([Attribute]), "_", " "), type text),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Replaced Text",{{"Value", Currency.Type}, {"indice_tiempo", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Attribute"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -3,7 +3,7 @@ table dimCategory
 
 	column Category
 		dataType: string
-		lineageTag: c93e7439-af06-43d6-a2f0-4859a441fe1a
+		lineageTag: 4c9d33be-fbb4-4577-84d5-734b328266d6
 		summarizeBy: none
 		sourceColumn: Category
 
@@ -13,16 +13,13 @@ table dimCategory
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/sspm/dataset/455/distribution/455.1/download/ventas-totales-supermercados-2.csv"),[Delimiter=",", Columns=27, Encoding=1252, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"indice_tiempo", type date}, {"ventas_precios_corrientes", Currency.Type}, {"ventas_precios_constantes", Currency.Type}, {"ventas_precios_constantes_original", Currency.Type}, {"ventas_precios_constantes_desestacionalizada", Currency.Type}, {"ventas_precios_constantes_tendencia_ciclo", Currency.Type}, {"ventas_totales_canal_venta", Currency.Type}, {"salon_ventas", Currency.Type}, {"canales_on_line", Currency.Type}, {"ventas_totales_medio_pago", Currency.Type}, {"efectivo", Currency.Type}, {"tarjetas_debito", Currency.Type}, {"tarjetas_credito", Currency.Type}, {"otros_medios", Currency.Type}, {"ventas_totales_grupo_articulos", Currency.Type}, {"subtotal_ventas_alimentos_bebidas", Currency.Type}, {"bebidas", Currency.Type}, {"almacen", Currency.Type}, {"panaderia", Currency.Type}, {"lacteos", Currency.Type}, {"carnes", Currency.Type}, {"verduleria_fruteria", Currency.Type}, {"alimentos_preparados_rotiseria", Currency.Type}, {"articulos_limpieza_perfumeria", Currency.Type}, {"indumentaria_calzado_textiles_hogar", Currency.Type}, {"electronicos_articulos_hogar", Currency.Type}, {"otros", Currency.Type}}),
-				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type", {"indice_tiempo"}, "Attribute", "Value"),
-				    #"Inserted Replaced Text" = Table.AddColumn(#"Unpivoted Other Columns", "Category", each Text.Replace(Text.Proper([Attribute]), "_", " "), type text),
-				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Replaced Text",{"Attribute"}),
-				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"Category"}),
-				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				    Source = Table.FromList(SalesSupermarket[Category]) & Table.FromList(SalesB2B[Category]),
+				    #"Removed Duplicates" = Table.Distinct(Source),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Duplicates",{{"Column1", type text}}),
+				    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Column1", Order.Ascending}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Sorted Rows",{{"Column1", "Category"}})
 				in
-				    #"Removed Duplicates"
+				    #"Renamed Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

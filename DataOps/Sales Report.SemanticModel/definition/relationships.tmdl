@@ -2,7 +2,15 @@ relationship 80d0c3db-fa92-12fc-d8bc-5db3d5f86bfc
 	fromColumn: SalesSupermarket.indice_tiempo
 	toColumn: Calendar.Date
 
-relationship AutoDetected_513a2aab-38e8-4c0c-b817-aeacff2faa41
+relationship 5e30847e-2235-cda1-e517-557b5dc56540
+	fromColumn: SalesB2B.indice_tiempo
+	toColumn: Calendar.Date
+
+relationship 02fdc34e-ea92-751a-444e-5869cd4f1f0a
 	fromColumn: SalesSupermarket.Category
+	toColumn: dimCategory.Category
+
+relationship e3548477-26d5-b9f2-173b-a4da4cd388bb
+	fromColumn: SalesB2B.Category
 	toColumn: dimCategory.Category
 

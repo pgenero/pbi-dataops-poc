@@ -55,19 +55,12 @@ for i in range(10):
 
     workspace_head = status_check.get("workspaceHead")
     remote_head = status_check.get("remoteCommitHash")
-    changes = status_check.get("changes", [])
 
-    # ✅ Mostrar SOLO transición relevante
-    print(f"[Check {i+1}] workspaceHead={workspace_head} vs remote={remote_head}")
-
-    # ✅ condición de fin clara
     if workspace_head == remote_head:
-        print("✅ Sync completed (commits are aligned)")
+        print(f"✅ Sync completed → {workspace_head}")
         break
 
+    if i == 0:
+        print(f"🔄 Sync started → {workspace_head} → {remote_head}")
+
     time.sleep(5)
-
-
-# ✅ 5. Commits details
-print("Remote commit:", remote_commit)
-print("Workspace head before:", workspace_head)

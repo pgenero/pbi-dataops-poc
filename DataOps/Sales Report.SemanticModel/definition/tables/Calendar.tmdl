@@ -13,14 +13,14 @@ table Calendar
 	column YEAR = YEAR( 'Calendar'[Date] )
 		formatString: 0
 		lineageTag: 45e68fd5-5afe-40fc-9b67-8e2b603fe2e1
-		summarizeBy: none
+		summarizeBy: sum
 
 		annotation SummarizationSetBy = Automatic
 
 	column MONTH_NUM = MONTH( 'Calendar'[Date] )
 		formatString: 0
 		lineageTag: 44864e6a-690c-4fd3-a365-a89064de6242
-		summarizeBy: none
+		summarizeBy: sum
 
 		annotation SummarizationSetBy = Automatic
 

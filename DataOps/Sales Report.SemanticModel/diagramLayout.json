@@ -10,8 +10,8 @@
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 24
+            "x": 108,
+            "y": 0
           },
           "nodeIndex": "SalesSupermarket",
           "nodeLineageTag": "8637835c-9834-4ef6-83e5-794b390268e2",
@@ -23,13 +23,39 @@
         },
         {
           "location": {
-            "x": 366,
-            "y": 124
+            "x": 147,
+            "y": 368
           },
           "nodeIndex": "Calendar",
           "nodeLineageTag": "271321bb-14f0-4a89-8ac0-a75a4637f923",
           "size": {
             "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 595,
+            "y": 388
+          },
+          "nodeIndex": "dimCategory",
+          "nodeLineageTag": "0b83c1d1-c1dd-4869-b2c6-7cdcefee3b3c",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 610,
+            "y": 18
+          },
+          "nodeIndex": "SalesB2B",
+          "nodeLineageTag": "f4f696da-ec15-416b-a86c-628f4c62fe41",
+          "size": {
+            "height": 152,
             "width": 234
           },
           "zIndex": 0

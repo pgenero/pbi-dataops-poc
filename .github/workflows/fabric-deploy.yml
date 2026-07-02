@@ -127,10 +127,6 @@ jobs:
         run: |
           python ci/scripts/sync_workspace.py
 
-      - name: Capture workspace head before
-        run: |
-          echo "WORKSPACE_HEAD_BEFORE=$(grep WORKSPACE_HEAD_BEFORE ci/scripts/sync_workspace.log)" >> $GITHUB_ENV
-
       - name: Check changes before deploy
         run: |
           response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploymentState \

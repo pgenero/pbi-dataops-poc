@@ -127,33 +127,41 @@ jobs:
         run: |
           python ci/scripts/sync_workspace.py
 
-      - name: Check changes before deploy
+      - name: Check status before deploy
         run: |
-          response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploymentState \
+          response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status \
             -H "Authorization: Bearer $TOKEN")
 
+          echo "Raw response:"
           echo "$response"
 
-          response_clean=$(echo "$response")
+          changes_count=$(echo "$response" | jq '.changes | length')
 
-          error=$(echo "$response_clean" | jq -r '.errorCode // empty')
-          changes=$(echo "$response_clean" | jq -r '.hasChanges // empty')
-
-          if [ "$error" == "EntityNotFound" ]; then
-            echo "First deployment detected → forcing deploy"
-            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
-
-          elif [ "$changes" == "true" ]; then
-            echo "Changes detected → proceeding"
-            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
-
+          if [ "$changes_count" -eq 0 ]; then
+            echo "No changes detected"
           else
-            echo "No changes detected → skipping deploy"
-            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
+            echo "Changes detected:"
+
+            echo "$response" | jq -r '
+              .changes[] |
+              [
+                .itemMetadata.itemIdentifier.objectId,
+                .itemType,
+                .displayName,
+                .conflictType
+              ] | @tsv
+            ' | while IFS=$'\t' read -r objectId itemType displayName conflictType; do
+              echo "--------------------------------------"
+              echo "Object ID: $objectId"
+              echo "Type: $itemType"
+              echo "Name: $displayName"
+              echo "Conflict: $conflictType"
+            done
           fi
 
+          echo "HAS_CHANGES=$changes_count" >> $GITHUB_ENV
+
       - name: Deploy DEV → TEST
-        if: env.SKIP_DEPLOY != 'true'
         run: |
           echo "Starting deployment..."
 
@@ -168,7 +176,7 @@ jobs:
           echo "Response:"
           echo "$response"
 
-          OPERATION_ID=$(echo "$response" | jq -r '.operationId // empty')
+          OPERATION_ID=$(echo "$response" | jq -r '.id // empty')
 
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId returned → possible no changes or immediate deployment"
@@ -179,7 +187,6 @@ jobs:
           fi
 
       - name: Wait for deployment result
-        if: env.SKIP_DEPLOY != 'true'
         run: |
           if [ -z "$OPERATION_ID" ]; then
             echo "No operation to track. Skipping monitoring."
@@ -304,33 +311,41 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ci/requirements/requirements.txt
 
-      - name: Check changes before deploy
+      - name: Check status before deploy
         run: |
-          response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploymentState \
+          response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status \
             -H "Authorization: Bearer $TOKEN")
 
+          echo "Raw response:"
           echo "$response"
 
-          response_clean=$(echo "$response")
+          changes_count=$(echo "$response" | jq '.changes | length')
 
-          error=$(echo "$response_clean" | jq -r '.errorCode // empty')
-          changes=$(echo "$response_clean" | jq -r '.hasChanges // empty')
-
-          if [ "$error" == "EntityNotFound" ]; then
-            echo "First deployment detected → forcing deploy"
-            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
-
-          elif [ "$changes" == "true" ]; then
-            echo "Changes detected → proceeding"
-            echo "SKIP_DEPLOY=false" >> $GITHUB_ENV
-
+          if [ "$changes_count" -eq 0 ]; then
+            echo "No changes detected"
           else
-            echo "No changes detected → skipping deploy"
-            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
+            echo "Changes detected:"
+
+            echo "$response" | jq -r '
+              .changes[] |
+              [
+                .itemMetadata.itemIdentifier.objectId,
+                .itemType,
+                .displayName,
+                .conflictType
+              ] | @tsv
+            ' | while IFS=$'\t' read -r objectId itemType displayName conflictType; do
+              echo "--------------------------------------"
+              echo "Object ID: $objectId"
+              echo "Type: $itemType"
+              echo "Name: $displayName"
+              echo "Conflict: $conflictType"
+            done
           fi
 
+          echo "HAS_CHANGES=$changes_count" >> $GITHUB_ENV
+
       - name: Deploy TEST → PROD
-        if: env.SKIP_DEPLOY != 'true'
         run: |
           response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
           -H "Authorization: Bearer $TOKEN" \
@@ -342,11 +357,10 @@ jobs:
 
           echo "$response"
 
-          OPERATION_ID=$(echo "$response" | jq -r '.operationId // empty')
+          OPERATION_ID=$(echo "$response" | jq -r '.id // empty')
           echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
       - name: Wait for deployment result
-        if: env.SKIP_DEPLOY != 'true'
         run: |
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId → skipping tracking"

@@ -129,7 +129,7 @@ jobs:
 
       - name: Capture workspace head before
         run: |
-          echo "WORKSPACE_HEAD_BEFORE=$(grep WORKSPACE_HEAD_BEFORE ci/scripts/sync_workspace.log)" >> $GITHUB_ENV
+          echo "WORKSPACE_HEAD_BEFORE=$(grep WORKSPACE_HEAD_BEFORE ci/scripts/sync_workspace.py)" >> $GITHUB_ENV
 
       - name: Check changes before deploy
         run: |

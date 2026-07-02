@@ -123,10 +123,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ci/requirements/requirements.txt
 
-      - name: Sync workspace
-        run: |
-          python ci/scripts/sync_workspace.py
-
       - name: Check status before deploy
         run: |
           response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status \
@@ -161,6 +157,10 @@ jobs:
 
           echo "HAS_CHANGES=$changes_count" >> $GITHUB_ENV
 
+      - name: Sync workspace
+        run: |
+          python ci/scripts/sync_workspace.py
+
       - name: Deploy DEV → TEST
         run: |
           echo "Starting deployment..."
@@ -173,10 +173,13 @@ jobs:
                   \"targetStageId\": \"$TEST_STAGE_ID\"
                 }")
 
-          echo "Response:"
-          echo "$response"
+          headers=$(echo "$response" | sed -n '1,/^\r$/p')
 
-          OPERATION_ID=$(echo "$response" | jq -r '.x-ms-operation-id // empty')
+          OPERATION_URL=$(echo "$headers" | grep -i "Location" | awk '{print $2}' | tr -d '\r')
+          OPERATION_ID=$(basename "$OPERATION_URL")
+
+          echo "Captured OPERATION_ID: $OPERATION_ID"
+          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId returned → possible no changes or immediate deployment"
@@ -347,6 +350,8 @@ jobs:
 
       - name: Deploy TEST → PROD
         run: |
+          echo "Starting deployment..."
+
           response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
           -H "Authorization: Bearer $TOKEN" \
           -H "Content-Type: application/json" \
@@ -355,11 +360,22 @@ jobs:
                 \"targetStageId\": \"$PROD_STAGE_ID\"
               }")
 
-          echo "$response"
+          headers=$(echo "$response" | sed -n '1,/^\r$/p')
 
-          OPERATION_ID=$(echo "$response" | jq -r '.x-ms-operation-id // empty')
+          OPERATION_URL=$(echo "$headers" | grep -i "Location" | awk '{print $2}' | tr -d '\r')
+          OPERATION_ID=$(basename "$OPERATION_URL")
+
+          echo "Captured OPERATION_ID: $OPERATION_ID"
           echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
+          if [ -z "$OPERATION_ID" ]; then
+            echo "No operationId returned → possible no changes or immediate deployment"
+            echo "OPERATION_ID=" >> $GITHUB_ENV
+          else
+            echo "Operation ID: $OPERATION_ID"
+            echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
+          fi          
+          
       - name: Wait for deployment result
         run: |
           if [ -z "$OPERATION_ID" ]; then

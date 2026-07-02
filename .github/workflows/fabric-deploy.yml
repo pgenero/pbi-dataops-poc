@@ -176,7 +176,7 @@ jobs:
           echo "Response:"
           echo "$response"
 
-          OPERATION_ID=$(echo "$response" | jq -r '.id // empty')
+          OPERATION_ID=$(echo "$response" | jq -r '.x-ms-operation-id // empty')
 
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId returned → possible no changes or immediate deployment"
@@ -357,7 +357,7 @@ jobs:
 
           echo "$response"
 
-          OPERATION_ID=$(echo "$response" | jq -r '.id // empty')
+          OPERATION_ID=$(echo "$response" | jq -r '.x-ms-operation-id // empty')
           echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
       - name: Wait for deployment result

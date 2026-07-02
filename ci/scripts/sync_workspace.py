@@ -13,7 +13,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# ✅ 1. CONFIGURAR CREDENCIALES (NUEVO)
+# 1. Configure Credentials
 cred_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/myGitCredentials"
 
 cred_payload = {
@@ -24,7 +24,7 @@ cred_payload = {
 cred_response = requests.patch(cred_url, headers=headers, json=cred_payload)
 print("Git credentials configured:", cred_response.text)
 
-# ✅ 2. OBTENER STATUS
+# 2. Get Status
 status_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/status"
 
 status_response = requests.get(status_url, headers=headers)
@@ -34,7 +34,7 @@ print("Workspace status:", status_data)
 
 workspace_head = status_data.get("workspaceHead") or ""
 
-# ✅ 3. SYNC
+# 3. Sync Workspace with Git Repository
 sync_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/updateFromGit"
 
 payload = {
@@ -49,7 +49,7 @@ sync_response = requests.post(sync_url, headers=headers, json=payload)
 
 print("Sync response:", sync_response.text)
 
-# ✅ 4. WAIT
+# 4. Wait sync to complete
 for i in range(10):
     status_check = requests.get(status_url, headers=headers).json()
 
@@ -64,3 +64,6 @@ for i in range(10):
         print(f"🔄 Sync started → {workspace_head} → {remote_head}")
 
     time.sleep(5)
+
+# 5. Workspace commit head before sync
+print(f"WORKSPACE_HEAD_BEFORE={workspace_head}")

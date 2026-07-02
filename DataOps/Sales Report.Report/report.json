@@ -15,6 +15,20 @@
         "name": "SharedResources",
         "type": 2
       }
+    },
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "Default_Comm_Forecast3329776244299355.png",
+            "path": "Default_Comm_Forecast3329776244299355.png",
+            "type": 100
+          }
+        ],
+        "name": "RegisteredResources",
+        "type": 1
+      }
     }
   ],
   "sections": [
@@ -175,7 +189,7 @@
       "width": 1280.00
     },
     {
-      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}]}}",
+      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}],\"background\":[{\"properties\":{\"image\":{\"image\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"'Default_Comm_Forecast.png'\"}}},\"url\":{\"expr\":{\"ResourcePackageItem\":{\"PackageName\":\"RegisteredResources\",\"PackageType\":1,\"ItemName\":\"Default_Comm_Forecast3329776244299355.png\"}}},\"scaling\":{\"expr\":{\"Literal\":{\"Value\":\"'Fit'\"}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}",
       "displayName": "Supermarket",
       "displayOption": 1,
       "filters": "[]",
@@ -183,16 +197,16 @@
       "name": "93bb16636b735b5bf90d",
       "visualContainers": [
         {
-          "config": "{\"name\":\"38bef29a59771723e262\",\"layouts\":[{\"id\":0,\"position\":{\"x\":653.8035264483626,\"y\":116.0705289672544,\"z\":1000,\"width\":626.5994962216624,\"height\":560.4030226700252,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(SalesSupermarket.Value)\"}],\"Series\":[{\"queryRef\":\"dimCategory.Category\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimCategory\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesSupermarket.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Category\"},\"Name\":\"dimCategory.Category\",\"NativeReferenceName\":\"Category\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Sales Supermarket by Year'\"}}}}}]}}}",
+          "config": "{\"name\":\"38bef29a59771723e262\",\"layouts\":[{\"id\":0,\"position\":{\"x\":646.3840399002494,\"y\":114.91271820448877,\"z\":1000,\"width\":626.6334164588528,\"height\":561.0972568578553,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(SalesSupermarket.Value)\"}],\"Series\":[{\"queryRef\":\"dimCategory.Category\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimCategory\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesSupermarket.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Category\"},\"Name\":\"dimCategory.Category\",\"NativeReferenceName\":\"Category\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Sales Supermarket by Year'\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}}}}],\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}}",
           "filters": "[{\"name\":\"7b297924180bcdefd1c1\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"SalesSupermarket\"}},\"Property\":\"Category\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Category\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Alimentos Preparados Rotiseria'\"}}],[{\"Literal\":{\"Value\":\"'Bebidas'\"}}],[{\"Literal\":{\"Value\":\"'Lacteos'\"}}],[{\"Literal\":{\"Value\":\"'Panaderia'\"}}],[{\"Literal\":{\"Value\":\"'Verduleria Fruteria'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{},\"isHiddenInViewMode\":false}]",
-          "height": 560.40,
-          "width": 626.60,
-          "x": 653.80,
-          "y": 116.07,
+          "height": 561.10,
+          "width": 626.63,
+          "x": 646.38,
+          "y": 114.91,
           "z": 1000.00
         },
         {
-          "config": "{\"name\":\"5dd7960bc5a05bfb62e0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.974811083123425,\"y\":116.0705289672544,\"z\":0,\"width\":604.8362720403022,\"height\":560.4030226700252,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"hundredPercentStackedColumnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(SalesSupermarket.Value)\"}],\"Series\":[{\"queryRef\":\"dimCategory.Category\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimCategory\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesSupermarket.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Category\"},\"Name\":\"dimCategory.Category\",\"NativeReferenceName\":\"Category\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Share % Sales Supermarket by Year'\"}}}}}]}}}",
+          "config": "{\"name\":\"5dd7960bc5a05bfb62e0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.974811083123425,\"y\":116.0705289672544,\"z\":0,\"width\":604.8362720403022,\"height\":560.4030226700252,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"hundredPercentStackedColumnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(SalesSupermarket.Value)\"}],\"Series\":[{\"queryRef\":\"dimCategory.Category\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimCategory\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesSupermarket.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Category\"},\"Name\":\"dimCategory.Category\",\"NativeReferenceName\":\"Category\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Share % Sales Supermarket by Year'\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}}}}]}}}",
           "filters": "[{\"name\":\"7b297924180bcdefd1c1\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"SalesSupermarket\"}},\"Property\":\"Category\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"SalesSupermarket\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Category\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Alimentos Preparados Rotiseria'\"}}],[{\"Literal\":{\"Value\":\"'Bebidas'\"}}],[{\"Literal\":{\"Value\":\"'Lacteos'\"}}],[{\"Literal\":{\"Value\":\"'Panaderia'\"}}],[{\"Literal\":{\"Value\":\"'Verduleria Fruteria'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{},\"isHiddenInViewMode\":false}]",
           "height": 560.40,
           "width": 604.84,
@@ -201,10 +215,10 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"a338d589833d896f6de3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":2000,\"width\":1280.4030226700252,\"height\":61.6624685138539,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"SUPERMARKET SALES\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontFamily\":\"Arial Black\",\"fontSize\":\"20pt\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":2,\"Percent\":0.6}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"64D\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "config": "{\"name\":\"a338d589833d896f6de3\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":2000,\"width\":1280.1995012468828,\"height\":77.20698254364089,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"SUPERMARKET SALES\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontFamily\":\"Arial Black\",\"fontSize\":\"20pt\",\"color\":\"#ffffff\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#0A4B4F'\"}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
           "filters": "[]",
-          "height": 61.66,
-          "width": 1280.40,
+          "height": 77.21,
+          "width": 1280.20,
           "x": 0.00,
           "y": 0.00,
           "z": 2000.00

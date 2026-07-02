@@ -71,5 +71,5 @@ print(f"WORKSPACE_HEAD_BEFORE={workspace_head}")
 with open(os.environ['GITHUB_ENV'], 'a') as f:
     f.write(f"WORKSPACE_HEAD_BEFORE={workspace_head}\n")
 
-if not workspace_head_before:
+if not workspace_head:
     raise Exception("WORKSPACE_HEAD_BEFORE not found")

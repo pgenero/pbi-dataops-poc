@@ -177,21 +177,16 @@ jobs:
                   \"targetStageId\": \"$TEST_STAGE_ID\"
                 }")
 
-          headers=$(echo "$response" | sed -n '1,/^\r$/p')
-
-          OPERATION_ID=$(echo "$headers" | grep -i "x-ms-operation-id" | awk '{print $2}' | tr -d '\r')
+          OPERATION_ID=$(echo "$response" \
+            | grep -i "^x-ms-operation-id:" \
+            | head -n 1 \
+            | cut -d':' -f2 \
+            | tr -d '\r[:space:]')
 
           echo "Captured OPERATION_ID: $OPERATION_ID"
 
-          echo "RAW OPERATION_ID: [$OPERATION_ID]"
-
-          OPERATION_ID=$(echo "$OPERATION_ID" | tr -d '[:space:]')
-
-          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
-
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId returned → possible no changes or immediate deployment"
-            echo "OPERATION_ID=" >> $GITHUB_ENV
           else
             echo "Operation ID: $OPERATION_ID"
             echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
@@ -365,28 +360,27 @@ jobs:
           echo "Starting deployment..."
 
           response=$(curl -i -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
-          -H "Authorization: Bearer $TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{
-                \"sourceStageId\": \"$TEST_STAGE_ID\",
-                \"targetStageId\": \"$PROD_STAGE_ID\"
-              }")
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{
+                  \"sourceStageId\": \"$TEST_STAGE_ID\",
+                  \"targetStageId\": \"$PROD_STAGE_ID\"
+                }")
 
-          headers=$(echo "$response" | sed -n '1,/^\r$/p')
-
-          OPERATION_ID=$(echo "$headers" | grep -i "x-ms-operation-id" | awk '{print $2}' | tr -d '\r')
+          OPERATION_ID=$(echo "$response" \
+            | grep -i "^x-ms-operation-id:" \
+            | head -n 1 \
+            | cut -d':' -f2 \
+            | tr -d '\r[:space:]')
 
           echo "Captured OPERATION_ID: $OPERATION_ID"
 
-          echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
-
           if [ -z "$OPERATION_ID" ]; then
             echo "No operationId returned → possible no changes or immediate deployment"
-            echo "OPERATION_ID=" >> $GITHUB_ENV
           else
             echo "Operation ID: $OPERATION_ID"
             echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
-          fi          
+          fi
           
       - name: Wait for deployment result
         run: |

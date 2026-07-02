@@ -142,8 +142,9 @@ jobs:
               .changes[] |
               [
                 .itemMetadata.itemIdentifier.objectId,
-                .itemType,
-                .displayName,
+                .itemMetadata.itemType,
+                .itemMetadata.displayName,
+                .workspaceChange,
                 .conflictType
               ] | @tsv
             ' | while IFS=$'\t' read -r objectId itemType displayName conflictType; do
@@ -151,6 +152,7 @@ jobs:
               echo "Object ID: $objectId"
               echo "Type: $itemType"
               echo "Name: $displayName"
+              echo "Change Type: $workspaceChange"
               echo "Conflict: $conflictType"
             done
           fi
@@ -165,7 +167,7 @@ jobs:
         run: |
           echo "Starting deployment..."
 
-          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
+          response=$(curl -i -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -d "{
@@ -175,10 +177,10 @@ jobs:
 
           headers=$(echo "$response" | sed -n '1,/^\r$/p')
 
-          OPERATION_URL=$(echo "$headers" | grep -i "Location" | awk '{print $2}' | tr -d '\r')
-          OPERATION_ID=$(basename "$OPERATION_URL")
+          OPERATION_ID=$(echo "$headers" | grep -i "x-ms-operation-id" | awk '{print $2}' | tr -d '\r')
 
           echo "Captured OPERATION_ID: $OPERATION_ID"
+
           echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
           if [ -z "$OPERATION_ID" ]; then
@@ -333,8 +335,9 @@ jobs:
               .changes[] |
               [
                 .itemMetadata.itemIdentifier.objectId,
-                .itemType,
-                .displayName,
+                .itemMetadata.itemType,
+                .itemMetadata.displayName,
+                .workspaceChange
                 .conflictType
               ] | @tsv
             ' | while IFS=$'\t' read -r objectId itemType displayName conflictType; do
@@ -342,6 +345,7 @@ jobs:
               echo "Object ID: $objectId"
               echo "Type: $itemType"
               echo "Name: $displayName"
+              echo "Change Type: $workspaceChange"
               echo "Conflict: $conflictType"
             done
           fi
@@ -352,7 +356,7 @@ jobs:
         run: |
           echo "Starting deployment..."
 
-          response=$(curl -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
+          response=$(curl -i -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
           -H "Authorization: Bearer $TOKEN" \
           -H "Content-Type: application/json" \
           -d "{
@@ -362,10 +366,10 @@ jobs:
 
           headers=$(echo "$response" | sed -n '1,/^\r$/p')
 
-          OPERATION_URL=$(echo "$headers" | grep -i "Location" | awk '{print $2}' | tr -d '\r')
-          OPERATION_ID=$(basename "$OPERATION_URL")
+          OPERATION_ID=$(echo "$headers" | grep -i "x-ms-operation-id" | awk '{print $2}' | tr -d '\r')
 
           echo "Captured OPERATION_ID: $OPERATION_ID"
+
           echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
 
           if [ -z "$OPERATION_ID" ]; then

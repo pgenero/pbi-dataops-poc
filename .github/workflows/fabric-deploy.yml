@@ -120,16 +120,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests
-
-      - name: Sync workspace
-        run: |
           python -m pip install --upgrade pip
           pip install -r ci/requirements/requirements.txt
 
+      - name: Sync workspace
+        run: |
+          python ci/scripts/sync_workspace.py
+
       - name: Capture workspace head before
         run: |
-          echo "WORKSPACE_HEAD_BEFORE=$(grep WORKSPACE_HEAD_BEFORE ci/scripts/sync_workspace.py)" >> $GITHUB_ENV
+          echo "WORKSPACE_HEAD_BEFORE=$(grep WORKSPACE_HEAD_BEFORE ci/scripts/sync_workspace.log)" >> $GITHUB_ENV
 
       - name: Check changes before deploy
         run: |
@@ -305,7 +305,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests
+          python -m pip install --upgrade pip
+          pip install -r ci/requirements/requirements.txt
 
       - name: Check changes before deploy
         run: |

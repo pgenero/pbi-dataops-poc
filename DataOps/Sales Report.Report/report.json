@@ -15,25 +15,6 @@
         "name": "SharedResources",
         "type": 2
       }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "name": "Default_Comm_Forecast3329776244299355.png",
-            "path": "Default_Comm_Forecast3329776244299355.png",
-            "type": 100
-          },
-          {
-            "name": "Default_Comm_Forecast8017004702745508.png",
-            "path": "Default_Comm_Forecast8017004702745508.png",
-            "type": 100
-          }
-        ],
-        "name": "RegisteredResources",
-        "type": 1
-      }
     }
   ],
   "sections": [
@@ -47,13 +28,13 @@
       "ordinal": 5,
       "visualContainers": [
         {
-          "config": "{\"name\":\"6e99853f855d598da998\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1068.2115869017632,\"y\":0,\"z\":2001,\"width\":192.2418136020151,\"height\":61.6624685138539,\"tabOrder\":2001}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true},{\"queryRef\":\"Calendar.MONTH_NUM\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"YEAR\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"MONTH_NUM\"},\"Name\":\"Calendar.MONTH_NUM\",\"NativeReferenceName\":\"MONTH_NUM\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"header\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'DATES'\"}}}}}],\"items\":[{\"properties\":{\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0}}}}},\"italic\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"bold\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "config": "{\"name\":\"6e99853f855d598da998\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1068.2115869017632,\"y\":0,\"z\":3000,\"width\":192.2418136020151,\"height\":61.6624685138539,\"tabOrder\":3000}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true},{\"queryRef\":\"Calendar.MONTH_NUM\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"YEAR\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"MONTH_NUM\"},\"Name\":\"Calendar.MONTH_NUM\",\"NativeReferenceName\":\"MONTH_NUM\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"YEAR\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"header\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'DATES'\"}}}}}],\"items\":[{\"properties\":{\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0}}}}},\"italic\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"bold\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
           "filters": "[]",
           "height": 61.66,
           "width": 192.24,
           "x": 1068.21,
           "y": 0.00,
-          "z": 2001.00
+          "z": 3000.00
         },
         {
           "config": "{\"name\":\"b26f022fd2c1bc2901f6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":660.1511335012594,\"y\":102.46851385390427,\"z\":1000,\"width\":600.3022670025189,\"height\":582.1662468513854,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"hundredPercentStackedBarChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sum(SalesSupermarket.Value)\"},{\"queryRef\":\"Sum(SalesB2B.Value)\"}],\"Category\":[{\"queryRef\":\"dimCategory.Category\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s1\",\"Entity\":\"SalesSupermarket\",\"Type\":0},{\"Name\":\"s\",\"Entity\":\"SalesB2B\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimCategory\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s1\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesSupermarket.Value)\",\"NativeReferenceName\":\"Sales\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(SalesB2B.Value)\",\"NativeReferenceName\":\"B2B\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Category\"},\"Name\":\"dimCategory.Category\",\"NativeReferenceName\":\"Category\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s1\"}},\"Property\":\"Value\"}},\"Function\":0}}}]},\"columnProperties\":{\"Sum(SalesB2B.Value)\":{\"displayName\":\"B2B\"},\"Sum(SalesSupermarket.Value)\":{\"displayName\":\"Sales\"}},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Payment Method %'\"}}}}}]}}}",
@@ -125,7 +106,7 @@
       "width": 1280.00
     },
     {
-      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}],\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}},\"image\":{\"image\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"'Default_Comm_Forecast.png'\"}}},\"url\":{\"expr\":{\"ResourcePackageItem\":{\"PackageName\":\"RegisteredResources\",\"PackageType\":1,\"ItemName\":\"Default_Comm_Forecast8017004702745508.png\"}}},\"scaling\":{\"expr\":{\"Literal\":{\"Value\":\"'Fill'\"}}}}}}}]}}",
+      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}],\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}},\"image\":{\"image\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"''\"}}},\"url\":{\"expr\":{\"Literal\":{\"Value\":\"''\"}}}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.6}}}}}}}]}}",
       "displayName": "B2B",
       "displayOption": 1,
       "filters": "[]",
@@ -164,7 +145,7 @@
       "width": 1280.00
     },
     {
-      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"185L\"}}}}}],\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":8,\"Percent\":0.6}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"91D\"}}}}}]}}",
+      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"185L\"}}}}}],\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.6}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}}}}]}}",
       "displayName": "Sales Food",
       "displayOption": 1,
       "filters": "[]",
@@ -203,7 +184,7 @@
       "width": 1280.00
     },
     {
-      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}],\"background\":[{\"properties\":{\"image\":{\"image\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"'Default_Comm_Forecast.png'\"}}},\"url\":{\"expr\":{\"ResourcePackageItem\":{\"PackageName\":\"RegisteredResources\",\"PackageType\":1,\"ItemName\":\"Default_Comm_Forecast3329776244299355.png\"}}},\"scaling\":{\"expr\":{\"Literal\":{\"Value\":\"'Fit'\"}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}",
+      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"365L\"}}}}}],\"background\":[{\"properties\":{\"image\":{\"image\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"''\"}}},\"url\":{\"expr\":{\"Literal\":{\"Value\":\"''\"}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.6}}}}}}}]}}",
       "displayName": "Supermarket",
       "displayOption": 1,
       "filters": "[]",

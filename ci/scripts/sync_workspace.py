@@ -8,6 +8,10 @@ pipeline_id = os.getenv("PIPELINE_ID")
 workspace_id = os.getenv("WORKSPACE_ID")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
+branch = os.getenv("GITHUB_REF_NAME")
+actor = os.getenv("GITHUB_ACTOR")
+message = os.getenv("COMMIT_MESSAGE")
+
 
 headers = {
     "Authorization": f"Bearer {token}",
@@ -85,7 +89,7 @@ for change in changes:
     metadata = change.get("itemMetadata", {})
     identifier = metadata.get("itemIdentifier", {})
 
-    if "objectId" in identifier and change.get("workspaceChange") in ["Added", "Modified"]:
+    if "objectId" in identifier and change.get("remoteChange") in ["Added", "Modified"]:
         items_to_deploy.append({
             "sourceItemId": identifier["objectId"],
             "itemType": metadata.get("itemType")
@@ -94,6 +98,11 @@ for change in changes:
 print(f"Items to deploy: {items_to_deploy}")
 
 # 7. Deploy the artifacts stored in the list
+# 7.1. Create the commit note
+note = f"commit={remote_commit[:7]} | branch={branch} | by={actor} | msg={message}"
+print("Deployment note:", note)
+
+# 7.2. Run the deploy
 if not items_to_deploy:
     print("No items to deploy → skipping")
 else:
@@ -103,7 +112,7 @@ else:
         "sourceStageId": dev_stage_id,
         "targetStageId": test_stage_id,
         "items": items_to_deploy,
-        "note": "Selective deploy based on git diff"
+        "note": note
     }
 
     response = requests.post(url, headers=headers, json=payload)

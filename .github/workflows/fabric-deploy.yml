@@ -30,6 +30,8 @@ env:
   APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
   APP_SECRET_KEY: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
   GIT_CONNECTION_ID: ${{ vars.GIT_CONNECTION_ID }}
+  COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+  PR_TITLE: ${{ github.event.pull_request.title }}
 
 jobs:
 

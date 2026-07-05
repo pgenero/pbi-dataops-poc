@@ -6,6 +6,8 @@ import time
 token = os.getenv("TOKEN")
 pipeline_id = os.getenv("PIPELINE_ID")
 workspace_id = os.getenv("WORKSPACE_ID")
+dev_stage_id = os.getenv("DEV_STAGE_ID")
+test_stage_id = os.getenv("TEST_STAGE_ID")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
 branch = os.getenv("GITHUB_REF_NAME")

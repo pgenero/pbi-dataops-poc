@@ -1,0 +1,48 @@
+table ConsumerIndex
+	lineageTag: a52cc80c-fe5e-413e-85df-9b7f26a7f069
+
+	column indice_tiempo
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cdd33559-fec1-455a-bec8-5e3b3d3cbc9f
+		summarizeBy: none
+		sourceColumn: indice_tiempo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Attribute
+		dataType: string
+		lineageTag: 585d70e9-cccf-4cba-94cb-1bfaee1c5871
+		summarizeBy: none
+		sourceColumn: Attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ad708dde-8481-4bc9-a2f0-8699902d02cc
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ConsumerIndex = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/sspm/dataset/380/distribution/380.1/download/indice-confianza-consumidor-valores-anuales.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([icc_nacional] <> "")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"indice_tiempo", type date}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type", {"indice_tiempo"}, "Attribute", "Value"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"Value", type number}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

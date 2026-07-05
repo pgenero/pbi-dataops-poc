@@ -19,12 +19,12 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 147,
-            "y": 368
+            "x": 606,
+            "y": 424
           },
           "nodeIndex": "Calendar",
           "nodeLineageTag": "271321bb-14f0-4a89-8ac0-a75a4637f923",
@@ -32,12 +32,12 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 595,
-            "y": 388
+            "x": 311,
+            "y": 483
           },
           "nodeIndex": "dimCategory",
           "nodeLineageTag": "0b83c1d1-c1dd-4869-b2c6-7cdcefee3b3c",
@@ -45,7 +45,7 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
@@ -58,7 +58,20 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 867,
+            "y": 23
+          },
+          "nodeIndex": "ConsumerIndex",
+          "nodeLineageTag": "a52cc80c-fe5e-413e-85df-9b7f26a7f069",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 5
         }
       ],
       "name": "All tables",

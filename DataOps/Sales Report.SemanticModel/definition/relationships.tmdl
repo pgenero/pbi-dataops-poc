@@ -14,3 +14,7 @@ relationship e3548477-26d5-b9f2-173b-a4da4cd388bb
 	fromColumn: SalesB2B.Category
 	toColumn: dimCategory.Category
 
+relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
+	fromColumn: ConsumerIndex.indice_tiempo
+	toColumn: Calendar.Date
+

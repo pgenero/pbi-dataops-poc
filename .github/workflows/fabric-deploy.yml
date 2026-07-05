@@ -161,36 +161,9 @@ jobs:
 
           echo "HAS_CHANGES=$changes_count" >> $GITHUB_ENV
 
-      - name: Sync workspace
-        run: |
-          python ci/scripts/sync_workspace.py
-
       - name: Deploy DEV → TEST
         run: |
-          echo "Starting deployment..."
-
-          response=$(curl -i -s -X POST https://api.fabric.microsoft.com/v1/deploymentPipelines/$PIPELINE_ID/deploy \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{
-                  \"sourceStageId\": \"$DEV_STAGE_ID\",
-                  \"targetStageId\": \"$TEST_STAGE_ID\"
-                }")
-
-          OPERATION_ID=$(echo "$response" \
-            | grep -i "^deployment-id:" \
-            | head -n 1 \
-            | cut -d':' -f2 \
-            | tr -d '\r[:space:]')
-
-          echo "Captured OPERATION_ID: $OPERATION_ID"
-
-          if [ -z "$OPERATION_ID" ]; then
-            echo "No operationId returned → possible no changes or immediate deployment"
-          else
-            echo "Operation ID: $OPERATION_ID"
-            echo "OPERATION_ID=$OPERATION_ID" >> $GITHUB_ENV
-          fi
+          python ci/scripts/sync_workspace.py
 
       - name: Wait for deployment result
         run: |

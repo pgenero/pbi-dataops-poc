@@ -4,6 +4,7 @@ import requests
 import time
 
 token = os.getenv("TOKEN")
+pipeline_id = os.getenv("PIPELINE_ID")
 workspace_id = os.getenv("WORKSPACE_ID")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
@@ -30,9 +31,12 @@ status_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git
 status_response = requests.get(status_url, headers=headers)
 status_data = status_response.json()
 
-print("Workspace status:", status_data)
+print("Workspace status BEFORE sync:", status_data)
 
 workspace_head = status_data.get("workspaceHead") or ""
+
+# 2.1. Capture the status changes for the deploy operation
+changes = status_data.get("changes", [])
 
 # 3. Sync Workspace with Git Repository
 sync_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/updateFromGit"
@@ -73,3 +77,41 @@ with open(os.environ['GITHUB_ENV'], 'a') as f:
 
 if not workspace_head:
     raise Exception("WORKSPACE_HEAD_BEFORE not found")
+
+# 6. Prepare the list of artifacts for the deploy
+items_to_deploy = []
+
+for change in changes:
+    metadata = change.get("itemMetadata", {})
+    identifier = metadata.get("itemIdentifier", {})
+
+    if "objectId" in identifier and change.get("workspaceChange") in ["Added", "Modified"]:
+        items_to_deploy.append({
+            "sourceItemId": identifier["objectId"],
+            "itemType": metadata.get("itemType")
+        })
+
+print(f"Items to deploy: {items_to_deploy}")
+
+# 7. Deploy the artifacts stored in the list
+if not items_to_deploy:
+    print("No items to deploy → skipping")
+else:
+    url = f"https://api.fabric.microsoft.com/v1/deploymentPipelines/{pipeline_id}/deploy"
+
+    payload = {
+        "sourceStageId": dev_stage_id,
+        "targetStageId": test_stage_id,
+        "items": items_to_deploy,
+        "note": "Selective deploy based on git diff"
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+
+    deployment_id = response.headers.get("deployment-id")
+
+    print("Operation ID:", deployment_id)
+
+    if deployment_id:
+        with open(os.environ["GITHUB_ENV"], "a") as f:
+            f.write(f"OPERATION_ID={deployment_id}\n")

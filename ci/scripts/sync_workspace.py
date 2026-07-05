@@ -121,7 +121,7 @@ else:
 
     deployment_id = response.headers.get("deployment-id")
 
-    print("Operation ID:", deployment_id)
+    print(f"Operation ID:" {deployment_id})
 
     if deployment_id:
         with open(os.environ["GITHUB_ENV"], "a") as f:

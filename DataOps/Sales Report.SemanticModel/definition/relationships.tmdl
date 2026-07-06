@@ -18,3 +18,7 @@ relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
 	fromColumn: ConsumerIndex.indice_tiempo
 	toColumn: Calendar.Date
 
+relationship 295ddfca-e63c-1a7b-a0db-f876838b096a
+	fromColumn: ConsumerIndex.Attribute
+	toColumn: dimIndex.IndexCategory
+

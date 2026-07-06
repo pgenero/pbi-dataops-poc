@@ -1,0 +1,25 @@
+table dimIndex
+	lineageTag: 43fc33bb-2a98-4673-8ff7-62f5f9f9c49d
+
+	column IndexCategory
+		dataType: string
+		lineageTag: f76d69fb-afd4-4b90-a915-f9e504e38269
+		summarizeBy: none
+		sourceColumn: IndexCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimIndex = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromList(ConsumerIndex[Attribute]),
+				    #"Removed Duplicates" = Table.Distinct(Source),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Duplicates",{{"Column1", "IndexCategory"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

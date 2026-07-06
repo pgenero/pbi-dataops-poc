@@ -9,7 +9,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex"]
+annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Invoices"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -19,6 +19,7 @@ ref table dimCategory
 ref table SalesB2B
 ref table ConsumerIndex
 ref table dimIndex
+ref table Invoices
 
 ref cultureInfo en-US
 

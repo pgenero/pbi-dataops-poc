@@ -11,3 +11,16 @@ expression Names2529 =
 
 	annotation PBI_ResultType = Table
 
+expression Names3034 =
+		let
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.4/download/nombres-1930-1934.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 7c10ba2f-c460-4d29-8853-2794e11c4430
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

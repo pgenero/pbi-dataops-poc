@@ -84,20 +84,36 @@ with open(os.environ['GITHUB_ENV'], 'a') as f:
 if not workspace_head:
     raise Exception("WORKSPACE_HEAD_BEFORE not found")
 
-# 6. Prepare the list of artifacts for the deploy
+# 6. Items to deploy
+# 6.1 Load the item type mapping from file
+with open("ci/config/item_type_mapping.json") as f:
+    ITEM_TYPE_MAP = json.load(f)
+
+# 6.2 Prepare items list
 items_to_deploy = []
 
 for change in changes:
     metadata = change.get("itemMetadata", {})
     identifier = metadata.get("itemIdentifier", {})
 
-    if "objectId" in identifier and change.get("remoteChange") in ["Added", "Modified"]:
-        items_to_deploy.append({
-            "sourceItemId": identifier["objectId"],
-            "itemType": metadata.get("itemType")
-        })
+    raw_type = metadata.get("itemType")
 
-print(f"Items to deploy: {items_to_deploy}")
+    if "objectId" in identifier and change.get("remoteChange") in ["Added", "Modified"]:
+        mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
+        item = {
+            "sourceItemId": identifier["objectId"],
+            "itemType": mapped_type
+        }
+        items_to_deploy.append(item)
+
+print("Items to deploy", items_to_deploy)
+
+# Delte Debug ❌
+for change in changes:
+    print("RAW CHANGE:", change)
+
+print(f"RAW TYPE: {raw_type}")
+print(f"MAPPED TYPE: {mapped_type}")
 
 # 7. Deploy the artifacts stored in the list
 # 7.1. Create the commit note
@@ -119,9 +135,20 @@ else:
 
     response = requests.post(url, headers=headers, json=payload)
 
-    deployment_id = response.headers.get("deployment-id")
+    deployment_id = None
 
+    for key, value in response.headers.items():
+        if key.lower() == "deployment-id":
+            deployment_id = value.strip()
+            break
+
+    print("All headers:", dict(response.headers))
     print("Operation ID:", deployment_id)
+
+    # Delete - debug only ❌
+    print(response.status_code)
+    print(response.headers)
+    print("FINAL PAYLOAD:", payload)
 
     if deployment_id:
         with open(os.environ["GITHUB_ENV"], "a") as f:

@@ -53,53 +53,29 @@ jobs:
 
           echo "$CHANGED_FILES"
 
+          TARGETS=""
+
           if echo "$CHANGED_FILES" | grep -q "^DataOps/"; then
-            echo "TARGET=sales" >> $GITHUB_ENV
+            TARGETS="$TARGETS sales"
+          fi
 
-          elif echo "$CHANGED_FILES" | grep -q "^ws-finance/"; then
-            echo "TARGET=finance" >> $GITHUB_ENV
+          if echo "$CHANGED_FILES" | grep -q "^ws-finance/"; then
+            TARGETS="$TARGETS finance"
+          fi
 
-          elif echo "$CHANGED_FILES" | grep -q "^ws-deploy-poc/"; then
-            echo "TARGET=operations" >> $GITHUB_ENV
+          if echo "$CHANGED_FILES" | grep -q "^ws-deploy-poc/"; then
+            TARGETS="$TARGETS operations"
+          fi
 
-          else
-            echo "SKIPPING PIPELINE - No relevant folder changes"
+          # clean spaces
+          TARGETS=$(echo "$TARGETS" | xargs)
+
+          if [ -z "$TARGETS" ]; then
+            echo "SKIPPING PIPELINE → No relevant changes"
             echo "SKIP_PIPELINE=true" >> $GITHUB_ENV
-          fi
-
-      - name: Set pipeline configuration
-        if: env.SKIP_PIPELINE != 'true'
-        run: |
-          if [ -n "${{ github.event.inputs.target }}" ]; then
-            TARGET="${{ github.event.inputs.target }}"
-          elif [ -n "$TARGET" ]; then
-            TARGET="$TARGET"
           else
-            TARGET="finance"
-          fi
-
-          echo "Selected pipeline: $TARGET"
-
-          if [ "$TARGET" == "finance" ]; then
-            echo "PIPELINE_ID=${{ vars.FINANCE_PIPELINE_ID }}" >> $GITHUB_ENV
-            echo "DEV_STAGE_ID=${{ vars.FINANCE_DEV_STAGE_ID }}" >> $GITHUB_ENV
-            echo "TEST_STAGE_ID=${{ vars.FINANCE_TEST_STAGE_ID }}" >> $GITHUB_ENV
-            echo "PROD_STAGE_ID=${{ vars.FINANCE_PROD_STAGE_ID }}" >> $GITHUB_ENV
-            echo "WORKSPACE_ID=${{ vars.FINANCE_WORKSPACE_ID }}" >> $GITHUB_ENV
-
-          elif [ "$TARGET" == "sales" ]; then
-            echo "PIPELINE_ID=${{ vars.SALES_PIPELINE_ID }}" >> $GITHUB_ENV
-            echo "DEV_STAGE_ID=${{ vars.SALES_DEV_STAGE_ID }}" >> $GITHUB_ENV
-            echo "TEST_STAGE_ID=${{ vars.SALES_TEST_STAGE_ID }}" >> $GITHUB_ENV
-            echo "PROD_STAGE_ID=${{ vars.SALES_PROD_STAGE_ID }}" >> $GITHUB_ENV
-            echo "WORKSPACE_ID=${{ vars.SALES_WORKSPACE_ID }}" >> $GITHUB_ENV
-
-          elif [ "$TARGET" == "operations" ]; then
-            echo "PIPELINE_ID=${{ vars.OPERATIONS_PIPELINE_ID }}" >> $GITHUB_ENV
-            echo "DEV_STAGE_ID=${{ vars.OPERATIONS_DEV_STAGE_ID }}" >> $GITHUB_ENV
-            echo "TEST_STAGE_ID=${{ vars.OPERATIONS_TEST_STAGE_ID }}" >> $GITHUB_ENV
-            echo "PROD_STAGE_ID=${{ vars.OPERATIONS_PROD_STAGE_ID }}" >> $GITHUB_ENV
-            echo "WORKSPACE_ID=${{ vars.OPERATIONS_WORKSPACE_ID }}" >> $GITHUB_ENV
+            echo "Detected targets: $TARGETS"
+            echo "TARGETS=$TARGETS" >> $GITHUB_ENV
           fi
 
       - name: Get Fabric token

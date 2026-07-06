@@ -33,9 +33,10 @@ table Names
 				let
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}}),
+				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529})
 				in
-				    #"Changed Type"
+				    #"Appended Query"
 
 	annotation PBI_NavigationStepName = Navigation
 

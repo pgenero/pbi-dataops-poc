@@ -38,9 +38,13 @@ table ConsumerIndex
 				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([icc_nacional] <> "")),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"indice_tiempo", type date}}),
 				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type", {"indice_tiempo"}, "Attribute", "Value"),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"Value", type number}})
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"Value", type number}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type1","_"," ",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","desagregacion regiones ","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","desagregacion subindices ","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value2",{{"Attribute", Text.Upper, type text}})
 				in
-				    #"Changed Type1"
+				    #"Uppercased Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

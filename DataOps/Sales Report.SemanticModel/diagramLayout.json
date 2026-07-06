@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 101,
         "y": 0
       },
       "nodes": [
@@ -72,6 +72,32 @@
             "width": 234
           },
           "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1001,
+            "y": 539
+          },
+          "nodeIndex": "dimIndex",
+          "nodeLineageTag": "43fc33bb-2a98-4673-8ff7-62f5f9f9c49d",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1186,
+            "y": 14
+          },
+          "nodeIndex": "Invoices",
+          "nodeLineageTag": "770033d9-e9c6-4dfc-9491-d42eea7ffe26",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",

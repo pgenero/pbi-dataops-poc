@@ -22,3 +22,7 @@ relationship 295ddfca-e63c-1a7b-a0db-f876838b096a
 	fromColumn: ConsumerIndex.Attribute
 	toColumn: dimIndex.IndexCategory
 
+relationship 89027c89-7138-c672-57cf-1ba9f975cf12
+	fromColumn: Invoices.mes-anio
+	toColumn: Calendar.Date
+

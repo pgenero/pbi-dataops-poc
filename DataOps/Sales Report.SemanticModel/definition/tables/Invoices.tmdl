@@ -1,0 +1,59 @@
+table Invoices
+	lineageTag: 770033d9-e9c6-4dfc-9491-d42eea7ffe26
+
+	column mes-anio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 47473424-03ea-40b1-a15f-e25e89b48c7e
+		summarizeBy: none
+		sourceColumn: mes-anio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column provincia
+		dataType: string
+		lineageTag: 46d6e89c-de41-48ff-ba9c-55679ce8e56e
+		summarizeBy: none
+		sourceColumn: provincia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'rubro A12'
+		dataType: string
+		lineageTag: 2515dcc1-3e34-4c86-9d7e-a450b41b98bb
+		summarizeBy: none
+		sourceColumn: rubro A12
+
+		annotation SummarizationSetBy = Automatic
+
+	column Facturacion
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b9aac2c7-08c0-4118-b7df-ae29f54ad494
+		summarizeBy: sum
+		sourceColumn: Facturacion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Invoices = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://datos.produccion.gob.ar/dataset/f3de9daa-f899-4132-9b42-5d245249bba2/resource/644bd06d-b7d0-4d63-a00b-88561dc6079c/download/a12-facturacion3.xlsx"), null, true),
+				    Facturacion_Sheet = Source{[Item="Facturacion",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Facturacion_Sheet, [PromoteAllScalars=true]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{"anio", "mes"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"Facturacion", Currency.Type}, {"rubro A12", type text}, {"provincia", type text}, {"mes-anio", type date}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"provincia", Text.Trim, type text}}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Trimmed Text",{{"provincia", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

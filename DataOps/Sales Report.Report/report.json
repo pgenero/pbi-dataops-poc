@@ -298,6 +298,36 @@
         }
       ],
       "width": 1280.00
+    },
+    {
+      "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"413L\"}}}}}],\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.6}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}}}}]}}",
+      "displayName": "Invoices",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "d64c858d78c0ff7b7ec3",
+      "ordinal": 7,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"52d6d5152a286ffa0bdc\",\"layouts\":[{\"id\":0,\"position\":{\"x\":29.011786038077968,\"y\":95.15865820489574,\"z\":0,\"width\":1231.260199456029,\"height\":603.4451495920217,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"Calendar.YEAR\",\"active\":true},{\"queryRef\":\"Calendar.MONTH_NUM\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(Invoices.Facturacion)\"}],\"Series\":[{\"queryRef\":\"Invoices.rubro A12\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c1\",\"Entity\":\"Calendar\",\"Type\":0},{\"Name\":\"i\",\"Entity\":\"Invoices\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c1\"}},\"Property\":\"YEAR\"},\"Name\":\"Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"i\"}},\"Property\":\"Facturacion\"}},\"Function\":0},\"Name\":\"Sum(Invoices.Facturacion)\",\"NativeReferenceName\":\"Sum of Facturacion\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c1\"}},\"Property\":\"MONTH_NUM\"},\"Name\":\"Calendar.MONTH_NUM\",\"NativeReferenceName\":\"MONTH_NUM\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"i\"}},\"Property\":\"rubro A12\"},\"Name\":\"Invoices.rubro A12\",\"NativeReferenceName\":\"rubro A12\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c1\"}},\"Property\":\"YEAR\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"axisType\":{\"expr\":{\"Literal\":{\"Value\":\"'Categorical'\"}}}}}],\"lineStyles\":[{\"properties\":{\"lineStyle\":{\"expr\":{\"Literal\":{\"Value\":\"'dashed'\"}}},\"showMarker\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}},\"selector\":{\"data\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"ConsumerIndex\"}},\"Property\":\"Attribute\"}},\"Right\":{\"Literal\":{\"Value\":\"'icc_nacional'\"}}}}}]}},{\"properties\":{\"showMarker\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.4}}}}}},\"selector\":{\"data\":[{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"ConsumerIndex\"}},\"Property\":\"Attribute\"}},\"Right\":{\"Literal\":{\"Value\":\"'icc_nacional'\"}}}}}]}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Consumer Index'\"}}},\"titleWrap\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"50D\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}},\"width\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}}",
+          "filters": "[{\"name\":\"e4d52cd55a5546880808\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Invoices\"}},\"Property\":\"rubro A12\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"i\",\"Entity\":\"Invoices\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"i\"}},\"Property\":\"rubro A12\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'Electrodomésticos'\"}}],[{\"Literal\":{\"Value\":\"'Indumentaria'\"}}],[{\"Literal\":{\"Value\":\"'Alimentos, bebidas y productos de higiene personal y limpieza'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
+          "height": 603.45,
+          "width": 1231.26,
+          "x": 29.01,
+          "y": 95.16,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"896a11f44b23b39e2b58\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":1280.4030226700252,\"height\":61.6624685138539,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Invoices\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontFamily\":\"Arial Black\",\"fontSize\":\"20pt\",\"color\":\"#ffffff\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#0A4B4F'\"}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"width\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}}}}],\"dropShadow\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"title\":[{\"properties\":{\"titleWrap\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"general\":[{\"properties\":{\"keepLayerOrder\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}],\"visualHeader\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 61.66,
+          "width": 1280.40,
+          "x": 0.00,
+          "y": 0.00,
+          "z": 1000.00
+        }
+      ],
+      "width": 1280.00
     }
   ]
 }

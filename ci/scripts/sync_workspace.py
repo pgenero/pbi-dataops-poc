@@ -20,6 +20,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
+results = []
 
 for target in targets:
     print(f"\n=== Processing target: {target} ===\n")

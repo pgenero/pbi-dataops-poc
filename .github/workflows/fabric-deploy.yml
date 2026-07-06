@@ -33,6 +33,22 @@ env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
   PR_TITLE: ${{ github.event.pull_request.title }}
 
+  SALES_PIPELINE_ID: ${{ vars.SALES_PIPELINE_ID }}
+  SALES_WORKSPACE_ID: ${{ vars.SALES_WORKSPACE_ID }}
+  SALES_DEV_STAGE_ID: ${{ vars.SALES_DEV_STAGE_ID }}
+  SALES_TEST_STAGE_ID: ${{ vars.SALES_TEST_STAGE_ID }}
+
+  FINANCE_PIPELINE_ID: ${{ vars.FINANCE_PIPELINE_ID }}
+  FINANCE_WORKSPACE_ID: ${{ vars.FINANCE_WORKSPACE_ID }}
+  FINANCE_DEV_STAGE_ID: ${{ vars.FINANCE_DEV_STAGE_ID }}
+  FINANCE_TEST_STAGE_ID: ${{ vars.FINANCE_TEST_STAGE_ID }}
+
+  OPERATIONS_PIPELINE_ID: ${{ vars.OPERATIONS_PIPELINE_ID }}
+  OPERATIONS_WORKSPACE_ID: ${{ vars.OPERATIONS_WORKSPACE_ID }}
+  OPERATIONS_DEV_STAGE_ID: ${{ vars.OPERATIONS_DEV_STAGE_ID }}
+  OPERATIONS_TEST_STAGE_ID: ${{ vars.OPERATIONS_TEST_STAGE_ID }}
+
+
 jobs:
 
   deploy_to_test:
@@ -104,45 +120,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r ci/requirements/requirements.txt
-
-      - name: Check status before deploy
-        if: env.SKIP_PIPELINE != 'true'
-        run: |
-          response=$(curl -s -X GET https://api.fabric.microsoft.com/v1/workspaces/$WORKSPACE_ID/git/status \
-            -H "Authorization: Bearer $TOKEN")
-
-          echo "Raw response:"
-          echo "$response"
-
-          changes_count=$(echo "$response" | jq '.changes | length')
-
-          if [ "$changes_count" -eq 0 ]; then
-            echo "No changes detected"
-          else
-            echo "Changes detected:"
-
-            echo "$response" | jq -r '
-              .changes[] |
-              [
-                .itemMetadata.itemIdentifier.objectId,
-                .itemMetadata.itemType,
-                .itemMetadata.displayName,
-                .workspaceChange,
-                .remoteChange,
-                .conflictType
-              ] | @tsv
-            ' | while IFS=$'\t' read -r objectId itemType displayName conflictType; do
-              echo "--------------------------------------"
-              echo "Object ID: $objectId"
-              echo "Type: $itemType"
-              echo "Name: $displayName"
-              echo "Workspace Change Type: $workspaceChange"
-              echo "Remote Change Type: $remoteChange"
-              echo "Conflict: $conflictType"
-            done
-          fi
-
-          echo "HAS_CHANGES=$changes_count" >> $GITHUB_ENV
 
       - name: Deploy DEV → TEST
         if: env.SKIP_PIPELINE != 'true'

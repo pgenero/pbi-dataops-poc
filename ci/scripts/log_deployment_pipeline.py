@@ -33,7 +33,7 @@ def wait_for_completion(pl, pipeline_id, operation_id, max_retries=15, wait_seco
 
         print(f"Attempt {i+1}: {status}")
 
-        if status not in ["NotStarted", "InProgress"]:
+        if status not in ["NotStarted", "InProgress", "Executing"]:
             print("✅ Deployment finished")
             return data
 

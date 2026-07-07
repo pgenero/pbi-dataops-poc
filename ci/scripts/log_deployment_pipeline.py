@@ -96,6 +96,8 @@ for target in targets:
 
             pipelineOperationData.append(details)
 
+        df = pd.DataFrame(pipelineOperationData)
+        print(df.to_string())
 
     except Exception as e:
         print(f"❌ Error logging {target}: {str(e)}")

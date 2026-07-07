@@ -7,9 +7,13 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
+queryGroup Names_Queries
+
+	annotation PBI_QueryGroupOrder = 0
+
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Invoices","Names","Names2529","Names3034"]
+annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Invoices","Names","Names2529","Names3034","Names3539"]
 
 annotation PBI_ProTooling = ["DevMode"]
 

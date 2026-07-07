@@ -6,6 +6,7 @@ expression Names2529 =
 		in
 		    #"Changed Type"
 	lineageTag: f048f296-b503-4000-8709-ac2237508c71
+	queryGroup: Names_Queries
 
 	annotation PBI_NavigationStepName = Navigation
 
@@ -19,6 +20,21 @@ expression Names3034 =
 		in
 		    #"Changed Type"
 	lineageTag: 7c10ba2f-c460-4d29-8853-2794e11c4430
+	queryGroup: Names_Queries
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Names3539 =
+		let
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.5/download/nombres-1935-1939.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 48197ab5-cb87-4690-b8fa-475b3e32dd2f
+	queryGroup: Names_Queries
 
 	annotation PBI_NavigationStepName = Navigation
 

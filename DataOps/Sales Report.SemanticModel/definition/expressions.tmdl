@@ -82,3 +82,17 @@ expression Names5054 =
 
 	annotation PBI_ResultType = Table
 
+expression Names5559 =
+		let
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.9/download/nombres-1955-1959.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 7f23c5dc-b60d-416e-9d38-894dd40c443e
+	queryGroup: Names_Queries
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

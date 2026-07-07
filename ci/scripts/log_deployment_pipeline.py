@@ -65,7 +65,15 @@ for target in targets:
 
         print(f"Operation ID: {operation_id}")
 
-        # 2.2 WAIT the end of the Power BI pipeline
+        # 2.2 Map pipeline from target
+        if target == "sales":
+            pipeline_id = os.getenv("SALES_PIPELINE_ID")
+        elif target == "finance":
+            pipeline_id = os.getenv("FINANCE_PIPELINE_ID")
+        elif target == "operations":
+            pipeline_id = os.getenv("OPERATIONS_PIPELINE_ID")
+
+        # 2.3 WAIT the end of the Power BI pipeline
         df = wait_for_completion(pl, pipeline_id, operation_id)
 
         log_entry = {

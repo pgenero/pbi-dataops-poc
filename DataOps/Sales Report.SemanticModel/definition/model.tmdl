@@ -13,7 +13,7 @@ queryGroup Names_Queries
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Invoices","Names","Names2529","Names3034","Names3539","Names4044","Names4549"]
+annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Invoices","Names","Names2529","Names3034","Names3539","Names4044","Names4549","Names5054"]
 
 annotation PBI_ProTooling = ["DevMode"]
 

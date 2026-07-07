@@ -1,6 +1,10 @@
 table Names
 	lineageTag: a46173ad-6e54-44ea-8fd1-f75999ad8322
 
+	measure 'Names Quantity' = SUM(Names[cantidad])
+		formatString: #,0
+		lineageTag: 9518bb9c-aecc-4001-9df1-13f95134f6b6
+
 	column nombre
 		dataType: string
 		lineageTag: f72465dd-df41-4667-a3a6-cd7426ea6441
@@ -41,7 +45,7 @@ table Names
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}}),
-				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034, Names3539})
+				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034, Names3539, Names4044})
 				in
 				    #"Appended Query"
 

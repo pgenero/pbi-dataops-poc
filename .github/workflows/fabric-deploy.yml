@@ -126,17 +126,9 @@ jobs:
         run: |
           python ci/scripts/sync_workspace.py
 
-      - name: Deployment Summary
-        if: env.SKIP_PIPELINE != 'true'
-        run: |
-          echo "### Dev → Test Deployment" >> $GITHUB_STEP_SUMMARY
-          echo "- Pipeline: $PIPELINE_ID" >> $GITHUB_STEP_SUMMARY
-          echo "- Operation: $OPERATION_ID" >> $GITHUB_STEP_SUMMARY
-
       - name: Log deployment (SOX)
         if: env.SKIP_PIPELINE != 'true'
         run: |
-          python ci/scripts/log_sync_git.py
           python ci/scripts/log_deployment_pipeline.py
 
   deploy_to_prod:

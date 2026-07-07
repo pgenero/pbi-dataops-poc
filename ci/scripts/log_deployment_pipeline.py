@@ -75,6 +75,31 @@ for target in targets:
 
         pipelineOperationData = []
 
+        # 2.4 Log Level 1 - Operations metadata
+        result = {
+            "operationId": operation_id,
+            "target": target,
+            "commit": remote_commit,
+            "github_url": github_run_url,
+            "items": []
+        }
+
+        # 2.5 Log Level 2 - Oerations details
+        for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
+            source_target = step.get("sourceAndTarget", {})
+
+            item = {
+                "itemType": source_target.get("type"),
+                "targetItemId": source_target.get("target"),
+                "targetItemName": source_target.get("targetDisplayName"),
+            }
+
+            result["items"].append(item)
+
+        # 2.6 Final Log Output
+        print(result)
+
+        # DELETE - Debug only ❌
         for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
             source_target = step.get("sourceAndTarget", {})
 
@@ -96,6 +121,7 @@ for target in targets:
 
             pipelineOperationData.append(details)
 
+        # DEBUG Remove ❌
         df = pd.DataFrame(pipelineOperationData)
         print(df.to_string())
 

@@ -27,6 +27,13 @@ table Names
 
 		annotation SummarizationSetBy = Automatic
 
+	column Decade = FLOOR([anio], 10)
+		formatString: 0
+		lineageTag: 38ef3c71-a43e-4fc5-b96f-a04b1a66bee3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Names = m
 		mode: import
 		source =
@@ -34,7 +41,7 @@ table Names
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}}),
-				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034})
+				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034, Names3539})
 				in
 				    #"Appended Query"
 

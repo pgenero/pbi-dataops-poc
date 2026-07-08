@@ -131,6 +131,11 @@ jobs:
         run: |
           python ci/scripts/log_deployment_pipeline.py
 
+      - name: Save deployment log in Fabric
+        if: env.SKIP_PIPELINE != 'true'
+        run: |
+          python ci/scripts/save_log_fabric.py
+
   deploy_to_prod:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest

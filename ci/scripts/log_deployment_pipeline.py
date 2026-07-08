@@ -99,6 +99,12 @@ for target in targets:
         # 2.6 Final Log Output
         print(result)
 
+        # 2.7 Save the json output
+        with open("deployment_log.json", "w") as f:
+            json.dump(result, f)
+
+        print("JSON stored")
+
         # DELETE - Debug only ❌
         for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
             source_target = step.get("sourceAndTarget", {})

@@ -5,6 +5,17 @@ table Names
 		formatString: #,0
 		lineageTag: 9518bb9c-aecc-4001-9df1-13f95134f6b6
 
+	measure 'Quantity Average' = ```
+			
+			MAXX( 
+			    VALUES( Names[Decade] ),
+			    Names[Names Quantity]
+			)
+			```
+		lineageTag: a987ce14-a78f-4b47-b0a6-c3ff00d569e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column nombre
 		dataType: string
 		lineageTag: f72465dd-df41-4667-a3a6-cd7426ea6441
@@ -45,7 +56,7 @@ table Names
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}}),
-				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034, Names3539, Names4044, Names4549, Names5054, Names5559, Names6064})
+				    #"Appended Query" = Table.Combine({#"Changed Type", Names2529, Names3034, Names3539, Names4044, Names4549, Names5054, Names5559, Names6064, Names6569})
 				in
 				    #"Appended Query"
 

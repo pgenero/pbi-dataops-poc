@@ -1,0 +1,61 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 186
+          },
+          "nodeIndex": "dim_geo",
+          "nodeLineageTag": "789e2cdf-85e3-4ac9-997a-a39f1a82188d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 381,
+            "y": 63
+          },
+          "nodeIndex": "fact_mani",
+          "nodeLineageTag": "b2e43d96-0c36-480a-88f0-7f3e2a5d3064",
+          "size": {
+            "height": 377,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 755,
+            "y": 205.5
+          },
+          "nodeIndex": "calendar",
+          "nodeLineageTag": "877c213b-b997-4a3c-b8e7-5e5983966166",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

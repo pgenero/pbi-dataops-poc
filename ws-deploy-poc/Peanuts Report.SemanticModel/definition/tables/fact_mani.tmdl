@@ -1,0 +1,68 @@
+table fact_mani
+	lineageTag: b2e43d96-0c36-480a-88f0-7f3e2a5d3064
+
+	column campania
+		dataType: string
+		lineageTag: 0d67c9b5-d0a5-4f2c-8848-11fe70e675ac
+		summarizeBy: none
+		sourceColumn: campania
+
+		annotation SummarizationSetBy = Automatic
+
+	column departamento_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 61500e4f-c0cc-492c-812a-5bdeca4a6b9f
+		summarizeBy: none
+		sourceColumn: departamento_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0ef826da-d9cf-46c6-874d-ad4c8a6618f4
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 4027fe71-7862-45d5-8844-dc1f81f6472c
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attribute
+		dataType: string
+		lineageTag: b3a09802-2644-490c-a48e-b7461ceee88b
+		summarizeBy: none
+		sourceColumn: Attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_mani = m
+		mode: import
+		source =
+				let
+				    Source = raw_mani_data,
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"provincia_id", Int64.Type}, {"departamento_id", Int64.Type}, {"superficie_sembrada_ha", Int64.Type}, {"superficie_cosechada_ha", Int64.Type}, {"produccion_tm", Int64.Type}, {"rendimiento_kgxha", Int64.Type}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "departamento_id_fix", each if [departamento_id] = null then (([provincia_id]*1000)+999) else [departamento_id]),
+				    #"Added Custom" = Table.AddColumn(#"Added Conditional Column", "date", each [anio] & "-01-01"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"date", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type2",{"provincia", "provincia_id", "departamento", "departamento_id", "cultivo", "anio"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"departamento_id_fix", "departamento_id"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"departamento_id", Int64.Type}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type1", {"campania", "departamento_id", "date"}, "Attribute", "Value")
+				in
+				    #"Unpivoted Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

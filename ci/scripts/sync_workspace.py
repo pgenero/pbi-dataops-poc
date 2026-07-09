@@ -195,6 +195,7 @@ for target in targets:
                             "itemType": ws_item["type"]
                         }
                         items_to_deploy.append(item)
+                        found = True
                         break
                 # Debug Output
                 if not found:

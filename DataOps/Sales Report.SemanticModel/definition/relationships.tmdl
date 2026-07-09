@@ -1,11 +1,3 @@
-relationship 80d0c3db-fa92-12fc-d8bc-5db3d5f86bfc
-	fromColumn: SalesSupermarket.indice_tiempo
-	toColumn: Calendar.Date
-
-relationship 5e30847e-2235-cda1-e517-557b5dc56540
-	fromColumn: SalesB2B.indice_tiempo
-	toColumn: Calendar.Date
-
 relationship 02fdc34e-ea92-751a-444e-5869cd4f1f0a
 	fromColumn: SalesSupermarket.Category
 	toColumn: dimCategory.Category
@@ -14,15 +6,28 @@ relationship e3548477-26d5-b9f2-173b-a4da4cd388bb
 	fromColumn: SalesB2B.Category
 	toColumn: dimCategory.Category
 
-relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
-	fromColumn: ConsumerIndex.indice_tiempo
-	toColumn: Calendar.Date
-
 relationship 295ddfca-e63c-1a7b-a0db-f876838b096a
 	fromColumn: ConsumerIndex.Attribute
 	toColumn: dimIndex.IndexCategory
 
+relationship 80d0c3db-fa92-12fc-d8bc-5db3d5f86bfc
+	fromColumn: SalesSupermarket.indice_tiempo
+	toColumn: Calendar.Date
+
+relationship 5e30847e-2235-cda1-e517-557b5dc56540
+	fromColumn: SalesB2B.indice_tiempo
+	toColumn: Calendar.Date
+
+relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
+	fromColumn: ConsumerIndex.indice_tiempo
+	toColumn: Calendar.Date
+
 relationship 89027c89-7138-c672-57cf-1ba9f975cf12
 	fromColumn: Invoices.mes-anio
 	toColumn: Calendar.Date
+
+relationship 4c96e5a2-2eb9-4643-58c1-0515caf86e6a
+	toCardinality: many
+	fromColumn: Names.anio
+	toColumn: Calendar.YEAR
 

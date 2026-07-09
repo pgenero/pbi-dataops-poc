@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 429,
+        "x": 0,
         "y": 0
       },
       "nodes": [
@@ -23,8 +23,8 @@
         },
         {
           "location": {
-            "x": 606,
-            "y": 424
+            "x": 469.29468471782718,
+            "y": 597.34797711038414
           },
           "nodeIndex": "Calendar",
           "nodeLineageTag": "271321bb-14f0-4a89-8ac0-a75a4637f923",
@@ -36,8 +36,8 @@
         },
         {
           "location": {
-            "x": 311,
-            "y": 483
+            "x": 33.361369993937615,
+            "y": 557.69465680366147
           },
           "nodeIndex": "dimCategory",
           "nodeLineageTag": "0b83c1d1-c1dd-4869-b2c6-7cdcefee3b3c",
@@ -75,8 +75,8 @@
         },
         {
           "location": {
-            "x": 1001,
-            "y": 539
+            "x": 733.22670202461,
+            "y": 729.2599748772509
           },
           "nodeIndex": "dimIndex",
           "nodeLineageTag": "43fc33bb-2a98-4673-8ff7-62f5f9f9c49d",
@@ -114,7 +114,7 @@
         }
       ],
       "name": "All tables",
-      "zoomValue": 100,
+      "zoomValue": 70.95554390096882,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

@@ -1,9 +1,11 @@
-
 import os
 import requests
 import time
 import json
 
+# ========================
+# 1. SETUP - ENV VARIABLES
+# ========================
 token = os.getenv("TOKEN")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
@@ -22,11 +24,38 @@ headers = {
 
 results = []
 
+# =========================
+# 2. BUILD FUNCTION
+# =========================
+# --- 2.1 Get Items from a given Workspace ---
+def get_items(workspace_id, token):
+  url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/items"
+
+  headers = {
+      "Authorization": f"Bearer {token}",
+      "Content-Type": "application/json",
+  }
+  # --- Execute the HTTP request ---
+  response = requests.get(url, headers=headers)
+
+  if response.status_code != 200:
+      print(f"❌ Error fetching items: {response.status_code} - {response.text}")
+      return []
+
+  data = response.json()
+  items = data.get("value", [])
+
+  print(f"✅ Items retrieved: {len(items)}")
+  return items
+
+# =========================
+# 3. MAIN LOOP - PER TARGET
+# =========================
 for target in targets:
     print(f"\n=== Processing target: {target} ===\n")
 
     try:
-        # map target → pipeline/workspace
+        # --- 3.1 Target-Specific Configuration Mapping ---
         if target == "sales":
             pipeline_id = os.getenv("SALES_PIPELINE_ID")
             workspace_id = os.getenv("SALES_WORKSPACE_ID")
@@ -43,7 +72,7 @@ for target in targets:
             dev_stage_id = os.getenv("OPERATIONS_DEV_STAGE_ID")
             test_stage_id = os.getenv("OPERATIONS_TEST_STAGE_ID")
 
-        # dEBUG dELETE ❌
+        # Debug Delete ❌
         print(f"""
         TARGET: {target}
         PIPELINE: {pipeline_id}
@@ -52,7 +81,8 @@ for target in targets:
         TEST_STAGE: {test_stage_id}
         """)
 
-        # 1. Configure Credentials
+        #-------------------------------------------
+        # --- 3.2 Git Credentials Configuration  ---
         cred_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/myGitCredentials"
 
         cred_payload = {
@@ -63,7 +93,8 @@ for target in targets:
         cred_response = requests.patch(cred_url, headers=headers, json=cred_payload)
         print("Git credentials configured:", cred_response.text)
 
-        # 2. Get Status
+        # -----------------------------------------------------------
+        # --- 3.3 Get Workspace Git status before Synchronization ---
         status_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/status"
 
         status_response = requests.get(status_url, headers=headers)
@@ -73,10 +104,11 @@ for target in targets:
 
         workspace_head = status_data.get("workspaceHead") or ""
 
-        # 2.1. Capture the status changes for the deploy operation
+        # --- Capture the status changes for potential deploy operation later ---
         changes = status_data.get("changes", [])
 
-        # 3. Sync Workspace with Git Repository
+        # ----------------------------------------------
+        # --- 3.4 Sync Workspace with Git Repository ---
         sync_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/updateFromGit"
 
         payload = {
@@ -91,7 +123,8 @@ for target in targets:
 
         print("Sync response:", sync_response.text)
 
-        # 4. Wait sync to complete
+        # ---------------------------------
+        # --- 3.5 Wait Sync to complete ---
         for i in range(10):
             status_check = requests.get(status_url, headers=headers).json()
 
@@ -107,7 +140,8 @@ for target in targets:
 
             time.sleep(5)
 
-        # 5. Workspace commit head before sync
+        # ---------------------------------------------------
+        # --- 3.6 Store Workspace Commit Head before sync ---
         print(f"WORKSPACE_HEAD_BEFORE={workspace_head}")
 
         with open(os.environ['GITHUB_ENV'], 'a') as f:
@@ -116,44 +150,75 @@ for target in targets:
         if not workspace_head:
             raise Exception("WORKSPACE_HEAD_BEFORE not found")
 
-        # 6. Items to deploy
-        # 6.1 Load the item type mapping from file
+        # ---------------------------------------------------
+        # --- 3.7. Build the list of Items for Deployment ---
+        # Load the item type mapping from file
         with open("ci/config/item_type_mapping.json") as f:
             ITEM_TYPE_MAP = json.load(f)
 
-        # 6.2 Prepare items list
+        # Prepare items list
         items_to_deploy = []
 
+        # Request the workspace existing items to use in case of Added objects from the Git repo
+        workspace_items = get_items(workspace_id, token)
+
+        # Get the items from the sync git output or for the get_items function
         for change in changes:
             metadata = change.get("itemMetadata", {})
             identifier = metadata.get("itemIdentifier", {})
 
             raw_type = metadata.get("itemType")
+            mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
 
-            if "objectId" in identifier and change.get("remoteChange") in ["Added", "Modified"]:
-                mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
+            remote_change = change.get("remoteChange")
+            display_name = metadata.get("displayName")
+
+            # Scenario 1 → Workspace existing items Modified in Git repo 
+            # Items source → git output ("changes" object)
+            if remote_change == "Modified" and "objectId" in identifier:
                 item = {
                     "sourceItemId": identifier["objectId"],
                     "itemType": mapped_type
                 }
                 items_to_deploy.append(item)
 
-        print("Items to deploy", items_to_deploy)
+            # Scenario 1 → Workspace new items Added from Git repo 
+            # Items source → get_items function
+            elif remote_change == "Added":
+                for ws_item in workspace_items:
+                    if (
+                        ws_item.get("displayName") == display_name
+                        and ws_item.get("type") == mapped_type
+                    ):
+                        item = {
+                            "sourceItemId": ws_item["id"],
+                            "itemType": ws_item["type"]
+                        }
+                        items_to_deploy.append(item)
+                        break
+                # Debug Output
+                if not found:
+                    print(f"⚠️ No match found for: {display_name} ({mapped_type})")
+
+        print("Items to deploy:", items_to_deploy)
 
         # Delte Debug ❌
         for change in changes:
             print("RAW CHANGE:", change)
 
-        print(f"RAW TYPE: {raw_type}")
-        print(f"MAPPED TYPE: {mapped_type}")
+        if changes:
+            print(f"RAW TYPE: {raw_type}")
+            print(f"MAPPED TYPE: {mapped_type}")
 
-        # 7. Deploy the artifacts stored in the list
-        # 7.1. Create the commit note
+        # -----------------------------------------------------
+        # --- 3.8 Executing the deployment from Dev to Test ---
+        # Create the deployment note from the commit message
         note = f"commit={remote_commit[:7]} | branch={branch} | by={actor} | msg={message}"
         print("Deployment note:", note)
 
-        # 7.2. Run the deploy
-        if not items_to_deploy:
+        # Execute Deploy
+        has_items = len(items_to_deploy) > 0
+        if not has_items:
             print("No items to deploy → skipping")
         else:
             url = f"https://api.fabric.microsoft.com/v1/deploymentPipelines/{pipeline_id}/deploy"
@@ -172,6 +237,7 @@ for target in targets:
                 if key.lower() == "deployment-id":
                     deployment_id = value.strip()
                     break
+            
             # Delete - debug only ❌
             print("All headers:", dict(response.headers))
             print("Deployment ID:", deployment_id)
@@ -192,7 +258,10 @@ for target in targets:
         print(f"❌ Error in {target}: {str(e)}")
         results.append((target, "FAILED"))
 
-# Final block - Execution Summary
+
+# ======================
+# 4. EXECUTION SUMMARY
+# =====================
 print("\n=== Execution Summary ===")
 
 failures = [r for r in results if r[1] == "FAILED"]

@@ -1,0 +1,8 @@
+relationship 41794122-852d-8b5c-6fc7-5f1e8a3fab59
+	fromColumn: fact_mani.departamento_id
+	toColumn: dim_geo.departamento_id
+
+relationship 37d14f60-ad43-26f5-9a7c-8ad3ee7ae6cf
+	fromColumn: fact_mani.date
+	toColumn: calendar.Date
+

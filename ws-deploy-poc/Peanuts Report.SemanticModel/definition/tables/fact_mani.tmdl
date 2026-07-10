@@ -27,6 +27,15 @@ table fact_mani
 		formatString: 0
 		lineageTag: ada7fcb3-2ea3-47bb-bd8e-e5a8294686f2
 
+	measure 'Rinde KG' =
+			
+			CALCULATE(
+			    [BaseMeasureMani],
+			    fact_mani[Attribute] = "rendimiento_kgxha"
+			)
+		formatString: 0
+		lineageTag: 803fa37c-3a1d-4f6e-a0ca-1df44ab59727
+
 	column campania
 		dataType: string
 		lineageTag: 0d67c9b5-d0a5-4f2c-8848-11fe70e675ac

@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"type\":2,\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"type\":2,\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -20,6 +20,27 @@
   "sections": [
     {
       "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "afe8abb68ecd83b78bc2",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"f4ee182850c6afc8563a\",\"layouts\":[{\"id\":0,\"position\":{\"x\":38.44155844155844,\"y\":44.675324675324674,\"z\":0,\"width\":713.7662337662338,\"height\":664.9350649350649,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"map\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_geo.provincia Hierarchy.pais\",\"active\":true},{\"queryRef\":\"dim_geo.provincia Hierarchy.provincia\",\"active\":true},{\"queryRef\":\"dim_geo.provincia Hierarchy.departamento\",\"active\":true}],\"Size\":[{\"queryRef\":\"Sum(fact_mani.Value)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_geo\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_mani\",\"Type\":0}],\"Select\":[{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Hierarchy\":\"provincia Hierarchy\"}},\"Level\":\"pais\"},\"Name\":\"dim_geo.provincia Hierarchy.pais\",\"NativeReferenceName\":\"provincia Hierarchy pais\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Hierarchy\":\"provincia Hierarchy\"}},\"Level\":\"provincia\"},\"Name\":\"dim_geo.provincia Hierarchy.provincia\",\"NativeReferenceName\":\"provincia Hierarchy provincia\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Hierarchy\":\"provincia Hierarchy\"}},\"Level\":\"departamento\"},\"Name\":\"dim_geo.provincia Hierarchy.departamento\",\"NativeReferenceName\":\"provincia Hierarchy departamento\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(fact_mani.Value)\",\"NativeReferenceName\":\"Sum of Value\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"mapControls\":[{\"properties\":{\"geocodingCulture\":{\"expr\":{\"Literal\":{\"Value\":\"'es-ES'\"}}}}}],\"categoryLabels\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 664.94,
+          "width": 713.77,
+          "x": 38.44,
+          "y": 44.68,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{\"objects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":-0.3}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"76D\"}}}}}]}}",
       "displayName": "SUMMARY",
       "displayOption": 1,
       "filters": "[]",
@@ -27,12 +48,12 @@
       "name": "ec205121f85f439517ec",
       "visualContainers": [
         {
-          "config": "{\"name\":\"18093f613c928cc1b737\",\"layouts\":[{\"id\":0,\"position\":{\"x\":15.562310030395137,\"y\":56.413373860182375,\"z\":0,\"width\":1232.340425531915,\"height\":545.6534954407296,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(fact_mani.Value)\"}],\"Series\":[{\"queryRef\":\"fact_mani.Attribute\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"calendar\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_mani\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(fact_mani.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Attribute\"},\"Name\":\"fact_mani.Attribute\",\"NativeReferenceName\":\"Attribute\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"axisType\":{\"expr\":{\"Literal\":{\"Value\":\"'Scalar'\"}}}}}]}}}",
+          "config": "{\"name\":\"18093f613c928cc1b737\",\"layouts\":[{\"id\":0,\"position\":{\"x\":14.589665653495441,\"y\":97.26443768996961,\"z\":0,\"width\":1232.340425531915,\"height\":545.6534954407296,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineChart\",\"projections\":{\"Category\":[{\"queryRef\":\"calendar.Date\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(fact_mani.Value)\"}],\"Series\":[{\"queryRef\":\"fact_mani.Attribute\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"calendar\",\"Type\":0},{\"Name\":\"f\",\"Entity\":\"fact_mani\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"calendar.Date\",\"NativeReferenceName\":\"Date\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(fact_mani.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Attribute\"},\"Name\":\"fact_mani.Attribute\",\"NativeReferenceName\":\"Attribute\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"axisType\":{\"expr\":{\"Literal\":{\"Value\":\"'Scalar'\"}}}}}]},\"vcObjects\":{\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"8D\"}}}}}]}}}",
           "filters": "[{\"name\":\"c7791c78c8e39de26a5a\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"fact_mani\"}},\"Property\":\"Attribute\"}},\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"f\",\"Entity\":\"fact_mani\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"f\"}},\"Property\":\"Attribute\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'superficie_cosechada_ha'\"}}],[{\"Literal\":{\"Value\":\"'superficie_sembrada_ha'\"}}]]}}}]},\"type\":\"Categorical\",\"howCreated\":0,\"objects\":{},\"isHiddenInViewMode\":false}]",
           "height": 545.65,
           "width": 1232.34,
-          "x": 15.56,
-          "y": 56.41,
+          "x": 14.59,
+          "y": 97.26,
           "z": 0.00
         }
       ],

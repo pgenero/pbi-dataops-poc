@@ -1,2 +1,1845 @@
 cultureInfo en-US
 
+	linguisticMetadata =
+			{
+			  "Version": "4.1.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dim_geo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "dim geo": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "dim_geo": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "geo": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "dim_geo.provincia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "ConceptualProperty": "provincia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "provincia": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "state or province": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        }
+			      ],
+			      "SemanticType": "Location"
+			    },
+			    "dim_geo.provincia_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "ConceptualProperty": "provincia_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "provincia id": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "provincia_id": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "provincia identification": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "provincia identity": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "provincia identifier": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "provincia credential": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "dim_geo.departamento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "ConceptualProperty": "departamento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "departamento": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "dim_geo.departamento_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "ConceptualProperty": "departamento_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "departamento id": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "departamento_id": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "departamento identification": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento identity": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento identifier": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento credential": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "dim_geo.pais": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "ConceptualProperty": "pais"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "pais": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "county": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        }
+			      ],
+			      "SemanticType": "Location"
+			    },
+			    "dim_geo.provincia_hierarchy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "Hierarchy": "provincia Hierarchy"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "provincia hierarchy": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "provincia ladder": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "provincia grading": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "provincia order": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "provincia pyramid": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        }
+			      ]
+			    },
+			    "dim_geo.provincia_hierarchy.pais": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "Hierarchy": "provincia Hierarchy",
+			          "HierarchyLevel": "pais"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "pais": {
+			            "State": "Generated"
+			          }
+			        }
+			      ],
+			      "SemanticType": "Location"
+			    },
+			    "dim_geo.provincia_hierarchy.provincia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "Hierarchy": "provincia Hierarchy",
+			          "HierarchyLevel": "provincia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "provincia": {
+			            "State": "Generated"
+			          }
+			        }
+			      ],
+			      "SemanticType": "Location"
+			    },
+			    "dim_geo.provincia_hierarchy.departamento": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_geo",
+			          "Hierarchy": "provincia Hierarchy",
+			          "HierarchyLevel": "departamento"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "departamento": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "fact mani": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "fact_mani": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "mani": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.campania": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "campania"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "campania": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.departamento_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "departamento_id"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "departamento id": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "departamento_id": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "departamento identification": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento identity": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento identifier": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "departamento credential": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "date": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "moment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "period": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "fact_mani.value": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "Value"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "value": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "assessment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "worth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "price": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "cost": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "charge": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "rate": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "importance": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "significance": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "usefulness": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "consequence": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.attribute": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "Attribute"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "attribute": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "trait": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "aspect": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "element": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "property": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "quality": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "characteristic": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "feature": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "point": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "power": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "part": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.base_measure_mani": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "BaseMeasureMani"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "base measure mani": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "BaseMeasureMani": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "mani": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "measure mani": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.cosecha": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "Cosecha"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "cosecha": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.siembra": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "Siembra"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "siembra": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "fact_mani.diferencia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_mani",
+			          "ConceptualProperty": "Diferencia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "diferencia": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Siembra": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "calendar": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "calendar"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "calendar": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "almanac": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "datebook": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "agenda": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "logbook": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "diary": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "schedule": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "timetable": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        }
+			      ]
+			    },
+			    "calendar.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "calendar",
+			          "ConceptualProperty": "Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "date": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "moment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "period": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    }
+			  },
+			  "Relationships": {
+			    "dim_geo_in_provincia": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.provincia": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia"
+			          }
+			        }
+			      },
+			      "SemanticSlots": {
+			        "Where": {
+			          "Role": "dim_geo.provincia"
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "dim_geo.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_are_in_provincias"
+			        }
+			      ]
+			    },
+			    "dim_geo_in_pais": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.pais": {
+			          "Target": {
+			            "Entity": "dim_geo.pais"
+			          }
+			        }
+			      },
+			      "SemanticSlots": {
+			        "Where": {
+			          "Role": "dim_geo.pais"
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "dim_geo.pais"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_are_in_paises"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_provincia": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.provincia": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_provincias"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_provincia_id": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.provincia_id": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_id"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_id"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_provincia_ids"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_departamento": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.departamento": {
+			          "Target": {
+			            "Entity": "dim_geo.departamento"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.departamento"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_departamentos"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_departamento_id": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.departamento_id": {
+			          "Target": {
+			            "Entity": "dim_geo.departamento_id"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.departamento_id"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_departamento_ids"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_pais": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.pais": {
+			          "Target": {
+			            "Entity": "dim_geo.pais"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.pais"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_paises"
+			        }
+			      ]
+			    },
+			    "dim_geo_has_provincia_hierarchy": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_provincia_hierarchies"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_campania": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.campania": {
+			          "Target": {
+			            "Entity": "fact_mani.campania"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.campania"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_campania"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_date": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.date": {
+			          "Target": {
+			            "Entity": "fact_mani.date"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.date"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_dates"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_value": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.value": {
+			          "Target": {
+			            "Entity": "fact_mani.value"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.value"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_values"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_attribute": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.attribute": {
+			          "Target": {
+			            "Entity": "fact_mani.attribute"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.attribute"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_attributes"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_base_measure_mani": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.base_measure_mani": {
+			          "Target": {
+			            "Entity": "fact_mani.base_measure_mani"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.base_measure_mani"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_base_measure_mani"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_cosecha": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.cosecha": {
+			          "Target": {
+			            "Entity": "fact_mani.cosecha"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.cosecha"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_cosecha"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_siembra": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.siembra": {
+			          "Target": {
+			            "Entity": "fact_mani.siembra"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.siembra"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_siembra"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_diferencia": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "fact_mani.diferencia": {
+			          "Target": {
+			            "Entity": "fact_mani.diferencia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "fact_mani.diferencia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_diferencia"
+			        }
+			      ]
+			    },
+			    "calendar_has_date": {
+			      "Binding": {
+			        "ConceptualEntity": "calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "calendar.date": {
+			          "Target": {
+			            "Entity": "calendar.date"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "calendar.date"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_dates"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_dim_geo": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "dim_geo": {
+			          "Target": {
+			            "Entity": "dim_geo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "dim_geo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_dim_geos"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo"
+			            },
+			            "Object": {
+			              "Role": "fact_mani"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_geos_have_fact_mani"
+			        }
+			      ]
+			    },
+			    "fact_mani_has_calendar": {
+			      "Binding": {
+			        "ConceptualEntity": "fact_mani"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_mani": {
+			          "Target": {
+			            "Entity": "fact_mani"
+			          }
+			        },
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_mani"
+			            },
+			            "Object": {
+			              "Role": "calendar"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_mani_have_calendars"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "fact_mani"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_fact_mani"
+			        }
+			      ]
+			    },
+			    "dim_geo_provincia_hierarchy_has_pais": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo.provincia_hierarchy": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy.pais": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.pais"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.pais"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincia_hierarchies_have_paises"
+			        }
+			      ]
+			    },
+			    "dim_geo_provincia_hierarchy_has_provincia": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo.provincia_hierarchy": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy.provincia": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.provincia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincia_hierarchies_have_provincias"
+			        }
+			      ]
+			    },
+			    "dim_geo_provincia_hierarchy_has_departamento": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo.provincia_hierarchy": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy.departamento": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.departamento"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.departamento"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincia_hierarchies_have_departamentos"
+			        }
+			      ]
+			    },
+			    "dim_geo_provincia_hierarchy_pais_has_dim_geo_provincia_hierarchy_provincia": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo.provincia_hierarchy.pais": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.pais"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy.provincia": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.provincia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.pais"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "paises_have_provincias"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.pais"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincias_have_paises"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.pais"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincias_are_in_paises"
+			        }
+			      ]
+			    },
+			    "dim_geo_provincia_hierarchy_provincia_has_dim_geo_provincia_hierarchy_departamento": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_geo"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_geo.provincia_hierarchy.provincia": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.provincia"
+			          }
+			        },
+			        "dim_geo.provincia_hierarchy.departamento": {
+			          "Target": {
+			            "Entity": "dim_geo.provincia_hierarchy.departamento"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.departamento"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "provincias_have_departamentos"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.departamento"
+			            },
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "departamentos_have_provincias"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "dim_geo.provincia_hierarchy.departamento"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "dim_geo.provincia_hierarchy.provincia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "departamentos_are_in_provincias"
+			        }
+			      ]
+			    }
+			  },
+			  "Agents": {
+			    "Internal": {
+			      "Version": "1.1.0"
+			    }
+			  }
+			}
+		contentType: json
+

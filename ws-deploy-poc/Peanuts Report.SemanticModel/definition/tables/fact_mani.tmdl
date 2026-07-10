@@ -1,6 +1,32 @@
 table fact_mani
 	lineageTag: b2e43d96-0c36-480a-88f0-7f3e2a5d3064
 
+	measure BaseMeasureMani = SUM( fact_mani[Value] )
+		formatString: 0
+		lineageTag: 63d82ee2-bb6a-42cb-9853-3f771516e135
+
+	measure Cosecha =
+			
+			CALCULATE(
+			    [BaseMeasureMani],
+			    fact_mani[Attribute] = "superficie_cosechada_ha"
+			)
+		formatString: 0
+		lineageTag: d03f142f-d6a5-4642-957a-eb18b7a33aa4
+
+	measure Siembra =
+			
+			CALCULATE(
+			    [BaseMeasureMani],
+			    fact_mani[Attribute] = "superficie_sembrada_ha"
+			)
+		formatString: 0
+		lineageTag: 3841ad00-218e-4a72-9983-071fa3e9c93a
+
+	measure Diferencia = [Siembra] - [Cosecha]
+		formatString: 0
+		lineageTag: ada7fcb3-2ea3-47bb-bd8e-e5a8294686f2
+
 	column campania
 		dataType: string
 		lineageTag: 0d67c9b5-d0a5-4f2c-8848-11fe70e675ac

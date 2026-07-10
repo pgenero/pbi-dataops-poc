@@ -100,7 +100,9 @@ for target in targets:
         print(result)
 
         # 2.7 Save the json output
-        with open("deployment_log.json", "w") as f:
+        file_name = f"deployment_log_{target}.json"
+
+        with open(file_name, "w") as f:
             json.dump(result, f)
 
         print("JSON stored")

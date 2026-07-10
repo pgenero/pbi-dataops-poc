@@ -2,7 +2,8 @@ table fact_mani
 	lineageTag: b2e43d96-0c36-480a-88f0-7f3e2a5d3064
 
 	measure BaseMeasureMani = SUM( fact_mani[Value] )
-		formatString: 0
+		formatString: #,0
+		displayFolder: M_Measures
 		lineageTag: 63d82ee2-bb6a-42cb-9853-3f771516e135
 
 	measure Cosecha =
@@ -11,7 +12,8 @@ table fact_mani
 			    [BaseMeasureMani],
 			    fact_mani[Attribute] = "superficie_cosechada_ha"
 			)
-		formatString: 0
+		formatString: #,0
+		displayFolder: M_Measures
 		lineageTag: d03f142f-d6a5-4642-957a-eb18b7a33aa4
 
 	measure Siembra =
@@ -20,11 +22,13 @@ table fact_mani
 			    [BaseMeasureMani],
 			    fact_mani[Attribute] = "superficie_sembrada_ha"
 			)
-		formatString: 0
+		formatString: #,0
+		displayFolder: M_Measures
 		lineageTag: 3841ad00-218e-4a72-9983-071fa3e9c93a
 
 	measure Diferencia = [Siembra] - [Cosecha]
-		formatString: 0
+		formatString: #,0
+		displayFolder: M_Measures
 		lineageTag: ada7fcb3-2ea3-47bb-bd8e-e5a8294686f2
 
 	measure 'Rinde KG' =
@@ -33,8 +37,19 @@ table fact_mani
 			    [BaseMeasureMani],
 			    fact_mani[Attribute] = "rendimiento_kgxha"
 			)
-		formatString: 0
+		formatString: #,0
+		displayFolder: M_Measures
 		lineageTag: 803fa37c-3a1d-4f6e-a0ca-1df44ab59727
+
+	measure Produccion =
+			
+			CALCULATE(
+			    [BaseMeasureMani],
+			    fact_mani[Attribute] = "produccion_tm"
+			)
+		formatString: #,0
+		displayFolder: M_Measures
+		lineageTag: 0baf8f1f-2f54-406c-acc8-dadcb7821694
 
 	column campania
 		dataType: string
@@ -66,12 +81,12 @@ table fact_mani
 
 	column Value
 		dataType: int64
-		formatString: 0
+		formatString: #,0
 		lineageTag: 4027fe71-7862-45d5-8844-dc1f81f6472c
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Value
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column Attribute
 		dataType: string

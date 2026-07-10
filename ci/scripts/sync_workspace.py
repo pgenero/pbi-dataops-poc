@@ -9,7 +9,7 @@ import json
 token = os.getenv("TOKEN")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
-branch = os.getenv("GITHUB_REF_NAME")
+branch = os.getenv("GITHUB_HEAD_REF") # os.getenv("GITHUB_REF_NAME")
 actor = os.getenv("GITHUB_ACTOR")
 message = os.getenv("COMMIT_MESSAGE")
 targets = os.getenv("TARGETS", "").split()

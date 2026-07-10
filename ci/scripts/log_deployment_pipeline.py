@@ -12,6 +12,7 @@ remote_commit = os.getenv("GITHUB_SHA")
 run_id = os.getenv("GITHUB_RUN_ID")
 repo = os.getenv("GITHUB_REPOSITORY")
 base = os.getenv("GITHUB_SERVER_URL")
+branch = os.getenv("GITHUB_HEAD_REF")
 github_run_url = f"{base}/{repo}/actions/runs/{run_id}"
 
 
@@ -81,6 +82,7 @@ for target in targets:
 
         # 2.4 Log Level 1 - Operations metadata
         result = {
+            "branch": branch,
             "operationId": operation_id,
             "target": target,
             "commit": remote_commit,
@@ -121,6 +123,7 @@ for target in targets:
 
             details = {
                 "github_url": github_run_url,
+                "branch": branch,
                 "commit": remote_commit,
 
                 "operationId": operation_id,

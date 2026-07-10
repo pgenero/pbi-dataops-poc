@@ -52,29 +52,30 @@ for target in targets:
 
     print(f"¡Job Accepted! Monitoring: {job_location_url}")
 
-# ==========================================
-# 4. BUCLE MONITORING
-# ==========================================
-while True:
-    print(f"Waiting {retry_after} seconds before status check...")
-    time.sleep(retry_after)
-    
-    # Check Job Instance status
-    status_response = requests.get(job_location_url, headers=headers)
-    
-    if status_response.status_code != 200:
-        print(f"Error checking status of: {status_response.text}")
-        exit(1)
+    # ==========================================
+    # 4. BUCLE MONITORING
+    # ==========================================
+    while True:
+        print(f"=== WAITING FOR TARGET: {target} ===")
+        print(f"Waiting {retry_after} seconds before status check...")
+        time.sleep(retry_after)
         
-    job_status_data = status_response.json()
-    current_status = job_status_data.get("status")
-    
-    print(f"Notebook current state: [{current_status}]")
-    
-    if current_status in ["Completed", "Succeeded"]:
-        print("Succeded! The Notebook completed the execution and the log was saved in the Lakehouse.")
-        break
-    elif current_status in ["Failed", "Canceled"]:
-        print("Error: The execution of the Notebook failed in Fabric.")
-        print(f"Failure reason: {job_status_data.get('failureReason', 'No specifieda')}")
-        exit(1)
+        # Check Job Instance status
+        status_response = requests.get(job_location_url, headers=headers)
+        
+        if status_response.status_code != 200:
+            print(f"Error checking status of: {status_response.text}")
+            exit(1)
+            
+        job_status_data = status_response.json()
+        current_status = job_status_data.get("status")
+        
+        print(f"Notebook current state: [{current_status}]")
+        
+        if current_status in ["Completed", "Succeeded"]:
+            print("Succeded! The Notebook completed the execution and the log was saved in the Lakehouse.")
+            break
+        elif current_status in ["Failed", "Canceled"]:
+            print("Error: The execution of the Notebook failed in Fabric.")
+            print(f"Failure reason: {job_status_data.get('failureReason', 'No specifieda')}")
+            exit(1)

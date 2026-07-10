@@ -43,9 +43,13 @@ def wait_for_completion(pl, pipeline_id, operation_id, max_retries=15, wait_seco
     return last_data
 
 # ========================
-# 2. Loop por target
+# 2. Loop per target
 # ========================
 results = []
+
+# Load the item type name mapping to use in the json file
+with open("ci/config/item_type_mapping.json") as f:
+    ITEM_TYPE_MAP = json.load(f)
 
 for target in targets:
     print(f"\n=== Logging target: {target} ===")
@@ -88,8 +92,12 @@ for target in targets:
         for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
             source_target = step.get("sourceAndTarget", {})
 
+            # Update the name in the object "itemType" to use the one required in the deployment operation
+            raw_type = source_target.get("type")
+            mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
+
             item = {
-                "itemType": source_target.get("type"),
+                "itemType": mapped_type,
                 "targetItemId": source_target.get("target"),
                 "targetItemName": source_target.get("targetDisplayName"),
             }

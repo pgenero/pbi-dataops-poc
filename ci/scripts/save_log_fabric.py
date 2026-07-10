@@ -5,42 +5,52 @@ import os
 
 # Variables
 token = os.getenv("TOKEN")
+targets = os.getenv("TARGETS", "").split()
 workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
 notebook_id = "13581d5f-41d4-4f09-8d3a-38d9a895837d"
 
 # Read json saved by log_deployment_pipeline.py
-with open("deployment_log.json", "r") as f:
-    result = json.load(f)
+for target in targets:
+    file_name = f"deployment_log_{target}.json"
 
-# opcional: convertir a string para enviarlo luego
-# log_data = json.dumps(result)
+    if not os.path.exists(file_name):
+        print(f"⚠️ File not found in VM: {file_name}")
+        continue
 
-print("JSON readed Ok")
+    with open(file_name, "r") as f:
+        result = json.load(f)
 
-log_string_parameter = json.dumps(result, separators=(',', ':'))
+    print(f"✅ File Loaded from VM {file_name}")
 
-# 2. Build headers
-headers = {
-    "Authorization": f"Bearer {token}", 
-    "Content-Type": "application/json"
-    }
+    # opcional: convertir a string para enviarlo luego
+    # log_data = json.dumps(result)
 
-# 3. Run Fabric Notebook
-fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/execute/instances?jobType=RunNotebook"
-payload = {"executionData": {"parameters": {"log_payload": {"value": log_string_parameter, "type": "string"}}}}
+    print("JSON readed Ok")
 
-print("Running Notebook in Fabric...")
-response = requests.post(fabric_url, headers=headers, json=payload)
+    log_string_parameter = json.dumps(result, separators=(',', ':'))
 
-if response.status_code not in [200, 201, 202]:
-    print(f"Error starting: {response.text}")
-    exit(1)
+    # 2. Build headers
+    headers = {
+        "Authorization": f"Bearer {token}", 
+        "Content-Type": "application/json"
+        }
 
-# Extract the URL for monitoring over headers (Location)
-job_location_url = response.headers.get("Location")
-retry_after = int(response.headers.get("Retry-After", 15)) # Fallback to 15
+    # 3. Run Fabric Notebook
+    fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/execute/instances?jobType=RunNotebook"
+    payload = {"executionData": {"parameters": {"log_payload": {"value": log_string_parameter, "type": "string"}}}}
 
-print(f"¡Job Accepted! Monitoring: {job_location_url}")
+    print("Running Notebook in Fabric...")
+    response = requests.post(fabric_url, headers=headers, json=payload)
+
+    if response.status_code not in [200, 201, 202]:
+        print(f"Error starting: {response.text}")
+        exit(1)
+
+    # Extract the URL for monitoring over headers (Location)
+    job_location_url = response.headers.get("Location")
+    retry_after = int(response.headers.get("Retry-After", 15)) # Fallback to 15
+
+    print(f"¡Job Accepted! Monitoring: {job_location_url}")
 
 # ==========================================
 # 4. BUCLE MONITORING

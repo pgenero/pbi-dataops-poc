@@ -4,6 +4,7 @@ table dim_geo
 	column provincia
 		dataType: string
 		lineageTag: 2216207b-0938-4e8e-a579-c876690c4fe4
+		dataCategory: StateOrProvince
 		summarizeBy: none
 		sourceColumn: provincia
 
@@ -35,6 +36,30 @@ table dim_geo
 
 		annotation SummarizationSetBy = Automatic
 
+	column pais
+		dataType: string
+		lineageTag: 848bc1af-f757-4912-b0fe-2be31abecc39
+		dataCategory: County
+		summarizeBy: none
+		sourceColumn: pais
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'provincia Hierarchy'
+		lineageTag: 3b60d8b7-c78b-4cdc-bb87-afcb7557083c
+
+		level pais
+			lineageTag: 7eeb3441-cac0-43ee-8253-6af78480f601
+			column: pais
+
+		level provincia
+			lineageTag: 84af1ea9-c987-4a72-afaf-e5ffa73251ea
+			column: provincia
+
+		level departamento
+			lineageTag: 35914204-b325-4d32-9959-b5d24aa36b7a
+			column: departamento
+
 	partition dim_geo = m
 		mode: import
 		source =
@@ -48,9 +73,10 @@ table dim_geo
 				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column1",{"departamento", "departamento_id"}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"departamento_fix", "departamento"}, {"departamento_id_fix", "departamento_id"}}),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"departamento_id", Int64.Type}}),
-				    #"Removed Duplicates1" = Table.Distinct(#"Changed Type1", {"departamento_id"})
+				    #"Removed Duplicates1" = Table.Distinct(#"Changed Type1", {"departamento_id"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Duplicates1", "pais", each "Argentina", type text)
 				in
-				    #"Removed Duplicates1"
+				    #"Added Custom"
 
 	annotation PBI_NavigationStepName = Navigation
 

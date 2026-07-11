@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "Detecting changed folder..."
 
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
 
           echo "$CHANGED_FILES"
 

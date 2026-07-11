@@ -11,6 +11,20 @@ table Names
 		formatString: #,0
 		lineageTag: 5d190688-a921-4779-a08c-746984e15628
 
+	measure 'Min Name' =
+			
+			CALCULATE(
+			    [Names Quantity],
+			    TOPN(
+			        1,
+			        VALUES( Names[nombre] ),
+			        [Names Quantity],
+			        ASC
+			    )
+			)
+		formatString: 0
+		lineageTag: 90df002c-d0a2-46c8-ac35-6abbaf207b55
+
 	column nombre
 		dataType: string
 		lineageTag: f72465dd-df41-4667-a3a6-cd7426ea6441

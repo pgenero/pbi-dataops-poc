@@ -3,18 +3,24 @@ model Model
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
 	dataAccessOptions
+		fastCombine
 		legacyRedirects
 		returnErrorValuesAsNull
 
+queryGroup Production
+
+	annotation PBI_QueryGroupOrder = 0
+
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["raw_mani_data","dim_geo","fact_mani"]
+annotation PBI_QueryOrder = ["raw_mani_data","dim_geo","fact_mani","fact_prod_industrial","produccion-aceite-mani","produccion-pellets-mani"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table dim_geo
 ref table fact_mani
 ref table calendar
+ref table fact_prod_industrial
 
 ref cultureInfo en-US
 

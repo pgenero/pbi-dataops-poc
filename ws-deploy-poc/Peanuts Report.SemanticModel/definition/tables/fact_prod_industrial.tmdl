@@ -1,0 +1,52 @@
+table fact_prod_industrial
+	lineageTag: f274c2fb-4b59-4a7a-b5dd-f9a281306944
+
+	column producto
+		dataType: string
+		lineageTag: eeb9b89a-8eca-4241-9b07-6fe183fab396
+		summarizeBy: none
+		sourceColumn: producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column tn
+		dataType: int64
+		formatString: 0
+		lineageTag: a820bba9-2345-4b22-a938-4cbaad3a44c3
+		summarizeBy: sum
+		sourceColumn: tn
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cc2688c5-d74d-49e3-bb2a-0cd04cd340ed
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fact_prod_industrial = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({#"produccion-pellets-mani", #"produccion-aceite-mani"}),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"cod_pais", "nom_pais", "unidad_id", "nom_unidad"}),
+				    #"Replaced Value pellets" = Table.ReplaceValue(#"Removed Columns","pellets de maní","pellets",Replacer.ReplaceText,{"producto"}),
+				    #"Replaced Value oil" = Table.ReplaceValue(#"Replaced Value pellets","aceite de maní","oil",Replacer.ReplaceText,{"producto"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value oil",{{"enero", "1"}, {"febrero", "2"}, {"marzo", "3"}, {"abril", "4"}, {"mayo", "5"}, {"junio", "6"}, {"julio", "7"}, {"agosto", "8"}, {"septiempre", "9"}, {"octubre", "10"}, {"noviembre", "11"}, {"diciembre", "12"}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Renamed Columns", {"año", "producto"}, "Attribute", "tn"),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Unpivoted Other Columns", "date", each Text.Combine({[año], [Attribute]}, "-"), type text),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"date", type date}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Changed Type",{"año", "Attribute"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns1",{{"tn", Int64.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

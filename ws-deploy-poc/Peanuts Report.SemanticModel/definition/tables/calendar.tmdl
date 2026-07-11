@@ -2,11 +2,25 @@ table calendar
 	lineageTag: 877c213b-b997-4a3c-b8e7-5e5983966166
 
 	column Date
-		formatString: General Date
+		formatString: Short Date
 		lineageTag: ed3d047c-e8ae-4466-87b5-74a15b91f430
 		summarizeBy: none
 		isNameInferred
 		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR = YEAR( 'calendar'[Date] )
+		formatString: 0
+		lineageTag: 8bca5b87-8c4c-47f5-add1-cd2abf429161
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTH = MONTH( 'calendar'[Date] )
+		formatString: 0
+		lineageTag: 3138bbaf-c048-4a9b-baeb-615da402a209
+		summarizeBy: sum
 
 		annotation SummarizationSetBy = Automatic
 

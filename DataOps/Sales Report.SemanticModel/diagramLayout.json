@@ -111,6 +111,18 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1612.6386300060624,
+            "y": 316.62998743862545
+          },
+          "nodeIndex": "Menor",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",

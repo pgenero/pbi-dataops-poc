@@ -2,9 +2,12 @@
 name: Fabric CICD
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed # start the action when the pull request to main is closed
+
 
   workflow_dispatch:   # Manual deploy to PROD
     inputs:
@@ -52,7 +55,7 @@ env:
 jobs:
 
   deploy_to_test:
-    if: github.event_name == 'push'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:

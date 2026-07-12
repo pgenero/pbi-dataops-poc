@@ -1,0 +1,23 @@
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: "Branch to deploy to PROD"
+        required: true
+
+env:
+  TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
+  APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
+  APP_SECRET_KEY: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
+
+jobs:
+  deploy_to_prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call Fabric Notebook
+        env:
+          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
+        run: |
+          python ci/scripts/run_nb_git_prod_deploy.py

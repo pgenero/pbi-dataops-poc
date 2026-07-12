@@ -1,3 +1,4 @@
+name: Fabric CICD - Prod Deploy
 
 on:
   workflow_dispatch:

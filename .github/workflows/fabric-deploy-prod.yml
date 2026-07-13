@@ -9,8 +9,8 @@ on:
 
 # Requires permissions
 permissions:
-  contents: read   # validate branch nae
-  # contents: write  # delete branch after the deploy to Prod
+  # contents: read   # validate branch name
+  contents: write  # Read and Write allowe - For branch name validation and branch deletion after the deploy to Prod
 
 env:
   TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}

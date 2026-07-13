@@ -3,7 +3,7 @@ import time
 import requests
 import os
 
-# Variables
+# --- Variables ---
 tenant_id = os.getenv("TENANT_ID")
 client_id = os.getenv("APP_CLIENT_ID")
 client_secret = os.getenv("APP_SECRET_KEY")
@@ -107,3 +107,15 @@ while True:
         print("❌ Notebook execution failed.")
         print(f"Failure reason: {job_status_data.get('failureReason', 'No specified')}")
         exit(1)
+
+# --- Delete the Feature Branch on Git after the deploy ---
+if current_status == "Succeeded":
+    
+    git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
+
+    git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
+
+    if git_delete_response.status_code == 204:
+        print(f"✅ Branch {branch} deleted")
+    else:
+        print(f"❌ Failed to delete branch: {git_delete_response.text}")

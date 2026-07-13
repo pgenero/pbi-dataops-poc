@@ -7,6 +7,11 @@ on:
         description: "Branch to deploy to PROD"
         required: true
 
+# Requires permissions
+permissions:
+  contents: read   # validate branch nae
+  # contents: write  # delete branch after the deploy to Prod
+
 env:
   TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
   APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
@@ -23,5 +28,6 @@ jobs:
       - name: Call Fabric Notebook
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python ci/scripts/run_nb_git_prod_deploy.py

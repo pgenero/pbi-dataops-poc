@@ -101,6 +101,7 @@ while True:
     
     if current_status in ["Completed", "Succeeded"]:
         print("✅ Notebook completed successfully.")
+        print( current_status )
         break
 
     elif current_status in ["Failed", "Canceled"]:
@@ -109,7 +110,7 @@ while True:
         exit(1)
 
 # --- Delete the Feature Branch on Git after the deploy ---
-if current_status == "Succeeded":
+if current_status in ["Completed", "Succeeded"]:
     
     git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
 

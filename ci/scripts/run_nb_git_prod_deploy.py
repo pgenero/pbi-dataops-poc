@@ -21,7 +21,7 @@ headers_gh = {
     "Authorization": f"Bearer {gh_token}"
 }
 
-res = requests.get(url, headers=headers_gh)
+res = requests.get(git_url, headers=headers_gh)
 
 if res.status_code != 200:
     raise Exception(f"Branch does not exist: {branch}")

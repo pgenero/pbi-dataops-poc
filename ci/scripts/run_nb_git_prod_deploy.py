@@ -11,6 +11,22 @@ branch = os.getenv("BRANCH_NAME")
 workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
 notebook_id = "11035ea6-bfbb-4223-ac4d-65045a0aeb18"
 
+# --- Branch Name Validation ---
+repo = "pgenero/pbi-dataops-poc"
+git_url = f"https://api.github.com/repos/{repo}/branches/{branch}"
+
+gh_token = os.getenv("GITHUB_TOKEN")
+
+headers_gh = {
+    "Authorization": f"Bearer {gh_token}"
+}
+
+res = requests.get(url, headers=headers_gh)
+
+if res.status_code != 200:
+    raise Exception(f"Branch does not exist: {branch}")
+
+
 # --- Get token ---
 token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
 

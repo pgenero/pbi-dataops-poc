@@ -97,26 +97,25 @@ while True:
     job_status_data = status_response.json()
     current_status = job_status_data.get("status")
     
-    print(f"Notebook current state: [{current_status}]")
+    print(f"Fabric Notebook current state: [{current_status}]")
     
+    # --- Fabric Notebook Success → Delete Git Feature Branch ---
     if current_status in ["Completed", "Succeeded"]:
-        print("✅ Notebook completed successfully.")
-        print( current_status )
+        print(f"Fabric Notebook completed. State: [{current_status}]")
+
+        # --- Delete the Feature Branch ---
+        git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
+        git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
+  
+        if git_delete_response.status_code == 204:
+            print(f"✅ Git Branch {branch} deleted")
+        else:
+            print(f"❌ Failed to delete Git branch: {git_delete_response.text}")
+
         break
 
+    # --- Fabric Notebook Fail → Keep Git Feature Branch ---
     elif current_status in ["Failed", "Canceled"]:
-        print("❌ Notebook execution failed.")
+        print("❌ Fabric Notebook execution failed.")
         print(f"Failure reason: {job_status_data.get('failureReason', 'No specified')}")
         exit(1)
-
-# --- Delete the Feature Branch on Git after the deploy ---
-if current_status in ["Completed", "Succeeded"]:
-    
-    git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
-
-    git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
-
-    if git_delete_response.status_code == 204:
-        print(f"✅ Branch {branch} deleted")
-    else:
-        print(f"❌ Failed to delete branch: {git_delete_response.text}")

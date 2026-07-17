@@ -3,10 +3,10 @@
   "name": "faa5802d326435bd1f61",
   "position": {
     "x": 14.364089775561096,
-    "y": 87.980049875311721,
+    "y": 266.63341645885288,
     "z": 0,
-    "height": 622.14463840399,
-    "width": 1251.4713216957605,
+    "height": 443.49127182044884,
+    "width": 1249.6758104738153,
     "tabOrder": 0
   },
   "visual": {
@@ -436,6 +436,39 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "396dd1bd06f1b0088c16",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a710e523cec73f546850",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SalesSupermarket"
+                  }
+                },
+                "Property": "Value"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

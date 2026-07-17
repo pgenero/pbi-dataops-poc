@@ -51,6 +51,17 @@
           "type": "BaseTheme"
         }
       ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "02.Sales_Performance7253602199446427.png",
+          "path": "02.Sales_Performance7253602199446427.png",
+          "type": "Image"
+        }
+      ]
     }
   ],
   "settings": {

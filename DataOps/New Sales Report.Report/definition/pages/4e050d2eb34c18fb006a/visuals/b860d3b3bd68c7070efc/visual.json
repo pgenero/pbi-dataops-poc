@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "faa5802d326435bd1f61",
+  "name": "b860d3b3bd68c7070efc",
   "position": {
     "x": 14.3928035982009,
     "y": 92.11394302848575,
@@ -41,7 +41,7 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "SalesSupermarket"
+                          "Entity": "SalesB2B"
                         }
                       },
                       "Property": "Value"
@@ -50,7 +50,7 @@
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(SalesSupermarket.Value)",
+              "queryRef": "Sum(SalesB2B.Value)",
               "nativeQueryRef": "Sum of Value"
             }
           ]
@@ -248,68 +248,6 @@
             }
           }
         }
-      ],
-      "referenceLine": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "displayName": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Median line 1'"
-                }
-              }
-            },
-            "value": {
-              "expr": {
-                "Aggregation": {
-                  "Expression": {
-                    "SelectRef": {
-                      "ExpressionName": "Sum(SalesSupermarket.Value)"
-                    }
-                  },
-                  "Function": 6
-                }
-              }
-            },
-            "lineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 9,
-                      "Percent": 0
-                    }
-                  }
-                }
-              }
-            },
-            "width": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "30D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "Sum(SalesSupermarket.Value)",
-            "id": "1"
-          }
-        }
       ]
     },
     "visualContainerObjects": {
@@ -438,7 +376,7 @@
         "howCreated": "User"
       },
       {
-        "name": "396dd1bd06f1b0088c16",
+        "name": "3be8649b819e2c282d1a",
         "field": {
           "Column": {
             "Expression": {
@@ -452,14 +390,14 @@
         "type": "Categorical"
       },
       {
-        "name": "a710e523cec73f546850",
+        "name": "2c94bbafd26326c4c628",
         "field": {
           "Aggregation": {
             "Expression": {
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "SalesSupermarket"
+                    "Entity": "SalesB2B"
                   }
                 },
                 "Property": "Value"

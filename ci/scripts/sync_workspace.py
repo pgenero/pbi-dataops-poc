@@ -10,8 +10,9 @@ token = os.getenv("TOKEN")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
 branch = os.getenv("GITHUB_HEAD_REF") # os.getenv("GITHUB_REF_NAME")
-actor = os.getenv("GITHUB_ACTOR")
-message = os.getenv("COMMIT_MESSAGE")
+approver = os.getenv("GITHUB_ACTOR") # no need to get it in the YML - Person that approves the PR
+author = os.getenv("GITHUB_AUTHOR") # contributor that creates the PR
+message = os.getenv("PR_TITLE")
 targets = os.getenv("TARGETS", "").split()
 
 # Debug Detele ❌
@@ -109,6 +110,8 @@ for target in targets:
 
         # ----------------------------------------------
         # --- 3.4 Sync Workspace with Git Repository ---
+        print(f"\n=== Start sync Workspace ←→ GitHub: {target} ===\n")
+        
         sync_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/updateFromGit"
 
         payload = {
@@ -214,7 +217,7 @@ for target in targets:
         # -----------------------------------------------------
         # --- 3.8 Executing the deployment from Dev to Test ---
         # Create the deployment note from the commit message
-        note = f"commit={remote_commit[:7]} | branch={branch} | by={actor} | msg={message}"
+        note = f"commit={remote_commit[:7]} | branch={branch} | approver={approver} | msg={message}"
         print("Deployment note:", note)
 
         # Execute Deploy

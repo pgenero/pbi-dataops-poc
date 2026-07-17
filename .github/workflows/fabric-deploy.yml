@@ -14,7 +14,7 @@ env:
   APP_SECRET_KEY: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
   GIT_CONNECTION_ID: ${{ vars.GIT_CONNECTION_ID }}
   GITHUB_AUTHOR: ${{ github.event.pull_request.user.login }}
-  PR_TITLE: ${{ github.event.pull_request.merge_commit_title }}
+  PR_TITLE: ${{ github.event.pull_request.title }}
 
   SALES_PIPELINE_ID: ${{ vars.SALES_PIPELINE_ID }}
   SALES_WORKSPACE_ID: ${{ vars.SALES_WORKSPACE_ID }}

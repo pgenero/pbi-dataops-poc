@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
   "version": "4.0",
   "datasetReference": {
-    "byPath": {
-      "path": "../../ws-deploy-poc/Peanuts Report.SemanticModel"
+    "byConnection": {
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=\"Peanuts Report\";access mode=readonly;integrated security=ClaimsToken;semanticmodelid=337481dd-6010-4616-bb1f-56a1499188ce"
     }
   }
 }

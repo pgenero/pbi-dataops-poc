@@ -217,7 +217,7 @@ for target in targets:
         # -----------------------------------------------------
         # --- 3.8 Executing the deployment from Dev to Test ---
         # Create the deployment note from the commit message
-        note = f"commit={remote_commit[:7]} | branch={branch} | approver={approver} | msg={message}"
+        note = f"commit={remote_commit[:7]} | branch={branch} | approver={approver} | author={author} | msg={message}"
         print("Deployment note:", note)
 
         # Execute Deploy

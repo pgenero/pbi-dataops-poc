@@ -1,0 +1,15 @@
+[
+  {
+    "name": "fci_types_monthly",
+    "path": "/Tables/stock_index",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/stock_index/fci_types_monthly",
+        "itemId": "33cfa6c6-a81e-b387-4014-e4e0aad32722",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "Lakehouse"
+      }
+    }
+  }
+]

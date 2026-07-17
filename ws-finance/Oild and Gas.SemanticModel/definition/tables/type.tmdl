@@ -1,0 +1,25 @@
+table type
+	lineageTag: a7167265-a9f9-495b-9f84-c85fbe9c8513
+
+	column tipo_de_recurso
+		dataType: string
+		lineageTag: b6fccf7b-f67a-4560-a7de-1058b9101a84
+		summarizeBy: none
+		sourceColumn: tipo_de_recurso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition type = m
+		mode: import
+		source =
+				let
+				    Source = oil_gas_2026,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"tipo_de_recurso"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

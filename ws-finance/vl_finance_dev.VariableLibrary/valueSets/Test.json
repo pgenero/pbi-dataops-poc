@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "Test",
+  "variableOverrides": [
+    {
+      "name": "ev_finance_workspace",
+      "value": "77fa1d16-3f26-4e90-a648-d3388d6e6ee5"
+    },
+    {
+      "name": "ev_lh_finance_bronze",
+      "value": "aad32722-e4e0-4014-b387-a81e33cfa6c6"
+    },
+    {
+      "name": "ev_lh_finance_silver",
+      "value": "ecdfe41d-b6f5-41bb-9c33-102a2e09cdfb"
+    }
+  ]
+}

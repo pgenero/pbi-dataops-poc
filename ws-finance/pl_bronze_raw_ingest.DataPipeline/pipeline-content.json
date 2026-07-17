@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "nb_transform_bronze_silver_stock",
+        "type": "TridentNotebook",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().libraryVariables.ev_nb_transform_bronze_silver_stock",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().libraryVariables.ev_finance_workspace",
+            "type": "Expression"
+          }
+        }
+      }
+    ],
+    "libraryVariables": {
+      "ev_nb_transform_bronze_silver_stock": {
+        "type": "String",
+        "variableName": "ev_nb_transform_bronze_silver_stock",
+        "libraryName": "vl_finance_dev"
+      },
+      "ev_finance_workspace": {
+        "type": "String",
+        "variableName": "ev_finance_workspace",
+        "libraryName": "vl_finance_dev"
+      }
+    }
+  }
+}

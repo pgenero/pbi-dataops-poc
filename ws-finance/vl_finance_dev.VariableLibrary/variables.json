@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "ev_finance_workspace",
+      "note": "",
+      "type": "String",
+      "value": "d56a2a3e-a883-4741-92c6-b269c96b4755"
+    },
+    {
+      "name": "ev_lh_finance_bronze",
+      "note": "",
+      "type": "String",
+      "value": "aad32722-e4e0-4014-b387-a81e33cfa6c6"
+    },
+    {
+      "name": "ev_lh_finance_silver",
+      "note": "",
+      "type": "String",
+      "value": "ecdfe41d-b6f5-41bb-9c33-102a2e09cdfb"
+    },
+    {
+      "name": "ev_nb_transform_bronze_silver_stock",
+      "note": "",
+      "type": "String",
+      "value": "2e4715f4-c2e5-4b8e-ad44-8a7b4d4c6b2e"
+    },
+    {
+      "name": "ev_pl_bronze_raw_ingest",
+      "note": "",
+      "type": "String",
+      "value": "9508c88c-6be3-48f1-bcad-9f5d869dda81"
+    }
+  ]
+}

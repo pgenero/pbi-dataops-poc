@@ -1,0 +1,23 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowFastCopy": false
+  },
+  "name": "Oil Gas Production",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "oil_gas_2026": {
+      "queryId": "444e4dcb-5aca-4b14-a6e6-0dd8168b3881",
+      "queryName": "oil_gas_2026"
+    }
+  },
+  "connections": [
+    {
+      "path": "http://datos.energia.gob.ar/dataset/c846e79c-026c-4040-897f-1ad3543b407c/resource/fb7a47a0-cba9-4667-a004-6f6c1c346c23/download/produccin-de-pozos-de-gas-y-petrleo-2026.csv",
+      "kind": "Web",
+      "connectionId": "{\"ClusterId\":\"ddda4a3c-8b04-4adc-9ec2-4ba2f53a0c77\",\"DatasourceId\":\"0d48ff46-c2f9-4695-a540-192162f7a21d\"}"
+    }
+  ],
+  "allowNativeQueries": false
+}

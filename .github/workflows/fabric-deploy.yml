@@ -13,7 +13,7 @@ env:
   APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
   APP_SECRET_KEY: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}
   GIT_CONNECTION_ID: ${{ vars.GIT_CONNECTION_ID }}
-  GITHUB_AUTHOR: ${{ github.event.pull_request.user }} # contributor that creates the PR
+  GITHUB_AUTHOR: ${{ github.event.pull_request.user.login }}
   PR_TITLE: ${{ github.event.pull_request.merge_commit_title }}
 
   SALES_PIPELINE_ID: ${{ vars.SALES_PIPELINE_ID }}

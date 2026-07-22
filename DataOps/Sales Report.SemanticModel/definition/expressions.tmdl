@@ -1,17 +1,3 @@
-expression fxNamesURLReader =
-		( _url as text ) =>
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
-		in
-		    #"Promoted Headers"
-	lineageTag: f048f296-b503-4000-8709-ac2237508c71
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
 expression Names3034 =
 		let
 		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.4/download/nombres-1930-1934.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
@@ -162,6 +148,19 @@ expression Names8589 =
 		in
 		    #"Promoted Headers"
 	lineageTag: d51f8039-0505-49c4-8b1f-e90a889fa5ed
+	queryGroup: Names_Queries
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Names2529 =
+		let
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: b60af694-d073-40eb-8e01-7d75883f227d
 	queryGroup: Names_Queries
 
 	annotation PBI_NavigationStepName = Navigation

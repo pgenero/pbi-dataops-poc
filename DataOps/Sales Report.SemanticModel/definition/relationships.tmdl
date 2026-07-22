@@ -22,8 +22,7 @@ relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
 	fromColumn: ConsumerIndex.indice_tiempo
 	toColumn: Calendar.Date
 
-relationship 4c96e5a2-2eb9-4643-58c1-0515caf86e6a
-	toCardinality: many
+relationship 00eb2be6-a6b1-9e79-d140-7fa53df45499
 	fromColumn: Names.anio
-	toColumn: Calendar.YEAR
+	toColumn: Calendar.Date
 

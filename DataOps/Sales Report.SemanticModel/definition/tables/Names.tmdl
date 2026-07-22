@@ -25,6 +25,16 @@ table Names
 		formatString: 0
 		lineageTag: 90df002c-d0a2-46c8-ac35-6abbaf207b55
 
+	measure 'Name Selected' = ```
+			
+			IF( 
+			    DISTINCTCOUNT( Names[nombre] ) = 1, 
+			    SELECTEDVALUE( Names[nombre] ),
+			    "Select Name"
+			)
+			```
+		lineageTag: f6c5a4d1-0cf7-4e0d-b816-c823c041ad07
+
 	column nombre
 		dataType: string
 		lineageTag: f72465dd-df41-4667-a3a6-cd7426ea6441
@@ -57,11 +67,19 @@ table Names
 		mode: import
 		source =
 				let
+<<<<<<< HEAD
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Appended Query" = Table.Combine({#"Promoted Headers", Names2529, Names3034, Names3539, Names4044, Names4549, Names5054, Names5559, Names6064, Names6569, Names7074, Names7579, Names8084, Names8589}),
 				    #"Added Suffix" = Table.TransformColumns(#"Appended Query", {{"anio", each _ & "-01-01", type text}}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"cantidad", Int64.Type}, {"anio", type date}})
+=======
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("rdQ9DsIwDIbhuzBD3Kb5K1epOqRNKZVKjZIA1wdLjB69ePHw6lm+YTjda32WK8B23HJUKVYsasVJxQxzrHHHFbBmLPB7xbJU0JC2UvM2veqGB2jVQcLPsWNMcOBjyku5tL22dHo1l/dpPEtkDJfpGjpGMGPZDGk6SY3jMoY0RlLj2QxpjKQmcBlLGiup6dkMaaykpm24jiOOk+S0LdshjxP1aK7jyeNFPewSePJ4UQ87BYE8QdTDbkEgT/h7xi8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Names_URL = _t]),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "Reader", each fxNamesURLReader([Names_URL])),
+				    #"Expanded Reader" = Table.ExpandTableColumn(#"Invoked Custom Function", "Reader", {"nombre", "cantidad", "anio"}, {"nombre", "cantidad", "anio"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Reader",{"Names_URL"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"nombre", type text}, {"cantidad", Int64.Type}, {"anio", Int64.Type}})
+>>>>>>> 2419795abac8682c0996e3fe8eb2a69fb087b400
 				in
 				    #"Changed Type"
 

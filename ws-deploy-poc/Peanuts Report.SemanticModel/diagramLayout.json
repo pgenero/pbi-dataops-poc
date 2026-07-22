@@ -19,7 +19,7 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 377,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
@@ -58,7 +58,20 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "fact_GlobalPrice",
+          "nodeLineageTag": "4640ec0f-1380-4862-b5c4-0dd8e8d20a91",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
         }
       ],
       "name": "All tables",

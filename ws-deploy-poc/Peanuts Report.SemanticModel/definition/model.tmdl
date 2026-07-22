@@ -13,7 +13,7 @@ queryGroup Production
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["raw_mani_data","dim_geo","fact_mani","fact_prod_industrial","produccion-aceite-mani","produccion-pellets-mani","fact_GlobalPrice"]
+annotation PBI_QueryOrder = ["raw_mani_data","dim_geo","fact_mani","fact_prod_industrial","produccion-aceite-mani","produccion-pellets-mani","fact_GlobalPrice","fact_ProducerPrice"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -22,6 +22,7 @@ ref table fact_mani
 ref table calendar
 ref table fact_prod_industrial
 ref table fact_GlobalPrice
+ref table fact_ProducerPrice
 
 ref cultureInfo en-US
 

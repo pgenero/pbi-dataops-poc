@@ -1,182 +1,30 @@
-expression Names2529 =
+expression Names_URLs =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("rdQ9DsIwDIbhuzBD3Kb5K1epOqRNKZVKjZIA1wdLjB69ePHw6lm+YTjda32WK8B23HJUKVYsasVJxQxzrHHHFbBmLPB7xbJU0JC2UvM2veqGB2jVQcLPsWNMcOBjyku5tL22dHo1l/dpPEtkDJfpGjpGMGPZDGk6SY3jMoY0RlLj2QxpjKQmcBlLGiup6dkMaaykpm24jiOOk+S0LdshjxP1aK7jyeNFPewSePJ4UQ87BYE8QdTDbkEgT/h7xi8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Names_URL = _t]),
+		    #"Invoked Custom Function" = Table.AddColumn(Source, "Reader", each fxNamesURLReader([Names_URL])),
+		    #"Expanded Reader" = Table.ExpandTableColumn(#"Invoked Custom Function", "Reader", {"nombre", "cantidad", "anio"}, {"nombre", "cantidad", "anio"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Expanded Reader",{"Names_URL"})
 		in
-		    #"Changed Type"
-	lineageTag: f048f296-b503-4000-8709-ac2237508c71
+		    #"Removed Columns"
+	lineageTag: 22b1654b-d808-451b-bd28-0c9abd999057
 	queryGroup: Names_Queries
 
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 
-expression Names3034 =
+expression fxNamesURLReader =
+		( _url as text ) =>
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.4/download/nombres-1930-1934.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(_url),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
 		in
 		    #"Changed Type"
-	lineageTag: 7c10ba2f-c460-4d29-8853-2794e11c4430
+	lineageTag: 9a770964-86a7-4488-999f-ad50de9b1863
 	queryGroup: Names_Queries
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Table
-
-expression Names3539 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.5/download/nombres-1935-1939.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 48197ab5-cb87-4690-b8fa-475b3e32dd2f
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names4044 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.6/download/nombres-1940-1944.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 2527cea2-54dc-4a16-9367-aa49fa7fd9ac
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names4549 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.7/download/nombres-1945-1949.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: d74b2c46-1f24-46d7-ad42-0a965f21bfa6
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names5054 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.8/download/nombres-1950-1954.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 34be8e6e-0768-4381-b2b7-f474da4b4b53
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names5559 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.9/download/nombres-1955-1959.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 7f23c5dc-b60d-416e-9d38-894dd40c443e
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names6064 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.10/download/nombres-1960-1964.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 821f4f17-d722-4910-b65c-a21c72e3d09e
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names6569 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.11/download/nombres-1965-1969.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 4ec06aae-bdc5-46dd-b062-050847da3cef
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names7074 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.12/download/nombres-1970-1974.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: fe9f3edf-e8ec-4a33-bc2a-5eab29f5b503
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names7579 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.13/download/nombres-1975-1979.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 81b4ac15-f511-4154-adb1-75c983fdf5c6
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names8084 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.14/download/nombres-1980-1984.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: 6f66cce0-ac3d-419b-8291-c383212fe575
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
-expression Names8589 =
-		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.15/download/nombres-1985-1989.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"cantidad", Int64.Type}, {"anio", Int64.Type}})
-		in
-		    #"Changed Type"
-	lineageTag: d51f8039-0505-49c4-8b1f-e90a889fa5ed
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Function
 

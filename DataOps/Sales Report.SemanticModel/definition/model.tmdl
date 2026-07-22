@@ -3,7 +3,6 @@ model Model
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
 	dataAccessOptions
-		fastCombine
 		legacyRedirects
 		returnErrorValuesAsNull
 

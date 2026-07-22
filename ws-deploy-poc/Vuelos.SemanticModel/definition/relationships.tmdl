@@ -1,0 +1,4 @@
+relationship a1ac551c-fe93-a75b-e090-231e8ce13727
+	fromColumn: magnitud_rutas.indice_tiempo
+	toColumn: dim_date.Date
+

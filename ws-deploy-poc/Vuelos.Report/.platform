@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Vuelos"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7225e729-a25c-4a8c-85a4-5a88880377fa"
+  }
+}

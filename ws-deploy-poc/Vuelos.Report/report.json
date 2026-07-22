@@ -1,0 +1,63 @@
+{
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "publicCustomVisuals": [
+    "sankey02300D1BE6F5427989F3DE31CCA9E0F32020"
+  ],
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU05",
+            "path": "BaseThemes/CY26SU05.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Vuelos",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "a46d77e97766c0ba8a82",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"4e3ac740d37b31810999\",\"layouts\":[{\"id\":0,\"position\":{\"x\":641,\"y\":416,\"width\":626,\"height\":293,\"z\":2,\"tabOrder\":2}}],\"singleVisual\":{\"visualType\":\"scatterChart\",\"projections\":{\"X\":[{\"queryRef\":\"Dax_Measures.02 Pasajeros\",\"active\":true}],\"Y\":[{\"queryRef\":\"Dax_Measures.03 Vuelos\"}],\"Category\":[{\"queryRef\":\"magnitud_rutas.destino\",\"active\":true}],\"Series\":[{\"queryRef\":\"magnitud_rutas.destino\"}],\"Size\":[{\"queryRef\":\"Dax_Measures.01 Asientos\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Dax_Measures\",\"Type\":0},{\"Name\":\"m\",\"Entity\":\"magnitud_rutas\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"02 Pasajeros\"},\"Name\":\"Dax_Measures.02 Pasajeros\",\"NativeReferenceName\":\"02 Pasajeros\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"03 Vuelos\"},\"Name\":\"Dax_Measures.03 Vuelos\",\"NativeReferenceName\":\"03 Vuelos\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"destino\"},\"Name\":\"magnitud_rutas.destino\",\"NativeReferenceName\":\"destino\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"01 Asientos\"},\"Name\":\"Dax_Measures.01 Asientos\",\"NativeReferenceName\":\"01 Asientos\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 293.00,
+          "width": 626.00,
+          "x": 641.00,
+          "y": 416.00,
+          "z": 2.00
+        },
+        {
+          "config": "{\"name\":\"a0924d2c400ed0763a69\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640.517380759903,\"y\":84.85044462409054,\"z\":0,\"width\":626.0307194826192,\"height\":331.1236863379143,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_date.Year\",\"active\":true}],\"Y\":[{\"queryRef\":\"Dax_Measures.03 Vuelos\"}],\"Y2\":[{\"queryRef\":\"Dax_Measures.04 D Count Destinos\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d1\",\"Entity\":\"Dax_Measures\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dim_date\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Year\"},\"Name\":\"dim_date.Year\",\"NativeReferenceName\":\"Year\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\"03 Vuelos\"},\"Name\":\"Dax_Measures.03 Vuelos\",\"NativeReferenceName\":\"03 Vuelos\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\"04 D Count Destinos\"},\"Name\":\"Dax_Measures.04 D Count Destinos\",\"NativeReferenceName\":\"04 D Count Destinos\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\"03 Vuelos\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 331.12,
+          "width": 626.03,
+          "x": 640.52,
+          "y": 84.85,
+          "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"d8e2decea9a6a4530994\",\"layouts\":[{\"id\":0,\"position\":{\"x\":15.521422797089732,\"y\":84.85044462409054,\"z\":1,\"width\":605.3354890864996,\"height\":623.9611964430072,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"clusteredBarChart\",\"projections\":{\"Category\":[{\"queryRef\":\"magnitud_rutas.destino\",\"active\":true}],\"Y\":[{\"queryRef\":\"Dax_Measures.03 Vuelos\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"m\",\"Entity\":\"magnitud_rutas\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"Dax_Measures\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"m\"}},\"Property\":\"destino\"},\"Name\":\"magnitud_rutas.destino\",\"NativeReferenceName\":\"destino\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"03 Vuelos\"},\"Name\":\"Dax_Measures.03 Vuelos\",\"NativeReferenceName\":\"03 Vuelos\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"03 Vuelos\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 623.96,
+          "width": 605.34,
+          "x": 15.52,
+          "y": 84.85,
+          "z": 1.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

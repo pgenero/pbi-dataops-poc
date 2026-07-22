@@ -1,0 +1,101 @@
+table magnitud_rutas
+	lineageTag: 779268dc-a04d-4528-bb9d-a4fbf645a4a5
+
+	column indice_tiempo
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c0c384be-f336-4738-8097-58b273a548e3
+		summarizeBy: none
+		sourceColumn: indice_tiempo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column clasificacion_vuelo
+		dataType: string
+		lineageTag: 11b48e3f-7db7-456b-821b-2ea621092299
+		summarizeBy: none
+		sourceColumn: clasificacion_vuelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ruta_nombre
+		dataType: string
+		lineageTag: e6c1cc9d-d2d5-4d7c-a80b-8242938adbfe
+		summarizeBy: none
+		sourceColumn: ruta_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column vuelos
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d9928c8-ddc0-4872-b9c1-466d5e952f7c
+		summarizeBy: none
+		sourceColumn: vuelos
+
+		annotation SummarizationSetBy = User
+
+	column pasajeros
+		dataType: int64
+		formatString: 0
+		lineageTag: 0511610a-f502-4899-9456-c96cf09f4d3c
+		summarizeBy: none
+		sourceColumn: pasajeros
+
+		annotation SummarizationSetBy = User
+
+	column asientos
+		dataType: int64
+		formatString: 0
+		lineageTag: 240dfaef-e051-4819-9b54-0388e7a0dd87
+		summarizeBy: none
+		sourceColumn: asientos
+
+		annotation SummarizationSetBy = User
+
+	column origen
+		dataType: string
+		lineageTag: 7d3c428a-b76b-44b2-a7bd-c64ba77b3db5
+		summarizeBy: none
+		sourceColumn: origen
+
+		annotation SummarizationSetBy = Automatic
+
+	column destino
+		dataType: string
+		lineageTag: 546f2dd8-a6bc-4abb-9d23-493e1bb9e960
+		summarizeBy: none
+		sourceColumn: destino
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy rutas
+		lineageTag: 9b5bb5ea-337c-410e-96bb-7ae8f7ede65a
+
+		level origen
+			lineageTag: 8769bceb-e2e8-4787-98dc-17dfa138c976
+			column: origen
+
+		level destino
+			lineageTag: 021d31b8-1da6-4aca-828f-a2fe776c9367
+			column: destino
+
+	partition magnitud_rutas = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://datos.yvera.gob.ar/dataset/c0e7bc3d-553c-405c-8b32-79282b28ffd5/resource/bdb24072-a463-4305-9fde-f38f753ebf26/download/magnitudes_por_ruta.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Inserted Text Before Delimiter" = Table.AddColumn(#"Promoted Headers", "origen", each Text.BeforeDelimiter([ruta_nombre], " - "), type text),
+				    #"Inserted Text After Delimiter" = Table.AddColumn(#"Inserted Text Before Delimiter", "destino", each Text.AfterDelimiter([ruta_nombre], " - "), type text),
+				    #"Added Suffix" = Table.TransformColumns(#"Inserted Text After Delimiter", {{"indice_tiempo", each _ & "-01-01", type text}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"indice_tiempo", type date}, {"vuelos", Int64.Type}, {"pasajeros", Int64.Type}, {"asientos", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,61 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 460,
+            "y": 245
+          },
+          "nodeIndex": "magnitud_rutas",
+          "nodeLineageTag": "779268dc-a04d-4528-bb9d-a4fbf645a4a5",
+          "size": {
+            "height": 338,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "e90ad77a-5b04-412d-bfd8-509b97440a63",
+          "size": {
+            "height": 255,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 751,
+            "y": 0
+          },
+          "nodeIndex": "Dax_Measures",
+          "nodeLineageTag": "62bf6d53-8831-415c-8d14-76b2595a7c5e",
+          "size": {
+            "height": 249,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -25,4 +25,4 @@ jobs:
           python-version: '3.11'
 
       - name: Run validation
-        run: python scripts/ci/validate_pbir.py
+        run: python ci/scripts/validate_pbir.py

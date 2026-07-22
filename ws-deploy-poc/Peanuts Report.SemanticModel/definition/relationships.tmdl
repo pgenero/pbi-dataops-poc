@@ -10,3 +10,7 @@ relationship 466c18b1-43a2-bbf0-d00e-37104000b0f8
 	fromColumn: fact_prod_industrial.date
 	toColumn: calendar.Date
 
+relationship 11a3e55f-a5a8-d9d5-fd72-e492bb25e0fa
+	fromColumn: fact_GlobalPrice.observation_date
+	toColumn: calendar.Date
+

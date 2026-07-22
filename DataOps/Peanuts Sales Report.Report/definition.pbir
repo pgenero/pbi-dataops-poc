@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byConnection": {
-      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/fw-pablo-operations;initial catalog=\"Peanuts Report\";access mode=readonly;integrated security=ClaimsToken;semanticmodelid=3c2601a6-c3e2-4363-a198-ee51b28a19ab"
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=\"Peanuts Report\";access mode=readonly;integrated security=ClaimsToken;semanticmodelid=337481dd-6010-4616-bb1f-56a1499188ce"
     }
   }
 }

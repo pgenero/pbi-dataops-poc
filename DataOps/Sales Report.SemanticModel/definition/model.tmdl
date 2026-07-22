@@ -3,6 +3,7 @@ model Model
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	sourceQueryCulture: en-US
 	dataAccessOptions
+		fastCombine
 		legacyRedirects
 		returnErrorValuesAsNull
 
@@ -12,7 +13,7 @@ queryGroup Names_Queries
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Names","Names_URLs","fxNamesURLReader"]
+annotation PBI_QueryOrder = ["SalesSupermarket","dimCategory","SalesB2B","ConsumerIndex","dimIndex","Names","fxNamesURLReader"]
 
 annotation PBI_ProTooling = ["DevMode"]
 

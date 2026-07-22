@@ -1,18 +1,3 @@
-expression Names_URLs =
-		let
-		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("rdQ9DsIwDIbhuzBD3Kb5K1epOqRNKZVKjZIA1wdLjB69ePHw6lm+YTjda32WK8B23HJUKVYsasVJxQxzrHHHFbBmLPB7xbJU0JC2UvM2veqGB2jVQcLPsWNMcOBjyku5tL22dHo1l/dpPEtkDJfpGjpGMGPZDGk6SY3jMoY0RlLj2QxpjKQmcBlLGiup6dkMaaykpm24jiOOk+S0LdshjxP1aK7jyeNFPewSePJ4UQ87BYE8QdTDbkEgT/h7xi8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Names_URL = _t]),
-		    #"Invoked Custom Function" = Table.AddColumn(Source, "Reader", each fxNamesURLReader([Names_URL])),
-		    #"Expanded Reader" = Table.ExpandTableColumn(#"Invoked Custom Function", "Reader", {"nombre", "cantidad", "anio"}, {"nombre", "cantidad", "anio"}),
-		    #"Removed Columns" = Table.RemoveColumns(#"Expanded Reader",{"Names_URL"})
-		in
-		    #"Removed Columns"
-	lineageTag: 22b1654b-d808-451b-bd28-0c9abd999057
-	queryGroup: Names_Queries
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
 expression fxNamesURLReader =
 		( _url as text ) =>
 		let

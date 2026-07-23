@@ -149,7 +149,7 @@ for target in targets:
             mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
 
             # --- Scenario 1: The deployed item exists in Test and is visible in the Pipeline Operation request
-            if diff_state != "New"
+            if diff_state != "New":
 
                 item = {
                     "itemType": mapped_type,

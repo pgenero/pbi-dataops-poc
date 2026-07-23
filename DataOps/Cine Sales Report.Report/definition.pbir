@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+  "version": "4.0",
+  "datasetReference": {
+    "byConnection": {
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=CineTickets;access mode=readonly;integrated security=ClaimsToken;semanticmodelid=592b9fee-c77e-449b-b0e4-e55a62d8a8f3"
+    }
+  }
+}

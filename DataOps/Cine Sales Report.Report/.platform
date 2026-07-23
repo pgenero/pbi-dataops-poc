@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Cine Sales Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f3b0498a-904b-4b5d-82ff-95ed3f5bae21"
+  }
+}

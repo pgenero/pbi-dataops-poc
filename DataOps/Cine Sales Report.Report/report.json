@@ -19,7 +19,7 @@
   ],
   "sections": [
     {
-      "config": "{}",
+      "config": "{\"objects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.2}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"0D\"}}}}}]}}",
       "displayName": "Cine Tickets",
       "displayOption": 1,
       "filters": "[]",
@@ -27,22 +27,22 @@
       "name": "e2cc6c3409a9704d0874",
       "visualContainers": [
         {
-          "config": "{\"name\":\"6eddccb1baa39d0108be\",\"layouts\":[{\"id\":0,\"position\":{\"x\":18.480243161094226,\"y\":85.59270516717325,\"z\":0,\"width\":1244.0121580547113,\"height\":610.8206686930091,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"clusteredColumnChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sum(valores_entrada.valor)\"}],\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"v\",\"Entity\":\"valores_entrada\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"v\"}},\"Property\":\"valor\"}},\"Function\":0},\"Name\":\"Sum(valores_entrada.valor)\",\"NativeReferenceName\":\"Sum of valor\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"vcObjects\":{\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.2}}}}}}}]}}}",
+          "config": "{\"name\":\"6eddccb1baa39d0108be\",\"layouts\":[{\"id\":0,\"position\":{\"x\":18.480243161094226,\"y\":113.79939209726444,\"z\":0,\"width\":1244.0121580547113,\"height\":582.613981762918,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"clusteredColumnChart\",\"projections\":{\"Y\":[{\"queryRef\":\"Sum(valores_entrada.valor)\"}],\"Category\":[{\"queryRef\":\"Calendar.Date\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"v\",\"Entity\":\"valores_entrada\",\"Type\":0},{\"Name\":\"c\",\"Entity\":\"Calendar\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"v\"}},\"Property\":\"valor\"}},\"Function\":0},\"Name\":\"Sum(valores_entrada.valor)\",\"NativeReferenceName\":\"Sum of valor\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"},\"Name\":\"Calendar.Date\",\"NativeReferenceName\":\"Date\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Date\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"dataPoint\":[{\"properties\":{\"fill\":{\"solid\":{\"color\":{\"expr\":{\"Literal\":{\"Value\":\"'#00B0B3'\"}}}}}}}],\"categoryAxis\":[{\"properties\":{\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"labelColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}}}],\"valueAxis\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"labelColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":-0.1}}}}},\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.2}}}}}}}],\"background\":[{\"properties\":{\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"80D\"}}}}}],\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Cine Ticket Value'\"}}},\"alignment\":{\"expr\":{\"Literal\":{\"Value\":\"'center'\"}}},\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":-0.1}}}}}}}],\"divider\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":9,\"Percent\":0}}}}}}}]}}}",
           "filters": "[]",
-          "height": 610.82,
+          "height": 582.61,
           "width": 1244.01,
           "x": 18.48,
-          "y": 85.59,
+          "y": 113.80,
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"ea85ee134ea90833e1ea\",\"layouts\":[{\"id\":0,\"position\":{\"x\":18.480243161094226,\"y\":0,\"z\":1,\"width\":1244.0121580547113,\"height\":85.59270516717325,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Report created in Desktop\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontSize\":\"16pt\"}}]},{\"textRuns\":[{\"value\":\"Live connection to a SM in a different Workspace\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontSize\":\"16pt\"}}]}]}}]}}}",
+          "config": "{\"name\":\"ea85ee134ea90833e1ea\",\"layouts\":[{\"id\":0,\"position\":{\"x\":18.480243161094226,\"y\":0,\"z\":1000,\"width\":1244.0121580547113,\"height\":85.59270516717325,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Report created in Desktop\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontSize\":\"16pt\"}}]},{\"textRuns\":[{\"value\":\"Live connection to a SM in a different Workspace\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontSize\":\"16pt\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.6}}}}}}}]}}}",
           "filters": "[]",
           "height": 85.59,
           "width": 1244.01,
           "x": 18.48,
           "y": 0.00,
-          "z": 1.00
+          "z": 1000.00
         }
       ],
       "width": 1280.00

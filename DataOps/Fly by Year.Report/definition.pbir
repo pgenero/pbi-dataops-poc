@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+  "version": "4.0",
+  "datasetReference": {
+    "byConnection": {
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=Vuelos;integrated security=ClaimsToken;semanticmodelid=571baec1-db20-4f3d-bb57-b0f4e782366f"
+    }
+  }
+}

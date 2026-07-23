@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Fly by Year"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "93254c97-365e-8433-4edd-372e0dc7ae82"
+  }
+}

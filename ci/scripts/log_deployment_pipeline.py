@@ -43,6 +43,52 @@ def wait_for_completion(pl, pipeline_id, operation_id, max_retries=15, wait_seco
     print("⚠️ Timeout waiting for deployment")
     return last_data
 
+# Function to recover the Test Workspace Content
+# To be used when the deploy to test creates new items
+# To complete the log json file the IDs will be recovered from the workspace content
+# To do dat, we need to request the content using the WorkspaceID.
+# Workspace ID will be recovered from the pipeline stages metadata
+def get_items(pipeline_id, token):
+    #--- 1. Get the Test Workspace ID from the pipeline stages
+    # Endpoint from SimplePBI (Power BI API)
+    pipeline_stages = pl.get_pipeline_stages(pipeline_id)
+    
+    workspace_id = None
+    
+    # Iterate over the list in the 'value'
+    for stage in pipeline_stages.get('value', []):
+        # Order: 0 = Dev, 1 = Test, 2 = Prod
+        if stage.get('order') == 1:
+            workspace_id = stage.get('workspaceId')
+            break # Encontrado, salimos del bucle
+
+    # If ID is missing
+    if not workspace_id:
+        print("❌ Not able to find Test Workspace ID")
+        return None
+
+    #--- 2. Use the Test Workspace ID to get the content of the workspace
+    # Endpoint from Fabric API
+    url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/items"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+
+    # --- Execute the HTTP request ---
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        print(f"❌ Error fetching items: {response.status_code} - {response.text}")
+        return []
+        
+    data = response.json()
+    items = data.get("value", [])
+    
+    ### FOR DEBUG - DELETE
+    print(f"✅ Items retrieved: {len(items)}")
+    return items
+
 # ========================
 # 2. Loop per target
 # ========================
@@ -90,21 +136,53 @@ for target in targets:
             "items": []
         }
 
+        # 2.XXXXX Request the workspace existing items to use in case of Added objects from the Git repo
+        workspace_items = get_items(pipeline_id, token)
+
         # 2.5 Log Level 2 - Oerations details
         for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
             source_target = step.get("sourceAndTarget", {})
+            diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
 
             # Update the name in the object "itemType" to use the one required in the deployment operation
             raw_type = source_target.get("type")
             mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
 
-            item = {
-                "itemType": mapped_type,
-                "targetItemId": source_target.get("target"),
-                "targetItemName": source_target.get("targetDisplayName"),
-            }
+            # --- Scenario 1: The deployed item exists in Test and is visible in the Pipeline Operation request
+            if diff_state != "New"
 
-            result["items"].append(item)
+                item = {
+                    "itemType": mapped_type,
+                    "targetItemId": source_target.get("target"),
+                    "targetItemName": source_target.get("targetDisplayName"),
+                }
+
+                result["items"].append(item)
+
+            # --- Scenario 2: The deployed doesn't exist Test (new), is not visible in the Pipeline Operations request
+            # Recover the ID from the Workspace Item endpoint (Target Workspace is Test)
+            else:
+                source_name = source_target.get("sourceDisplayName")
+                found = False
+                for ws_item in workspace_items:
+                    if (
+                        ws_item.get("displayName") == source_name
+                        and ws_item.get("type") == mapped_type
+                    ):
+                        item = {
+                            "itemType": mapped_type,
+                            "targetItemId": ws_item["id"],
+                            "targetItemName": ws_item["displayName"]
+                        }
+                        result["items"].append(item)
+                        found = True
+                        break
+
+                if not found:
+                    print(
+                        f"⚠️ No match found in TEST workspace "
+                        f"for '{source_name}' ({mapped_type})"
+                    )
 
         # 2.6 Final Log Output
         print(result)

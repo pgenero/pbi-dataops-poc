@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "b860d3b3bd68c7070efc",
   "position": {
     "x": 14.3928035982009,
@@ -246,6 +246,95 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "referenceLine": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Percentile line 1'"
+                }
+              }
+            },
+            "value": {
+              "expr": {
+                "Percentile": {
+                  "Expression": {
+                    "SelectRef": {
+                      "ExpressionName": "Sum(SalesB2B.Value)"
+                    }
+                  },
+                  "K": 0.9
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(SalesB2B.Value)",
+            "id": "1"
+          }
+        }
+      ],
+      "error": [
+        {
+          "properties": {
+            "enabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(SalesB2B.Value)"
+          }
+        },
+        {
+          "properties": {
+            "errorRange": {
+              "kind": "ErrorRange",
+              "symmetricalExplicit": {
+                "delta": {
+                  "expr": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "SalesB2B"
+                            }
+                          },
+                          "Property": "Value"
+                        }
+                      },
+                      "Function": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "metadata": "Sum(SalesB2B.Value)",
+            "highlightMatching": 1
           }
         }
       ]

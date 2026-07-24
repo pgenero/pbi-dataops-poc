@@ -1,15 +1,3 @@
-relationship 02fdc34e-ea92-751a-444e-5869cd4f1f0a
-	fromColumn: SalesSupermarket.Category
-	toColumn: dimCategory.Category
-
-relationship e3548477-26d5-b9f2-173b-a4da4cd388bb
-	fromColumn: SalesB2B.Category
-	toColumn: dimCategory.Category
-
-relationship 295ddfca-e63c-1a7b-a0db-f876838b096a
-	fromColumn: ConsumerIndex.Attribute
-	toColumn: dimIndex.IndexCategory
-
 relationship 80d0c3db-fa92-12fc-d8bc-5db3d5f86bfc
 	fromColumn: SalesSupermarket.indice_tiempo
 	toColumn: Calendar.Date
@@ -18,9 +6,21 @@ relationship 5e30847e-2235-cda1-e517-557b5dc56540
 	fromColumn: SalesB2B.indice_tiempo
 	toColumn: Calendar.Date
 
+relationship 02fdc34e-ea92-751a-444e-5869cd4f1f0a
+	fromColumn: SalesSupermarket.Category
+	toColumn: dimCategory.Category
+
+relationship e3548477-26d5-b9f2-173b-a4da4cd388bb
+	fromColumn: SalesB2B.Category
+	toColumn: dimCategory.Category
+
 relationship d17cd351-4e4c-818e-9eac-9704c3931d9a
 	fromColumn: ConsumerIndex.indice_tiempo
 	toColumn: Calendar.Date
+
+relationship 295ddfca-e63c-1a7b-a0db-f876838b096a
+	fromColumn: ConsumerIndex.Attribute
+	toColumn: dimIndex.IndexCategory
 
 relationship 00eb2be6-a6b1-9e79-d140-7fa53df45499
 	fromColumn: Names.anio

@@ -3,7 +3,7 @@ table SalesB2B
 
 	column indice_tiempo
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 7de6f4a1-1120-496a-be9e-15c7e6f14efe
 		summarizeBy: none
 		sourceColumn: indice_tiempo

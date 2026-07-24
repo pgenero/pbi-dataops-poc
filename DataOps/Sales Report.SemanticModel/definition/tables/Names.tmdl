@@ -54,7 +54,7 @@ table Names
 
 	column anio
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 1dd84aa3-a3c6-44ce-92f2-ef6734921124
 		summarizeBy: none
 		sourceColumn: anio

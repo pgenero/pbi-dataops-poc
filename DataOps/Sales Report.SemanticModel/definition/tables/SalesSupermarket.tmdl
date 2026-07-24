@@ -3,7 +3,7 @@ table SalesSupermarket
 
 	column indice_tiempo
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 55832e0c-585d-4e06-a937-9954dfda1d26
 		summarizeBy: none
 		sourceColumn: indice_tiempo

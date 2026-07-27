@@ -1,0 +1,42 @@
+{
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU05",
+            "path": "BaseThemes/CY26SU05.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{\"objects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.2}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"12D\"}}}}}]}}",
+      "displayName": "Summary",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "4bd17ec0447c611e9891",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"a6d0d679384e2cae4181\",\"layouts\":[{\"id\":0,\"position\":{\"x\":19.658703071672356,\"y\":55.69965870307167,\"z\":0,\"width\":1246.1433447098975,\"height\":615.9726962457338,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(AirFareCarrier.market_passengers)\"}],\"Y2\":[{\"queryRef\":\"Sum(AirFareCarrier.market_revenue_real)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"a\",\"Entity\":\"AirFareCarrier\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dim_Calendar\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"YEAR\"},\"Name\":\"dim_Calendar.YEAR\",\"NativeReferenceName\":\"YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"market_passengers\"}},\"Function\":0},\"Name\":\"Sum(AirFareCarrier.market_passengers)\",\"NativeReferenceName\":\"Sum of market_passengers\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"market_revenue_real\"}},\"Function\":0},\"Name\":\"Sum(AirFareCarrier.market_revenue_real)\",\"NativeReferenceName\":\"Sum of market_revenue_real\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"market_passengers\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 615.97,
+          "width": 1246.14,
+          "x": 19.66,
+          "y": 55.70,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

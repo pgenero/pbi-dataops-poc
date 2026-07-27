@@ -17,14 +17,11 @@ queryGroup ProducerPriceIndex
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["raw_mani_data","dim_geo","fact_mani","fact_prod_industrial","produccion-aceite-mani","produccion-pellets-mani","fact_GlobalPrice","fact_ProducerPrice","priceIndex_pistachios","priceIndex_almonds","priceIndex_pecans","priceIndex_treeNuts","priceIndex_macadamia","priceIndex_filberts","priceIndex_walnut"]
+annotation PBI_QueryOrder = ["fact_GlobalPrice","fact_ProducerPrice","priceIndex_pistachios","priceIndex_almonds","priceIndex_pecans","priceIndex_treeNuts","priceIndex_macadamia","priceIndex_filberts","priceIndex_walnut"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table dim_geo
-ref table fact_mani
 ref table calendar
-ref table fact_prod_industrial
 ref table fact_GlobalPrice
 ref table fact_ProducerPrice
 

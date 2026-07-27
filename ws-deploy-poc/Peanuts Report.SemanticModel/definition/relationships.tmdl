@@ -1,15 +1,3 @@
-relationship 41794122-852d-8b5c-6fc7-5f1e8a3fab59
-	fromColumn: fact_mani.departamento_id
-	toColumn: dim_geo.departamento_id
-
-relationship 37d14f60-ad43-26f5-9a7c-8ad3ee7ae6cf
-	fromColumn: fact_mani.date
-	toColumn: calendar.Date
-
-relationship 466c18b1-43a2-bbf0-d00e-37104000b0f8
-	fromColumn: fact_prod_industrial.date
-	toColumn: calendar.Date
-
 relationship 11a3e55f-a5a8-d9d5-fd72-e492bb25e0fa
 	fromColumn: fact_GlobalPrice.observation_date
 	toColumn: calendar.Date

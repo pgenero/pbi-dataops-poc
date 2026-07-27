@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Flight Model"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "833b4f8c-e20d-4280-9515-2bb9d7281bc4"
+  }
+}

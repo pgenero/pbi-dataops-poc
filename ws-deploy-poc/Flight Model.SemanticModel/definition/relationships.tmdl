@@ -1,0 +1,12 @@
+relationship AutoDetected_7abac23c-b5e3-42c5-8ae9-4c87c0e064df
+	fromColumn: AirFareCarrier.rpcarrier
+	toColumn: dim_carriers.rpcarrier
+
+relationship ea79c1ec-8a1b-9e96-1371-6c025a7ce598
+	fromColumn: AirFareCarrier.year
+	toColumn: dim_Calendar.Date
+
+relationship 8a1c3f71-2267-b2e0-5a65-02d5fb6c4813
+	fromColumn: PassengerIndicators.week_ending
+	toColumn: dim_Calendar.Date
+

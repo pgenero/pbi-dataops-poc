@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Fly Stats"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e18495ae-d9a4-42dd-95f9-f735de98c010"
+  }
+}

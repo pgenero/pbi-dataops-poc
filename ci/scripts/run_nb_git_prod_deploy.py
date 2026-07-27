@@ -99,23 +99,66 @@ while True:
     
     print(f"Fabric Notebook current state: [{current_status}]")
     
-    # --- Fabric Notebook Success → Delete Git Feature Branch ---
+    # --- NOTEBOOK EXECUTION --- 
+    # Fabric Notebook Success → Delete Git Feature Branch
     if current_status in ["Completed", "Succeeded"]:
-        print(f"Fabric Notebook completed. State: [{current_status}]")
+        print("\n=======================================================")
+        print("         FABRIC EXECUTION SUMMARY RESULTS              ")
+        print("=======================================================")
 
-        # --- Delete the Feature Branch ---
-        git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
-        git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
-  
-        if git_delete_response.status_code == 204:
-            print(f"✅ Git Branch {branch} deleted")
+        # Extract the value returned by mssparkutils.notebook.exit()
+        exit_value_raw = job_status_data.get("result", {}).get("resultValue")
+        
+        has_internal_errors = False
+
+        if exit_value_raw:
+            try:
+                # Parse if the value returned is a JSON string
+                execution_summary = json.loads(exit_value_raw) if isinstance(exit_value_raw, str) else exit_value_raw
+                
+                # Print in read format for Git Hub 
+                for item in execution_summary:
+                    target = item.get("target", "Unknown")
+                    deploy_st = item.get("deploy_status", "N/A")
+                    git_st = item.get("git_commit_status", "N/A")
+                    err_msg = item.get("error_message")
+
+                    print(f"\n📌 Target: {target}")
+                    print(f"   ├─ Deploy Status:     {deploy_st}")
+                    print(f"   ├─ Git Push Status:   {git_st}")
+                    
+                    if err_msg:
+                        print(f"   └─ ⚠️ Error Detail:    {err_msg}")
+                        has_internal_errors = True
+                    else:
+                        print(f"   └─ Status:            ✅ All OK")
+                        
+            except json.JSONDecodeError:
+                print("⚠️ Output from notebook is not JSON:")
+                print(exit_value_raw)
         else:
-            print(f"❌ Failed to delete Git branch: {git_delete_response.text}")
+            print("⚠️ Notebook completed, but no exitValue was returned by mssparkutils.notebook.exit().")
+
+        print("=======================================================\n")
+
+        # --- Delete Git Branch ---
+        if not has_internal_errors:
+            print(f"🗑️ Deleting Git Branch: {branch}...")
+            git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
+            git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
+      
+            if git_delete_response.status_code == 204:
+                print(f"✅ Git Branch '{branch}' deleted successfully.")
+            else:
+                print(f"❌ Failed to delete Git branch: {git_delete_response.text}")
+        else:
+            print(f"⚠️ Branch '{branch}' was NOT deleted because one or more targets failed internally.")
+            exit(1) # Force pipeline fail in Git as warning
 
         break
 
     # --- Fabric Notebook Fail → Keep Git Feature Branch ---
     elif current_status in ["Failed", "Canceled"]:
-        print("❌ Fabric Notebook execution failed.")
+        print("❌ Fabric Notebook execution failed at infrastructure level.")
         print(f"Failure reason: {job_status_data.get('failureReason', 'No specified')}")
         exit(1)

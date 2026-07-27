@@ -10,6 +10,7 @@ client_secret = os.getenv("APP_SECRET_KEY")
 branch = os.getenv("BRANCH_NAME")
 workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
 notebook_id = "11035ea6-bfbb-4223-ac4d-65045a0aeb18"
+lakehouse_id = "85602e65-4d1f-47a3-9bf8-20a0f229eb55"
 
 # --- Branch Name Validation ---
 repo = "pgenero/pbi-dataops-poc"
@@ -106,34 +107,26 @@ while True:
         print("         FABRIC EXECUTION SUMMARY RESULTS              ")
         print("=======================================================")
 
-        # 1. Obtain detailed output using the Job instance URL
-        # The Fabric API requires querying the execution details/results
-        exit_value_raw = None
-        
-        # Get the value from Fabric
-        exit_value_raw = (
-            job_status_data.get("result", {}).get("exitValue") or
-            job_status_data.get("executionResult", {}).get("exitValue")
-        )
+        # 1. Build the file name from the branch name
+        file_name = f"execution_log_{brandh}.json"
 
-        # If it doesn't come in the basic state, we make an explicit GET to the results endpoint
-        if not exit_value_raw:
-            job_instance_id = job_status_data.get("id")
-            if job_instance_id:
-                result_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/instances/{job_instance_id}/result"
-                res_detail = requests.get(result_url, headers=headers)
-                if res_detail.status_code == 200:
-                    detail_data = res_detail.json()
-                    exit_value_raw = detail_data.get("exitValue") or detail_data.get("resultValue")
+        # 2. Read file from OneLake
+        onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{workspace_id}/{lakehouse_id}/Files/ci_cd_results/{file_name}"
+        
+        headers_onelake = {
+            "Authorization": f"Bearer {token}"
+        }
+
+        print(f"📥 Fetching summary file from OneLake: {file_name}...")
+        onelake_res = requests.get(onelake_url, headers=headers_onelake)
 
         has_internal_errors = False
 
-        if exit_value_raw:
+        if onelake_res.status_code == 200:
             try:
-                # If it is returned as scaped object it is converted to Python
-                execution_summary = json.loads(exit_value_raw) if isinstance(exit_value_raw, str) else exit_value_raw
+                execution_summary = onelake_res.json()
                 
-                # Print in read format for Git Hub 
+                # Print read format for the GitHub Actions
                 for item in execution_summary:
                     target = item.get("target", "Unknown")
                     deploy_st = item.get("deploy_status", "N/A")
@@ -149,12 +142,13 @@ while True:
                         has_internal_errors = True
                     else:
                         print(f"   └─ Status:            ✅ All OK")
-                        
+
             except json.JSONDecodeError:
-                print(f"⚠️ Raw exit output: {exit_value_raw}")
+                print(f"⚠️ Failed to parse JSON from OneLake. Raw content: {onelake_res.text}")
+                has_internal_errors = True
         else:
-            print("⚠️ No exitValue returned. Printing full status response for debugging:")
-            print(json.dumps(job_status_data, indent=2))
+            print(f"❌ Error fetching summary file from OneLake (HTTP {onelake_res.status_code}): {onelake_res.text}")
+            has_internal_errors = True
 
         print("=======================================================\n")
 
@@ -170,7 +164,7 @@ while True:
                 print(f"❌ Failed to delete Git branch: {git_delete_response.text}")
         else:
             print(f"⚠️ Branch '{branch}' was NOT deleted because one or more targets failed internally.")
-            exit(1) # Force pipeline fail in Git as warning
+            exit(1) # Fail pipeline in GitHub Actions if internal errors were detected
 
         break
 

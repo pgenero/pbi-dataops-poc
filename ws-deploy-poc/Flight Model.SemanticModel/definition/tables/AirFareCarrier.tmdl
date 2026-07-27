@@ -1,0 +1,97 @@
+table AirFareCarrier
+	lineageTag: fe7397e9-7021-4e9c-810a-85de20a233fc
+
+	column year
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 00ea64cb-ceb3-4da3-a898-1ba74ea77620
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column rpcarrier
+		dataType: string
+		lineageTag: f29e7f80-3406-457a-bd07-3f231d6bb80e
+		summarizeBy: none
+		sourceColumn: rpcarrier
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_market_fare_real
+		dataType: int64
+		formatString: 0
+		lineageTag: 40a8d6b5-32f1-4afe-88b4-c3d2a4a17c0d
+		summarizeBy: sum
+		sourceColumn: average_market_fare_real
+
+		annotation SummarizationSetBy = Automatic
+
+	column market_passengers
+		dataType: int64
+		formatString: 0
+		lineageTag: 4847f340-5dd8-47fa-8007-a3b9f7510896
+		summarizeBy: sum
+		sourceColumn: market_passengers
+
+		annotation SummarizationSetBy = Automatic
+
+	column market_revenue_real
+		dataType: int64
+		formatString: 0
+		lineageTag: c2dd363a-a48c-4d39-aa95-c6f2a0eb1f48
+		summarizeBy: sum
+		sourceColumn: market_revenue_real
+
+		annotation SummarizationSetBy = Automatic
+
+	column market_passenger_miles_flown
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b1c9669-ae3e-4a07-9ddd-4de7d5642e88
+		summarizeBy: sum
+		sourceColumn: market_passenger_miles_flown
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_market_yield_real
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 252e2b2f-5384-4857-a558-ced76f2e6069
+		summarizeBy: sum
+		sourceColumn: average_market_yield_real
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column average_market_miles_flown
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 3546b35f-5d75-455c-9dfa-59d1f1f9cd50
+		summarizeBy: sum
+		sourceColumn: average_market_miles_flown
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition AirFareCarrier = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov/api/v3/views/gjp5-nh2u/query.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{":id", ":version", ":created_at", ":updated_at", "carrier_name"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"average_market_fare_real", Int64.Type}, {"market_passengers", Int64.Type}, {"market_revenue_real", Int64.Type}, {"market_passenger_miles_flown", Int64.Type}, {"average_market_yield_real", Currency.Type}, {"average_market_miles_flown", Currency.Type}}),
+				    #"Added Suffix" = Table.TransformColumns(#"Changed Type", {{"year", each _ & "-01-01", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Suffix",{{"year", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

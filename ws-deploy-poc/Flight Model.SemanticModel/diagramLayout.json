@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 249,
+            "y": 387
+          },
+          "nodeIndex": "AirFareCarrier",
+          "nodeLineageTag": "fe7397e9-7021-4e9c-810a-85de20a233fc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 22
+          },
+          "nodeIndex": "dim_carriers",
+          "nodeLineageTag": "03ae7869-2171-4d25-ae84-a3a782c1b08a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 385
+          },
+          "nodeIndex": "PassengerIndicators",
+          "nodeLineageTag": "99b91e9d-2eee-4cac-af7c-d09dedcd0dca",
+          "size": {
+            "height": 261,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 476,
+            "y": 6
+          },
+          "nodeIndex": "dim_Calendar",
+          "nodeLineageTag": "2ad3da39-5575-4cc9-b3c4-8660f20866eb",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

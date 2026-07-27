@@ -69,7 +69,7 @@ table Names
 				let
 				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.2/download/nombres-1920-1924.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Appended Query" = Table.Combine({#"Promoted Headers", Names2529, Names3034, Names3539, Names4044, Names4549, Names5054, Names5559, Names6064, Names6569, Names7074, Names7579, Names8084, Names8589}),
+				    #"Appended Query" = Table.Combine({#"Promoted Headers", Names2529, Names3034, Names3539, Names4044, Names4549, Names5054, Names5559, Names6064, Names6569, Names7074, Names7579, Names8084, Names8589, Names9094}),
 				    #"Added Suffix" = Table.TransformColumns(#"Appended Query", {{"anio", each _ & "-01-01", type text}}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"cantidad", Int64.Type}, {"anio", type date}})
 				in

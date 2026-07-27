@@ -110,11 +110,25 @@ while True:
         # 1. Build the file name from the branch name
         file_name = f"execution_log_{branch}.json"
 
+        # 2. Request token with scope Azure Storage / OneLake
+        onelake_token_payload = {
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "grant_type": "client_credentials",
+            "scope": "https://storage.azure.com/.default"  # 👈 Scope required for OneLake DFS
+        }
+
+        token_res = requests.post(token_url, data=onelake_token_payload)
+        if token_res.status_code != 200:
+            raise Exception(f"Error getting OneLake token: {token_res.text}")
+
+        onelake_token = token_res.json()["access_token"]
+
         # 2. Read file from OneLake
         onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{workspace_id}/{lakehouse_id}/Files/ci_cd_results/{file_name}"
         
         headers_onelake = {
-            "Authorization": f"Bearer {token}"
+            "Authorization": f"Bearer {onelake_token}"
         }
 
         print(f"📥 Fetching summary file from OneLake: {file_name}...")

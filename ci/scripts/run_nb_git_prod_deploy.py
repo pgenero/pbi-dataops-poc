@@ -106,18 +106,25 @@ while True:
         print("         FABRIC EXECUTION SUMMARY RESULTS              ")
         print("=======================================================")
 
-        # Search exitValue / exitOutput
-        result_obj = job_status_data.get("result", {})
-        exec_obj = job_status_data.get("executionResult", {})
+        # 1. Obtain detailed output using the Job instance URL
+        # The Fabric API requires querying the execution details/results
+        exit_value_raw = None
         
         # Get the value from Fabric
         exit_value_raw = (
-            result_obj.get("exitValue") or 
-            result_obj.get("exitOutput") or 
-            exec_obj.get("exitValue") or 
-            exec_obj.get("exitOutput") or
-            job_status_data.get("exitValue")
+            job_status_data.get("result", {}).get("exitValue") or
+            job_status_data.get("executionResult", {}).get("exitValue")
         )
+
+        # If it doesn't come in the basic state, we make an explicit GET to the results endpoint
+        if not exit_value_raw:
+            job_instance_id = job_status_data.get("id")
+            if job_instance_id:
+                result_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/instances/{job_instance_id}/result"
+                res_detail = requests.get(result_url, headers=headers)
+                if res_detail.status_code == 200:
+                    detail_data = res_detail.json()
+                    exit_value_raw = detail_data.get("exitValue") or detail_data.get("resultValue")
 
         has_internal_errors = False
 
@@ -144,11 +151,10 @@ while True:
                         print(f"   └─ Status:            ✅ All OK")
                         
             except json.JSONDecodeError:
-                print("⚠️ Output from notebook is not JSON:")
-                print("RAW API RESPONSE FOR DEBUGGING:")
-                print(json.dumps(job_status_data, indent=2))  # Shows real output for debbig
+                print(f"⚠️ Raw exit output: {exit_value_raw}")
         else:
-            print("⚠️ Notebook completed, but no exitValue was returned by mssparkutils.notebook.exit().")
+            print("⚠️ No exitValue returned. Printing full status response for debugging:")
+            print(json.dumps(job_status_data, indent=2))
 
         print("=======================================================\n")
 

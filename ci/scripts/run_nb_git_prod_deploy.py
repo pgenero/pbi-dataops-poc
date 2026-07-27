@@ -106,14 +106,24 @@ while True:
         print("         FABRIC EXECUTION SUMMARY RESULTS              ")
         print("=======================================================")
 
-        # Extract the value returned by mssparkutils.notebook.exit()
-        exit_value_raw = job_status_data.get("result", {}).get("resultValue")
+        # Search exitValue / exitOutput
+        result_obj = job_status_data.get("result", {})
+        exec_obj = job_status_data.get("executionResult", {})
         
+        # Get the value from Fabric
+        exit_value_raw = (
+            result_obj.get("exitValue") or 
+            result_obj.get("exitOutput") or 
+            exec_obj.get("exitValue") or 
+            exec_obj.get("exitOutput") or
+            job_status_data.get("exitValue")
+        )
+
         has_internal_errors = False
 
         if exit_value_raw:
             try:
-                # Parse if the value returned is a JSON string
+                # If it is returned as scaped object it is converted to Python
                 execution_summary = json.loads(exit_value_raw) if isinstance(exit_value_raw, str) else exit_value_raw
                 
                 # Print in read format for Git Hub 
@@ -135,7 +145,8 @@ while True:
                         
             except json.JSONDecodeError:
                 print("⚠️ Output from notebook is not JSON:")
-                print(exit_value_raw)
+                print("RAW API RESPONSE FOR DEBUGGING:")
+                print(json.dumps(job_status_data, indent=2))  # Shows real output for debbig
         else:
             print("⚠️ Notebook completed, but no exitValue was returned by mssparkutils.notebook.exit().")
 

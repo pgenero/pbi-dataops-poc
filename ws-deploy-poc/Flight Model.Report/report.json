@@ -1,0 +1,42 @@
+{
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU05",
+            "path": "BaseThemes/CY26SU05.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "SUMMARY",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "f8bdd1ff0377e93dda0d",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"de66bf57b0816909a435\",\"layouts\":[{\"id\":0,\"position\":{\"x\":38.535394629780306,\"y\":53.11635475996745,\"z\":0,\"width\":1217.5101708706266,\"height\":307.2416598860862,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"clusteredColumnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dim_Calendar.YEAR\",\"active\":true}],\"Y\":[{\"queryRef\":\"Sum(AirFareCarrier.market_passengers)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_Calendar\",\"Type\":0},{\"Name\":\"a\",\"Entity\":\"AirFareCarrier\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"YEAR\"},\"Name\":\"dim_Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"market_passengers\"}},\"Function\":0},\"Name\":\"Sum(AirFareCarrier.market_passengers)\",\"NativeReferenceName\":\"Sum of market_passengers\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"a\"}},\"Property\":\"market_passengers\"}},\"Function\":0}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 307.24,
+          "width": 1217.51,
+          "x": 38.54,
+          "y": 53.12,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

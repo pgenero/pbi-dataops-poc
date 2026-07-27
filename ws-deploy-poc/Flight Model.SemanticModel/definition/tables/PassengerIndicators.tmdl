@@ -1,0 +1,65 @@
+table PassengerIndicators
+	lineageTag: 99b91e9d-2eee-4cac-af7c-d09dedcd0dca
+
+	column mode
+		dataType: string
+		lineageTag: 93f94f8b-0ae8-4f1b-9a03-2151948feded
+		summarizeBy: none
+		sourceColumn: mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column indicator
+		dataType: string
+		lineageTag: 9af56378-854f-452b-ab36-ca9478916300
+		summarizeBy: none
+		sourceColumn: indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_number
+		dataType: int64
+		formatString: 0
+		lineageTag: c29ed189-26bd-41bd-a661-30508d0b25a0
+		summarizeBy: sum
+		sourceColumn: week_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_ending
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7137412f-c80f-4dad-91fd-1081c9bdceb8
+		summarizeBy: none
+		sourceColumn: week_ending
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column week_change
+		dataType: double
+		lineageTag: 34e528fb-e43d-43e9-98ce-adcd378c04f8
+		summarizeBy: sum
+		sourceColumn: week_change
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition PassengerIndicators = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov/api/v3/views/tchw-zxud/query.csv?query=SELECT%20%60mode%60%2C%20%60indicator%60%2C%20%60week_number%60%2C%20%60week_ending%60%2C%20%60week_change%60"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{":id", ":version", ":created_at", ":updated_at"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"week_change", type number}, {"week_ending", type datetime}, {"week_number", Int64.Type}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"week_ending", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

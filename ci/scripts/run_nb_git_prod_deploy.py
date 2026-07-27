@@ -108,7 +108,7 @@ while True:
         print("=======================================================")
 
         # 1. Build the file name from the branch name
-        file_name = f"execution_log_{brandh}.json"
+        file_name = f"execution_log_{branch}.json"
 
         # 2. Read file from OneLake
         onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{workspace_id}/{lakehouse_id}/Files/ci_cd_results/{file_name}"

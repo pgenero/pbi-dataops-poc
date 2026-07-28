@@ -159,8 +159,11 @@ for target in targets:
         with open("ci/config/item_type_mapping.json") as f:
             ITEM_TYPE_MAP = json.load(f)
 
-        # Prepare items list
+        # Prepare items list for deploy
         items_to_deploy = []
+
+        # Item list to use when the items are deleted trough the Pull Request
+        deleted_items = []
 
         # Request the workspace existing items to use in case of Added objects from the Git repo
         workspace_items = get_items(workspace_id, token)
@@ -185,7 +188,7 @@ for target in targets:
                 }
                 items_to_deploy.append(item)
 
-            # Scenario 1 → Workspace new items Added from Git repo 
+            # Scenario 2 → Workspace new items Added from Git repo 
             # Items source → get_items function
             elif remote_change == "Added":
                 for ws_item in workspace_items:
@@ -203,6 +206,17 @@ for target in targets:
                 # Debug Output
                 if not found:
                     print(f"⚠️ No match found for: {display_name} ({mapped_type})")
+
+            # Scenario 3 → Workspace items Deleted from Git repo 
+            # Store the items removed in the Dev to create a log json file
+            elif remote_change == "Deleted" and "objectId" in identifier:
+                item = {
+                    "sourceItemId": identifier["objectId"],
+                    "itemType": mapped_type,
+                    "displayName": display_name,
+                    "changeType": remote_change
+                }
+                deleted_items.append(item)
 
         print("Items to deploy:", items_to_deploy)
 
@@ -222,8 +236,19 @@ for target in targets:
 
         # Execute Deploy
         has_items = len(items_to_deploy) > 0
-        if not has_items:
-            print("No items to deploy → skipping")
+        has_deleted = len(deleted_items) > 0
+
+        # Save the list of deleted items if exist
+        if has_deleted:
+            print("Deleted items detected → skipping deployment")
+            file_name = f"deletion_log_{target}.json"
+            with open(file_name, "w") as f:
+                json.dump(deleted_items, f)
+            print("Deletion JSON stored")
+
+        elif not has_items:
+            print("No items to deploy → skipping deployment")
+
         else:
             url = f"https://api.fabric.microsoft.com/v1/deploymentPipelines/{pipeline_id}/deploy"
 

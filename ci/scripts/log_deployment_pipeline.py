@@ -107,13 +107,6 @@ for target in targets:
         env_var = f"OPERATION_ID_{target.upper()}"
         operation_id = os.getenv(env_var)
 
-        if not operation_id:
-            print(f"⚠️ No operation ID found for {target}")
-            results.append((target, "NO_DEPLOY"))
-            continue
-
-        print(f"Operation ID: {operation_id}")
-
         # 2.2 Map pipeline from target
         if target == "sales":
             pipeline_id = os.getenv("SALES_PIPELINE_ID")
@@ -122,12 +115,8 @@ for target in targets:
         elif target == "operations":
             pipeline_id = os.getenv("OPERATIONS_PIPELINE_ID")
 
-        # 2.3 WAIT the end of the Power BI pipeline
-        pipelineOperationRaw = wait_for_completion(pl, pipeline_id, operation_id)
-
-        pipelineOperationData = []
-
-        # 2.4 Log Level 1 - Operations metadata
+        # 2.3 Log Level 1 - Operations metadata
+        # The object "items" will be filled in later depending on the scenario 
         result = {
             "branch": branch,
             "operationId": operation_id,
@@ -137,33 +126,28 @@ for target in targets:
             "items": []
         }
 
-        # 2.XXXXX Request the workspace existing items to use in case of Added objects from the Git repo
+        # 2.4 Request the workspace existing items to use fot the scenario Added objects from the Git repository
         workspace_items = get_items(pipeline_id, token)
 
-        # 2.5 Log Level 2 - Oerations details
-        for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
-            source_target = step.get("sourceAndTarget", {})
-            diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
+        # ==================================================
+        # Scenario A: Items deleted - No deploy available
+        # ==================================================
+        # -- 2.5 Check if the deletion file exists in the VM
+        # If the deleted_items file exists → Items Deletion Scenario
+        deleted_file_name = f"deletion_log_{target}.json"
+        if os.path.exists(deleted_file_name):
+            print(f"Deletion log found for {target} → Processing deleted items scenario")
 
-            # Update the name in the object "itemType" to use the one required in the deployment operation
-            raw_type = source_target.get("type")
-            mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
+            with open(deleted_file_name, "r") as f:
+                result_file = json.load(f)
 
-            # --- Scenario 1: The deployed item exists in Test and is visible in the Pipeline Operation request
-            if diff_state != "New":
+            for deleted in result_file:
+                source_name = deleted["displayName"]
+                item_id = deleted["sourceItemId"]
+                change_type = deleted["changeType"]
+                raw_type = deleted["itemType"]
+                mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
 
-                item = {
-                    "itemType": mapped_type,
-                    "targetItemId": source_target.get("target"),
-                    "targetItemName": source_target.get("targetDisplayName"),
-                }
-
-                result["items"].append(item)
-
-            # --- Scenario 2: The deployed doesn't exist Test (new), is not visible in the Pipeline Operations request
-            # Recover the ID from the Workspace Item endpoint (Target Workspace is Test)
-            else:
-                source_name = source_target.get("sourceDisplayName")
                 found = False
                 for ws_item in workspace_items:
                     if (
@@ -173,55 +157,118 @@ for target in targets:
                         item = {
                             "itemType": mapped_type,
                             "targetItemId": ws_item["id"],
-                            "targetItemName": ws_item["displayName"]
+                            "targetItemName": ws_item["displayName"],
+                            "changeType": change_type
                         }
                         result["items"].append(item)
                         found = True
                         break
 
-                if not found:
-                    print(
-                        f"⚠️ No match found in TEST workspace "
-                        f"for '{source_name}' ({mapped_type})"
-                    )
+        # ==================================================
+        # Scenario B: Normal deploy
+        # ==================================================
+        # 2.6 If there is no delete scenario, build the log according to the deploy operation
+        else:
+            if not operation_id:
+                print(f"⚠️ No operation ID found for {target}")
+                results.append((target, "NO_DEPLOY"))
+                continue
 
-        # 2.6 Final Log Output
+            print(f"Operation ID: {operation_id}")
+
+            # 2.6.1 WAIT the end of the Power BI pipeline
+            pipelineOperationRaw = wait_for_completion(pl, pipeline_id, operation_id)
+
+            pipelineOperationData = []
+
+            # 2.6.2 Log Level 2 - Oerations details for normal deploy
+            for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
+                source_target = step.get("sourceAndTarget", {})
+                diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
+
+                # Update the name in the object "itemType" to use the one required in the deployment operation
+                raw_type = source_target.get("type")
+                mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
+
+                # --- Scenario B1: The deployed item exists in Test and is visible in the Pipeline Operation request
+                if diff_state != "New":
+
+                    item = {
+                        "itemType": mapped_type,
+                        "targetItemId": source_target.get("target"),
+                        "targetItemName": source_target.get("targetDisplayName"),
+                        "changeType": diff_state
+                    }
+
+                    result["items"].append(item)
+
+                # --- Scenario B2: The deployed artifact doesn't exist Test (new), is not visible in the Pipeline Operations request
+                # Recover the ID from the Workspace Item endpoint (Target Workspace is Test)
+                else:
+                    source_name = source_target.get("sourceDisplayName")
+                    found = False
+                    for ws_item in workspace_items:
+                        if (
+                            ws_item.get("displayName") == source_name
+                            and ws_item.get("type") == mapped_type
+                        ):
+                            item = {
+                                "itemType": mapped_type,
+                                "targetItemId": ws_item["id"],
+                                "targetItemName": ws_item["displayName"],
+                                "changeType": diff_state
+                            }
+                            result["items"].append(item)
+                            found = True
+                            break
+
+                    if not found:
+                        print(
+                            f"⚠️ No match found in TEST workspace "
+                            f"for '{source_name}' ({mapped_type})"
+                        )
+
+            # DELETE - Debug only ❌
+            print("Debug Information")
+            for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
+                source_target = step.get("sourceAndTarget", {})
+
+                details = {
+                    "github_url": github_run_url,
+                    "branch": branch,
+                    "commit": remote_commit,
+
+                    "operationId": operation_id,
+                    "operationStatus": pipelineOperationRaw.get("status"),
+                    "executionStatus": step.get("status"),
+
+                    "itemType": source_target.get("type"),
+                    "sourceItemId": source_target.get("source"),
+                    "sourceItemName": source_target.get("sourceDisplayName"),
+
+                    "targetItemId": source_target.get("target"),
+                    "targetItemName": source_target.get("targetDisplayName"),
+                }
+
+                pipelineOperationData.append(details)
+
+            # DEBUG Remove ❌
+            df = pd.DataFrame(pipelineOperationData)
+            print(df.to_string())
+
+        # ========================
+        # 3. Save Results
+        # ========================
+        # 3.1 Final Log Output
+        print("Final Log Output")
         print(result)
 
-        # 2.7 Save the json output
+        # 3.2 Save the json output
         file_name = f"deployment_log_{target}.json"
-
         with open(file_name, "w") as f:
             json.dump(result, f)
 
         print("JSON stored")
-
-        # DELETE - Debug only ❌
-        for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
-            source_target = step.get("sourceAndTarget", {})
-
-            details = {
-                "github_url": github_run_url,
-                "branch": branch,
-                "commit": remote_commit,
-
-                "operationId": operation_id,
-                "operationStatus": pipelineOperationRaw.get("status"),
-                "executionStatus": step.get("status"),
-
-                "itemType": source_target.get("type"),
-                "sourceItemId": source_target.get("source"),
-                "sourceItemName": source_target.get("sourceDisplayName"),
-
-                "targetItemId": source_target.get("target"),
-                "targetItemName": source_target.get("targetDisplayName"),
-            }
-
-            pipelineOperationData.append(details)
-
-        # DEBUG Remove ❌
-        df = pd.DataFrame(pipelineOperationData)
-        print(df.to_string())
 
     except Exception as e:
         print(f"❌ Error logging {target}: {str(e)}")

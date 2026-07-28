@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "88b5bd6637139a04be12",
+  "name": "de35d7f0001c94090e0b",
   "position": {
-    "x": 11.078561917443409,
-    "y": 369.85352862849538,
-    "z": 2,
-    "height": 303.38215712383493,
-    "width": 605.05992010652471,
-    "tabOrder": 2
+    "x": 640.04405589591784,
+    "y": 370.30449048897452,
+    "z": 3,
+    "height": 302.63463435900962,
+    "width": 628.76574654092371,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "scatterChart",
@@ -23,30 +23,35 @@
                       "Entity": "dim_Calendar"
                     }
                   },
-                  "Property": "MONTH"
-                }
-              },
-              "queryRef": "dim_Calendar.MONTH",
-              "nativeQueryRef": "Sum of MONTH",
-              "active": true
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_Calendar"
-                    }
-                  },
                   "Property": "YEAR"
                 }
               },
               "queryRef": "dim_Calendar.YEAR",
-              "nativeQueryRef": "YEAR"
+              "nativeQueryRef": "Sum of YEAR",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AirFareCarrier"
+                        }
+                      },
+                      "Property": "market_passengers"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(AirFareCarrier.market_passengers)",
+              "nativeQueryRef": "Sum of market_passengers"
             }
           ]
         },
@@ -59,17 +64,17 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "PassengerIndicators"
+                          "Entity": "AirFareCarrier"
                         }
                       },
-                      "Property": "week_number"
+                      "Property": "average_market_fare_real"
                     }
                   },
-                  "Function": 3
+                  "Function": 0
                 }
               },
-              "queryRef": "Sum(PassengerIndicators.week_number)",
-              "nativeQueryRef": "Min of week_number",
+              "queryRef": "Sum(AirFareCarrier.average_market_fare_real)",
+              "nativeQueryRef": "Sum of average_market_fare_real",
               "active": true
             }
           ]
@@ -83,67 +88,66 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "PassengerIndicators"
+                          "Entity": "AirFareCarrier"
                         }
                       },
-                      "Property": "week_change"
+                      "Property": "market_revenue_real"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(PassengerIndicators.week_change)",
-              "nativeQueryRef": "Sum of week_change"
+              "queryRef": "Sum(AirFareCarrier.market_revenue_real)",
+              "nativeQueryRef": "Sum of market_revenue_real"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "isDefaultSort": true
       }
-    },
-    "objects": {
-      "trend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "displayName": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Trend line 1'"
-                }
-              }
-            }
-          }
-        }
-      ]
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "ffe061e8aed494534074",
+        "name": "952a3f4ce00d0d81b10d",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "dim_Calendar"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "average_market_fare_real"
               }
             },
-            "Property": "MONTH"
+            "Function": 0
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "c528cf003035a606a867",
+        "name": "2e8fabf2a3760108ddb0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "market_revenue_real"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "19066bd7084deebc7803",
         "field": {
           "Column": {
             "Expression": {
@@ -157,39 +161,20 @@
         "type": "Advanced"
       },
       {
-        "name": "69fe0373ae66e4457d5c",
+        "name": "c46015f69e8271808b63",
         "field": {
           "Aggregation": {
             "Expression": {
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "PassengerIndicators"
+                    "Entity": "AirFareCarrier"
                   }
                 },
-                "Property": "week_change"
+                "Property": "market_passengers"
               }
             },
             "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5403670dd05d935b4046",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "PassengerIndicators"
-                  }
-                },
-                "Property": "week_number"
-              }
-            },
-            "Function": 3
           }
         },
         "type": "Advanced"

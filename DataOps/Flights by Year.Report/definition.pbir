@@ -1,9 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
-  "version": "4.0",
-  "datasetReference": {
-    "byConnection": {
-      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsProd;initial catalog=\"Flight Model\";integrated security=ClaimsToken;semanticmodelid=8aa80e9c-a022-435f-82dd-29a4108e923e"
-    }
-  }
-}

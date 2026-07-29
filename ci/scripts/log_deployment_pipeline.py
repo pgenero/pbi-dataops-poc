@@ -182,62 +182,46 @@ for target in targets:
 
             pipelineOperationData = []
 
-            # 2.5.2 Once the deployment is complete, the new items (if there are any) should already be in Test.
-            # Initialize as None to load only if there are 'New' items
-            workspace_items = None  
+            # 2.5.2 Once the deployment is complete, all the deployed items should be updated in Test.
+            # Small pause to wait the Fabric API for index - Then, list the Test Workspace Items
+            time.sleep(2) 
+            workspace_items = get_items(pipeline_id, token)
 
             # 2.5.3 Log Level 2 - Oerations details for normal deploy
             for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
                 source_target = step.get("sourceAndTarget", {})
                 diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
 
+            # 2.5.4 Filter the Test Workspace by Item Name AND Type
+                # Recover the item name from the objects deployed from Dev 
+                source_name = source_target.get("sourceDisplayName")
+
+                # Recover the item type from the objects deployed from Dev 
                 # Update the name in the object "itemType" to use the one required in the deployment operation
                 raw_type = source_target.get("type")
                 mapped_type = ITEM_TYPE_MAP.get((raw_type or "").lower(), raw_type)
 
-                # --- Scenario B1: The deployed item exists in Test and is visible in the Pipeline Operation request
-                if diff_state != "New":
+                found = False
+                for ws_item in workspace_items:
+                    if (
+                        ws_item.get("displayName") == source_name
+                        and ws_item.get("type") == mapped_type
+                    ):
+                        item = {
+                            "itemType": mapped_type,
+                            "targetItemId": ws_item["id"],
+                            "targetItemName": ws_item["displayName"],
+                            "changeType": diff_state
+                        }
+                        result["items"].append(item)
+                        found = True
+                        break
 
-                    item = {
-                        "itemType": mapped_type,
-                        "targetItemId": source_target.get("target"),
-                        "targetItemName": source_target.get("targetDisplayName"),
-                        "changeType": diff_state
-                    }
-
-                    result["items"].append(item)
-
-                # --- Scenario B2: The deployed artifact doesn't exist Test (new), is not visible in the Pipeline Operations request
-                # Recover the ID from the Workspace Item endpoint (Target Workspace is Test)
-                else:
-                    # If there is a "New" item  request the Test workspace items to build the Log file
-                    if workspace_items is None:
-                        # Small pause to wait the Fabric API for index
-                        time.sleep(2) 
-                        workspace_items = get_items(pipeline_id, token) or []
-
-                    source_name = source_target.get("sourceDisplayName")
-                    found = False
-                    for ws_item in workspace_items:
-                        if (
-                            ws_item.get("displayName") == source_name
-                            and ws_item.get("type") == mapped_type
-                        ):
-                            item = {
-                                "itemType": mapped_type,
-                                "targetItemId": ws_item["id"],
-                                "targetItemName": ws_item["displayName"],
-                                "changeType": diff_state
-                            }
-                            result["items"].append(item)
-                            found = True
-                            break
-
-                    if not found:
-                        print(
-                            f"⚠️ No match found in TEST workspace "
-                            f"for '{source_name}' ({mapped_type})"
-                        )
+                if not found:
+                    print(
+                        f"⚠️ No match found in TEST workspace "
+                        f"for '{source_name}' ({mapped_type})"
+                    )
 
             # DELETE - Debug only ❌
             print("Debug Information")

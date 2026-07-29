@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "de35d7f0001c94090e0b",
   "position": {
-    "x": 640.04405589591784,
-    "y": 370.30449048897452,
+    "x": 11.078561917443409,
+    "y": 370.70572569906795,
     "z": 3,
-    "height": 302.63463435900962,
-    "width": 628.76574654092371,
+    "height": 331.50466045272969,
+    "width": 1257.8428761651132,
     "tabOrder": 3
   },
   "visual": {
@@ -29,6 +29,24 @@
               "queryRef": "dim_Calendar.YEAR",
               "nativeQueryRef": "Sum of YEAR",
               "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_carriers"
+                    }
+                  },
+                  "Property": "carrier_name"
+                }
+              },
+              "queryRef": "dim_carriers.carrier_name",
+              "nativeQueryRef": "carrier_name"
             }
           ]
         },
@@ -178,6 +196,20 @@
           }
         },
         "type": "Advanced"
+      },
+      {
+        "name": "274fe4c9dbb64cbc9803",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_carriers"
+              }
+            },
+            "Property": "carrier_name"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

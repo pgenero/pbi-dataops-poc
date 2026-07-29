@@ -3,7 +3,9 @@ import time
 import requests
 import os
 
-# Variables
+# ========================
+# 1. SETUP - ENV & CONSTANTS
+# ========================
 token = os.getenv("TOKEN")
 targets = os.getenv("TARGETS", "").split()
 workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
@@ -22,9 +24,6 @@ for target in targets:
 
     print(f"✅ File Loaded from VM {file_name}")
 
-    # opcional: convertir a string para enviarlo luego
-    # log_data = json.dumps(result)
-
     print("JSON readed Ok")
 
     log_string_parameter = json.dumps(result, separators=(',', ':'))
@@ -37,26 +36,39 @@ for target in targets:
 
     # 3. Run Fabric Notebook
     fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/execute/instances?jobType=RunNotebook"
-    payload = {"executionData": {"parameters": {"log_payload": {"value": log_string_parameter, "type": "string"}}}}
+    payload = {
+        "executionData": {
+            "parameters": {
+                "log_payload": {
+                    "value": log_string_parameter, 
+                    "type": "string"
+                }
+            }
+        }
+    }
 
-    print("Running Notebook in Fabric...")
+    print(f"Running Notebook in Fabric for target [{target}]...")
     response = requests.post(fabric_url, headers=headers, json=payload)
 
     if response.status_code not in [200, 201, 202]:
-        print(f"Error starting: {response.text}")
+        print(f"❌ Error starting Notebook job: {response.status_code} - {response.text}")
         exit(1)
 
-    # Extract the URL for monitoring over headers (Location)
+    # Extract location and wait time from response headers
     job_location_url = response.headers.get("Location")
-    retry_after = int(response.headers.get("Retry-After", 15)) # Fallback to 15
+    
+    try:
+        retry_after = int(response.headers.get("Retry-After", 15))
+    except ValueError:
+        retry_after = 15
 
-    print(f"¡Job Accepted! Monitoring: {job_location_url}")
+    print(f"🚀 Job Accepted! Monitoring URL: {job_location_url}")
 
     # ==========================================
-    # 4. BUCLE MONITORING
+    # 3. MONITORING LOOP
     # ==========================================
     while True:
-        print(f"=== WAITING FOR TARGET: {target} ===")
+        print(f"\n=== WAITING FOR TARGET: {target} ===")
         print(f"Waiting {retry_after} seconds before status check...")
         time.sleep(retry_after)
         
@@ -64,7 +76,7 @@ for target in targets:
         status_response = requests.get(job_location_url, headers=headers)
         
         if status_response.status_code != 200:
-            print(f"Error checking status of: {status_response.text}")
+            print(f"❌ Error checking status: {status_response.status_code} - {status_response.text}")
             exit(1)
             
         job_status_data = status_response.json()
@@ -73,9 +85,10 @@ for target in targets:
         print(f"Notebook current state: [{current_status}]")
         
         if current_status in ["Completed", "Succeeded"]:
-            print("Succeded! The Notebook completed the execution and the log was saved in the Lakehouse.")
+            print(f"✅ Success! Notebook completed execution for {target}. Log saved in Lakehouse.")
             break
         elif current_status in ["Failed", "Canceled"]:
-            print("Error: The execution of the Notebook failed in Fabric.")
-            print(f"Failure reason: {job_status_data.get('failureReason', 'No specifieda')}")
+            failure_reason = job_status_data.get('failureReason', 'No specified reason')
+            print(f"❌ Error: Notebook execution failed in Fabric for target {target}.")
+            print(f"Failure reason: {failure_reason}")
             exit(1)

@@ -1,0 +1,23 @@
+{
+  "finance": {
+    "pipeline_id": "722720ff-bfe1-47b4-98e7-ad75072a9ac4",
+    "workspace_id": "91a851c6-a93e-422c-a353-d4507a456b0a",
+    "dev_stage_id": "ffee08ea-be00-4a29-9d0c-dab2b5915a7b",
+    "test_stage_id": "a2c18a5e-bc23-4d36-8a9a-96ea790f8233",
+    "prod_stage_id": "38c491d3-a484-4856-babf-f090dc3aaf86"
+  },
+  "operations": {
+    "pipeline_id": "9127a12d-4aa8-4032-b25c-b59bcd6180f9",
+    "workspace_id": "2f9761d8-259a-4bcd-bcbc-4fab371b1046",
+    "dev_stage_id": "536db314-05fb-4bf4-93a9-a9be66dbac61",
+    "test_stage_id": "1781c23f-2c97-4aa2-922f-1d3bf8cbe1a0",
+    "prod_stage_id": "6d0210b4-e7ec-43cb-ade8-881cb76cb177"
+  },
+  "sales": {
+    "pipeline_id": "d8c538e6-42bf-4a55-abc1-ceb7a8c6b49c",
+    "workspace_id": "f0a9d041-a69e-4246-812a-917332b7675e",
+    "dev_stage_id": "d4d5d15a-029c-4bd9-9024-7fb114ec097b",
+    "test_stage_id": "07808301-020e-4cd1-aded-d32c701ea50f",
+    "prod_stage_id": "7717e1f0-5064-415a-bffb-747e3769800e"
+  }
+}

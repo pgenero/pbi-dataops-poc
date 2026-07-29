@@ -10,12 +10,22 @@ token = os.getenv("TOKEN")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
 branch = os.getenv("GITHUB_HEAD_REF") # os.getenv("GITHUB_REF_NAME")
-approver = os.getenv("GITHUB_ACTOR") # no need to get it in the YML - Person that approves the PR
-author = os.getenv("GITHUB_AUTHOR") # contributor that creates the PR
+approver = os.getenv("GITHUB_ACTOR") # Person that approves the PR
+author = os.getenv("GITHUB_AUTHOR") # Contributor that creates the PR
 message = os.getenv("PR_TITLE")
 targets = os.getenv("TARGETS", "").split()
 
-# Debug Detele ❌
+# Load the targets from config JSON
+CONFIG_FILE_PATH = "ci/config/fabric_targets.json"
+try:
+    with open(CONFIG_FILE_PATH, "r", encoding="utf-8") as f:
+        TARGETS_CONFIG = json.load(f)
+except Exception as e:
+    print(f"❌ Error loading the config file {CONFIG_FILE_PATH}: {e}")
+    exit(1)
+
+# Debug Detail
+print("Debug #1")
 print("Targets detected:", targets)
 
 headers = {
@@ -30,24 +40,24 @@ results = []
 # =========================
 # --- 2.1 Get Items from a given Workspace ---
 def get_items(workspace_id, token):
-  url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/items"
+    url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/items"
 
-  headers = {
-      "Authorization": f"Bearer {token}",
-      "Content-Type": "application/json",
-  }
-  # --- Execute the HTTP request ---
-  response = requests.get(url, headers=headers)
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
+    # --- Execute the HTTP request ---
+    response = requests.get(url, headers=headers)
 
-  if response.status_code != 200:
-      print(f"❌ Error fetching items: {response.status_code} - {response.text}")
-      return []
+    if response.status_code != 200:
+        print(f"❌ Error fetching items: {response.status_code} - {response.text}")
+        return []
 
-  data = response.json()
-  items = data.get("value", [])
+    data = response.json()
+    items = data.get("value", [])
 
-  print(f"✅ Items retrieved: {len(items)}")
-  return items
+    print(f"✅ Items retrieved: {len(items)}")
+    return items
 
 # =========================
 # 3. MAIN LOOP - PER TARGET
@@ -56,24 +66,19 @@ for target in targets:
     print(f"\n=== Processing target: {target} ===\n")
 
     try:
-        # --- 3.1 Target-Specific Configuration Mapping ---
-        if target == "sales":
-            pipeline_id = os.getenv("SALES_PIPELINE_ID")
-            workspace_id = os.getenv("SALES_WORKSPACE_ID")
-            dev_stage_id = os.getenv("SALES_DEV_STAGE_ID")
-            test_stage_id = os.getenv("SALES_TEST_STAGE_ID")
-        elif target == "finance":
-            pipeline_id = os.getenv("FINANCE_PIPELINE_ID")
-            workspace_id = os.getenv("FINANCE_WORKSPACE_ID")
-            dev_stage_id = os.getenv("FINANCE_DEV_STAGE_ID")
-            test_stage_id = os.getenv("FINANCE_TEST_STAGE_ID")
-        elif target == "operations":
-            pipeline_id = os.getenv("OPERATIONS_PIPELINE_ID")
-            workspace_id = os.getenv("OPERATIONS_WORKSPACE_ID")
-            dev_stage_id = os.getenv("OPERATIONS_DEV_STAGE_ID")
-            test_stage_id = os.getenv("OPERATIONS_TEST_STAGE_ID")
+        # --- 3.1 Target-Specific Configuration Mapping (JSON) ---
+        target_info = TARGETS_CONFIG.get(target.lower())
 
-        # Debug Delete ❌
+        if not target_info:
+            raise ValueError(f"The target '{target}' is missing in {CONFIG_FILE_PATH}")
+
+        pipeline_id = target_info.get("pipeline_id")
+        workspace_id = target_info.get("workspace_id")
+        dev_stage_id = target_info.get("dev_stage_id")
+        test_stage_id = target_info.get("test_stage_id")
+
+        # Debug
+        print("Debug #2")
         print(f"""
         TARGET: {target}
         PIPELINE: {pipeline_id}
@@ -162,7 +167,7 @@ for target in targets:
         # Prepare items list for deploy
         items_to_deploy = []
 
-        # Item list to use when the items are deleted trough the Pull Request
+        # Item list to use when the items are deleted through the Pull Request
         deleted_items = []
 
         # Request the workspace existing items to use in case of Added objects from the Git repo
@@ -191,6 +196,7 @@ for target in targets:
             # Scenario 2 → Workspace new items Added from Git repo 
             # Items source → get_items function
             elif remote_change == "Added":
+                found = False
                 for ws_item in workspace_items:
                     if (
                         ws_item.get("displayName") == display_name
@@ -203,6 +209,7 @@ for target in targets:
                         items_to_deploy.append(item)
                         found = True
                         break
+                
                 # Debug Output
                 if not found:
                     print(f"⚠️ No match found for: {display_name} ({mapped_type})")
@@ -220,7 +227,8 @@ for target in targets:
 
         print("Items to deploy:", items_to_deploy)
 
-        # Delte Debug ❌
+        # Debug
+        print( "Debug #3")
         for change in changes:
             print("RAW CHANGE:", change)
 
@@ -267,7 +275,8 @@ for target in targets:
                     deployment_id = value.strip()
                     break
             
-            # Delete - debug only ❌
+            # Debug
+            print("Debug #4")
             print("All headers:", dict(response.headers))
             print("Deployment ID:", deployment_id)
             
@@ -276,7 +285,7 @@ for target in targets:
                 with open(os.environ["GITHUB_ENV"], "a") as f:
                     f.write(f"OPERATION_ID_{target.upper()}={deployment_id}\n")
 
-            # Delete - debug only ❌
+            print("Debug #5")
             print(response.status_code)
             print(response.headers)
             print("FINAL PAYLOAD:", payload)

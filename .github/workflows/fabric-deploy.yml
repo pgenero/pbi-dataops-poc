@@ -1,5 +1,4 @@
-
-name: Fabric CICD
+name: Fabric CICD - Dev to Test
 
 on:
   pull_request:
@@ -15,22 +14,6 @@ env:
   GIT_CONNECTION_ID: ${{ vars.GIT_CONNECTION_ID }}
   GITHUB_AUTHOR: ${{ github.event.pull_request.user.login }}
   PR_TITLE: ${{ github.event.pull_request.title }}
-
-  SALES_PIPELINE_ID: ${{ vars.SALES_PIPELINE_ID }}
-  SALES_WORKSPACE_ID: ${{ vars.SALES_WORKSPACE_ID }}
-  SALES_DEV_STAGE_ID: ${{ vars.SALES_DEV_STAGE_ID }}
-  SALES_TEST_STAGE_ID: ${{ vars.SALES_TEST_STAGE_ID }}
-
-  FINANCE_PIPELINE_ID: ${{ vars.FINANCE_PIPELINE_ID }}
-  FINANCE_WORKSPACE_ID: ${{ vars.FINANCE_WORKSPACE_ID }}
-  FINANCE_DEV_STAGE_ID: ${{ vars.FINANCE_DEV_STAGE_ID }}
-  FINANCE_TEST_STAGE_ID: ${{ vars.FINANCE_TEST_STAGE_ID }}
-
-  OPERATIONS_PIPELINE_ID: ${{ vars.OPERATIONS_PIPELINE_ID }}
-  OPERATIONS_WORKSPACE_ID: ${{ vars.OPERATIONS_WORKSPACE_ID }}
-  OPERATIONS_DEV_STAGE_ID: ${{ vars.OPERATIONS_DEV_STAGE_ID }}
-  OPERATIONS_TEST_STAGE_ID: ${{ vars.OPERATIONS_TEST_STAGE_ID }}
-
 
 jobs:
 

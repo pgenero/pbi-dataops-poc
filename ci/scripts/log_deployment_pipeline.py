@@ -16,8 +16,17 @@ base = os.getenv("GITHUB_SERVER_URL")
 branch = os.getenv("GITHUB_HEAD_REF")
 github_run_url = f"{base}/{repo}/actions/runs/{run_id}"
 
+# Load the targets from config JSON
+CONFIG_FILE_PATH = "ci/config/fabric_targets.json"
+try:
+    with open(CONFIG_FILE_PATH, "r", encoding="utf-8") as f:
+        TARGETS_CONFIG = json.load(f)
+except Exception as e:
+    print(f"❌ Error loading the config file {CONFIG_FILE_PATH}: {e}")
+    exit(1)
 
-# Debug delete ❌
+# Debug
+print("Debug #1")
 print("Targets for logging:", targets)
 
 # Install Pipelines client 
@@ -61,7 +70,7 @@ def get_items(pipeline_id, token):
         # Order: 0 = Dev, 1 = Test, 2 = Prod
         if stage.get('order') == 1:
             workspace_id = stage.get('workspaceId')
-            break # Encontrado, salimos del bucle
+            break
 
     # If ID is missing
     if not workspace_id:
@@ -86,7 +95,8 @@ def get_items(pipeline_id, token):
     data = response.json()
     items = data.get("value", [])
     
-    ### FOR DEBUG - DELETE
+    # Debug
+    print("Debug #2")
     print(f"✅ Items retrieved: {len(items)}")
     return items
 
@@ -107,13 +117,12 @@ for target in targets:
         env_var = f"OPERATION_ID_{target.upper()}"
         operation_id = os.getenv(env_var)
 
-        # 2.2 Map pipeline from target
-        if target == "sales":
-            pipeline_id = os.getenv("SALES_PIPELINE_ID")
-        elif target == "finance":
-            pipeline_id = os.getenv("FINANCE_PIPELINE_ID")
-        elif target == "operations":
-            pipeline_id = os.getenv("OPERATIONS_PIPELINE_ID")
+        # 2.2 Map pipeline from target (JSON)
+        target_info = TARGETS_CONFIG.get(target.lower())
+        if not target_info:
+            raise ValueError(f"The target '{target}' is missing in {CONFIG_FILE_PATH}")
+
+        pipeline_id = target_info.get("pipeline_id")
 
         # 2.3 Log Level 1 - Operations metadata
         # The object "items" will be filled in later depending on the scenario 
@@ -187,7 +196,7 @@ for target in targets:
             time.sleep(2) 
             workspace_items = get_items(pipeline_id, token)
 
-            # 2.5.3 Log Level 2 - Oerations details for normal deploy
+            # 2.5.3 Log Level 2 - Operations details for normal deploy
             for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
                 source_target = step.get("sourceAndTarget", {})
                 diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
@@ -223,7 +232,8 @@ for target in targets:
                         f"for '{source_name}' ({mapped_type})"
                     )
 
-            # DELETE - Debug only ❌
+            # Debug
+            print("Debug #3")
             print("Debug Information")
             for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
                 source_target = step.get("sourceAndTarget", {})
@@ -247,7 +257,8 @@ for target in targets:
 
                 pipelineOperationData.append(details)
 
-            # DEBUG Remove ❌
+            # Debug
+            print("Debug #4")
             df = pd.DataFrame(pipelineOperationData)
             print(df.to_string())
 

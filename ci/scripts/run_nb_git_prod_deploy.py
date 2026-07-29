@@ -3,34 +3,32 @@ import time
 import requests
 import os
 
-# --- Variables ---
+# ========================
+# 1. SETUP & SETUP VARS
+# ========================
 tenant_id = os.getenv("TENANT_ID")
 client_id = os.getenv("APP_CLIENT_ID")
 client_secret = os.getenv("APP_SECRET_KEY")
 branch = os.getenv("BRANCH_NAME")
+gh_token = os.getenv("GITHUB_TOKEN")
 workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
 notebook_id = "11035ea6-bfbb-4223-ac4d-65045a0aeb18"
 lakehouse_id = "85602e65-4d1f-47a3-9bf8-20a0f229eb55"
 
-# --- Branch Name Validation ---
 repo = "pgenero/pbi-dataops-poc"
+
+# --- 1.1 Branch Name Validation ---
 git_url = f"https://api.github.com/repos/{repo}/branches/{branch}"
-
-gh_token = os.getenv("GITHUB_TOKEN")
-
 headers_gh = {
     "Authorization": f"Bearer {gh_token}"
 }
 
 res = requests.get(git_url, headers=headers_gh)
-
 if res.status_code != 200:
-    raise Exception(f"Branch does not exist: {branch}")
+    raise Exception(f"❌ Branch does not exist: {branch}")
 
-
-# --- Get token ---
+# --- 1.2 Get Fabric API Token ---
 token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
-
 payload = {
     "client_id": client_id,
     "client_secret": client_secret,
@@ -39,19 +37,18 @@ payload = {
 }
 
 response = requests.post(token_url, data=payload)
-
 if response.status_code != 200:
-    raise Exception(f"Error getting token: {response.text}")
+    raise Exception(f"❌ Error getting token: {response.text}")
 
 token = response.json()["access_token"]
-
-# 2. Build headers
 headers = {
     "Authorization": f"Bearer {token}", 
     "Content-Type": "application/json"
-    }
+}
 
-# 3. Run Fabric Notebook
+# ==========================================
+# 2. RUN FABRIC NOTEBOOK (PROD DEPLOY)
+# ==========================================
 fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/execute/instances?jobType=RunNotebook"
 payload = {
     "executionData": {
@@ -64,27 +61,30 @@ payload = {
     }
 }
 
-print("Running Notebook in Fabric...")
+print(f"🚀 Running Prod Deployment Notebook in Fabric for branch: {branch}...")
 response = requests.post(fabric_url, headers=headers, json=payload)
 
 if response.status_code not in [200, 201, 202]:
-    print(f"Error starting: {response.text}")
+    print(f"❌ Error starting Notebook: {response.text}")
     exit(1)
 
-# Extract the URL for monitoring over headers (Location)
 job_location_url = response.headers.get("Location")
-retry_after = int(response.headers.get("Retry-After", 15)) # Fallback to 15
+
+try:
+    retry_after = int(response.headers.get("Retry-After", 15))
+except ValueError:
+    retry_after = 15
 
 if not job_location_url:
-    raise Exception("No Location header returned from Fabric API")
+    raise Exception("❌ No Location header returned from Fabric API")
 
-print(f"¡Job Accepted! Monitoring: {job_location_url}")
+print(f"✅ Job Accepted! Monitoring URL: {job_location_url}")
 
 # ==========================================
-# 4. BUCLE MONITORING
+# 3. MONITORING LOOP & SUMMARY CHECK
 # ==========================================
 while True:
-    print(f"=== WAITING FOR NOTEBOOK EXECUTION ===")
+    print("\n=== WAITING FOR NOTEBOOK EXECUTION ===")
     print(f"Waiting {retry_after} seconds before status check...")
     time.sleep(retry_after)
     
@@ -92,7 +92,7 @@ while True:
     status_response = requests.get(job_location_url, headers=headers)
     
     if status_response.status_code != 200:
-        print(f"Error checking status of: {status_response.text}")
+        print(f"❌ Error checking status: {status_response.status_code} - {status_response.text}")
         exit(1)
         
     job_status_data = status_response.json()
@@ -107,26 +107,25 @@ while True:
         print("         FABRIC EXECUTION SUMMARY RESULTS              ")
         print("=======================================================")
 
-        # 1. Build the file name from the branch name
+        # 3.1 Build the file name from the branch name
         file_name = f"execution_log_{branch}.json"
 
-        # 2. Request token with scope Azure Storage / OneLake
+        # 3.2 Request token with scope Azure Storage / OneLake
         onelake_token_payload = {
             "client_id": client_id,
             "client_secret": client_secret,
             "grant_type": "client_credentials",
-            "scope": "https://storage.azure.com/.default"  # 👈 Scope required for OneLake DFS
+            "scope": "https://storage.azure.com/.default"
         }
 
         token_res = requests.post(token_url, data=onelake_token_payload)
         if token_res.status_code != 200:
-            raise Exception(f"Error getting OneLake token: {token_res.text}")
+            raise Exception(f"❌ Error getting OneLake token: {token_res.text}")
 
         onelake_token = token_res.json()["access_token"]
 
-        # 2. Read file from OneLake
+        # 3.3. Read summary file from OneLake
         onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{workspace_id}/{lakehouse_id}/Files/ci_cd_results/{file_name}"
-        
         headers_onelake = {
             "Authorization": f"Bearer {onelake_token}"
         }

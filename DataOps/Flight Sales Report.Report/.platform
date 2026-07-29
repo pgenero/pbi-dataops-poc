@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Flight Sales Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c0f0bacf-95a6-4d70-beba-071dacf7da98"
+  }
+}

@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byConnection": {
-      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=\"Flight Model\";integrated security=ClaimsToken;semanticmodelid=a8668f26-83e8-4674-8f45-de35dd3abaef"
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/OperationsDev;initial catalog=\"Flight Model\";access mode=readonly;integrated security=ClaimsToken;semanticmodelid=a8668f26-83e8-4674-8f45-de35dd3abaef"
     }
   }
 }

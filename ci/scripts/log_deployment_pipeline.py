@@ -126,17 +126,18 @@ for target in targets:
             "items": []
         }
 
-        # 2.4 Request the workspace existing items to use fot the scenario Added objects from the Git repository
-        workspace_items = get_items(pipeline_id, token)
-
         # ==================================================
         # Scenario A: Items deleted - No deploy available
         # ==================================================
-        # -- 2.5 Check if the deletion file exists in the VM
+        # -- 2.4 Check if the deletion file exists in the VM
         # If the deleted_items file exists → Items Deletion Scenario
         deleted_file_name = f"deletion_log_{target}.json"
         if os.path.exists(deleted_file_name):
             print(f"Deletion log found for {target} → Processing deleted items scenario")
+
+            # Request the workspace existing items to build the Log json file
+            # When the item is deleted, no pipeline operations are related to it
+            workspace_items = get_items(pipeline_id, token)
 
             with open(deleted_file_name, "r") as f:
                 result_file = json.load(f)
@@ -167,7 +168,7 @@ for target in targets:
         # ==================================================
         # Scenario B: Normal deploy
         # ==================================================
-        # 2.6 If there is no delete scenario, build the log according to the deploy operation
+        # 2.5 If there is no delete scenario, build the log according to the deploy operation
         else:
             if not operation_id:
                 print(f"⚠️ No operation ID found for {target}")
@@ -176,12 +177,16 @@ for target in targets:
 
             print(f"Operation ID: {operation_id}")
 
-            # 2.6.1 WAIT the end of the Power BI pipeline
+            # 2.5.1 WAIT the end of the Power BI pipeline
             pipelineOperationRaw = wait_for_completion(pl, pipeline_id, operation_id)
 
             pipelineOperationData = []
 
-            # 2.6.2 Log Level 2 - Oerations details for normal deploy
+            # 2.5.2 Once the deployment is complete, the new items (if there are any) should already be in Test.
+            # Initialize as None to load only if there are 'New' items
+            workspace_items = None  
+
+            # 2.5.3 Log Level 2 - Oerations details for normal deploy
             for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):
                 source_target = step.get("sourceAndTarget", {})
                 diff_state = step.get("preDeploymentDiffState") # Get state to check if the artifact deployes is new
@@ -205,6 +210,12 @@ for target in targets:
                 # --- Scenario B2: The deployed artifact doesn't exist Test (new), is not visible in the Pipeline Operations request
                 # Recover the ID from the Workspace Item endpoint (Target Workspace is Test)
                 else:
+                    # If there is a "New" item  request the Test workspace items to build the Log file
+                    if workspace_items is None:
+                        # Small pause to wait the Fabric API for index
+                        time.sleep(2) 
+                        workspace_items = get_items(pipeline_id, token) or []
+
                     source_name = source_target.get("sourceDisplayName")
                     found = False
                     for ws_item in workspace_items:

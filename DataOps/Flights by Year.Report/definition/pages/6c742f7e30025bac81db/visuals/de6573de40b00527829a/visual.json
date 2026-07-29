@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "de35d7f0001c94090e0b",
+  "name": "de6573de40b00527829a",
   "position": {
     "x": 11.078561917443409,
-    "y": 370.70572569906795,
-    "z": 3,
-    "height": 331.50466045272969,
-    "width": 1257.8428761651132,
-    "tabOrder": 3
+    "y": 57.097203728362189,
+    "z": 1000,
+    "height": 645.11318242343543,
+    "width": 879.46737683089225,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "scatterChart",
@@ -27,8 +27,9 @@
                 }
               },
               "queryRef": "dim_Calendar.YEAR",
-              "nativeQueryRef": "Sum of YEAR",
-              "active": true
+              "nativeQueryRef": "Year",
+              "active": true,
+              "displayName": "Year"
             }
           ]
         },
@@ -46,34 +47,12 @@
                 }
               },
               "queryRef": "dim_carriers.carrier_name",
-              "nativeQueryRef": "carrier_name"
+              "nativeQueryRef": "Carrier",
+              "displayName": "Carrier"
             }
           ]
         },
         "Size": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "AirFareCarrier"
-                        }
-                      },
-                      "Property": "market_passengers"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(AirFareCarrier.market_passengers)",
-              "nativeQueryRef": "Sum of market_passengers"
-            }
-          ]
-        },
-        "X": {
           "projections": [
             {
               "field": {
@@ -92,12 +71,12 @@
                 }
               },
               "queryRef": "Sum(AirFareCarrier.average_market_fare_real)",
-              "nativeQueryRef": "Sum of average_market_fare_real",
-              "active": true
+              "nativeQueryRef": "AVG Fare",
+              "displayName": "AVG Fare"
             }
           ]
         },
-        "Y": {
+        "X": {
           "projections": [
             {
               "field": {
@@ -116,56 +95,120 @@
                 }
               },
               "queryRef": "Sum(AirFareCarrier.market_revenue_real)",
-              "nativeQueryRef": "Sum of market_revenue_real"
+              "nativeQueryRef": "Revenue",
+              "active": true,
+              "displayName": "Revenue"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AirFareCarrier"
+                        }
+                      },
+                      "Property": "market_passengers"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(AirFareCarrier.market_passengers)",
+              "nativeQueryRef": "Passengers",
+              "displayName": "Passengers"
             }
           ]
         }
       }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
+            "showGradientLegend": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "bubbles": [
+        {
+          "properties": {
+            "preventOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerRangeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'auto'"
+                }
+              }
+            },
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'circle'"
+                }
+              }
+            },
+            "bubbleSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "-20L"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "952a3f4ce00d0d81b10d",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "AirFareCarrier"
-                  }
-                },
-                "Property": "average_market_fare_real"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "2e8fabf2a3760108ddb0",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "AirFareCarrier"
-                  }
-                },
-                "Property": "market_revenue_real"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "19066bd7084deebc7803",
+        "name": "12ae27b4035c364eb0da",
         "field": {
           "Column": {
             "Expression": {
@@ -179,7 +222,21 @@
         "type": "Advanced"
       },
       {
-        "name": "c46015f69e8271808b63",
+        "name": "5e0933029830563689ee",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_carriers"
+              }
+            },
+            "Property": "carrier_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "c24593c1b9321d7c76a5",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -198,18 +255,42 @@
         "type": "Advanced"
       },
       {
-        "name": "274fe4c9dbb64cbc9803",
+        "name": "cc1d29ce6d2583079c65",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "dim_carriers"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "market_revenue_real"
               }
             },
-            "Property": "carrier_name"
+            "Function": 0
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
+      },
+      {
+        "name": "a3de0edea445010a08b7",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "average_market_fare_real"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "f2521b7441cd0156b6c2",
   "position": {
-    "x": 11.078561917443409,
-    "y": 57.097203728362189,
-    "z": 1,
-    "height": 302.52996005326236,
-    "width": 1257.8428761651132,
-    "tabOrder": 1
+    "x": 11.353336567112466,
+    "y": 56.766682835562328,
+    "z": 1000,
+    "height": 643.35573880303969,
+    "width": 1257.3820248077056,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -267,26 +267,21 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "b01cd1d0ccc5d72d855e",
+        "name": "f666bfd67c3320936104",
         "field": {
-          "Aggregation": {
+          "Column": {
             "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "PassengerIndicators"
-                  }
-                },
-                "Property": "week_number"
+              "SourceRef": {
+                "Entity": "dim_Calendar"
               }
             },
-            "Function": 0
+            "Property": "YEAR"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "3fb960fe5d3260650210",
+        "name": "c92b078c202276a90940",
         "field": {
           "Column": {
             "Expression": {
@@ -300,15 +295,20 @@
         "type": "Advanced"
       },
       {
-        "name": "6bc3b9c530030b909d22",
+        "name": "2e06a2fc60d4715b094d",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "dim_Calendar"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "PassengerIndicators"
+                  }
+                },
+                "Property": "week_number"
               }
             },
-            "Property": "YEAR"
+            "Function": 0
           }
         },
         "type": "Advanced"

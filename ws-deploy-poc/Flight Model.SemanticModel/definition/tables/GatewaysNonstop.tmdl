@@ -1,14 +1,6 @@
 table GatewaysNonstop
 	lineageTag: 0075e436-1669-4e15-a894-7600572ac8a7
 
-	column gateway_airport
-		dataType: string
-		lineageTag: df612f16-d9d5-45af-9a47-64a3bc924b42
-		summarizeBy: none
-		sourceColumn: gateway_airport
-
-		annotation SummarizationSetBy = Automatic
-
 	column Value
 		dataType: int64
 		formatString: 0
@@ -29,6 +21,22 @@ table GatewaysNonstop
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column city
+		dataType: string
+		lineageTag: 6092cfc0-cfe5-4a35-97e9-5e0acd11f882
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column airport_state
+		dataType: string
+		lineageTag: 6b62c6f9-76a1-485e-afec-fd68028bfaba
+		summarizeBy: none
+		sourceColumn: airport_state
+
+		annotation SummarizationSetBy = Automatic
+
 	partition GatewaysNonstop = m
 		mode: import
 		source =
@@ -41,9 +49,11 @@ table GatewaysNonstop
 				    #"Changed Type" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"Value", Int64.Type}}),
 				    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Changed Type", {{"Date", each Text.AfterDelimiter(_, "_"), type text}}),
 				    #"Added Prefix" = Table.TransformColumns(#"Extracted Text After Delimiter", {{"Date", each _ & "-01-01", type text}}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Prefix",{{"Date", type date}})
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Prefix",{{"Date", type date}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type1", "gateway_airport", Splitter.SplitTextByDelimiter(", ", QuoteStyle.Csv), {"city", "airport_state"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Split Column by Delimiter", each ([city] <> "Top 20" and [city] <> "Total"))
 				in
-				    #"Changed Type1"
+				    #"Filtered Rows"
 
 	annotation PBI_NavigationStepName = Navigation
 

@@ -39,9 +39,11 @@ table GA_Performance
 				    #"Added Suffix" = Table.TransformColumns(#"Promoted Headers", {{"year", each _ & "-01-01", type text}}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Added Suffix",{{"year", "date"}}),
 				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Renamed Columns", {"date"}, "ga_type", "value"),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"value", Int64.Type}, {"date", type date}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"value", Int64.Type}, {"date", type date}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Changed Type",{{"ga_type", Text.Upper, type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Uppercased Text","_"," ",Replacer.ReplaceText,{"ga_type"})
 				in
-				    #"Changed Type"
+				    #"Replaced Value"
 
 	annotation PBI_NavigationStepName = Navigation
 

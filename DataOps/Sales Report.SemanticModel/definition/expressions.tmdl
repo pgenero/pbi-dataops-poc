@@ -1,6 +1,6 @@
 expression Names2529 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath = "catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"

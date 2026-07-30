@@ -51,7 +51,9 @@ table PassengerIndicators
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://data.bts.gov/api/v3/views/tchw-zxud/query.csv?query=SELECT%20%60mode%60%2C%20%60indicator%60%2C%20%60week_number%60%2C%20%60week_ending%60%2C%20%60week_change%60"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov",
+				    [RelativePath = "/api/v3/views/tchw-zxud/query.csv?query=SELECT%20%60mode%60%2C%20%60indicator%60%2C%20%60week_number%60%2C%20%60week_ending%60%2C%20%60week_change%60"]
+				    ),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{":id", ":version", ":created_at", ":updated_at"}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"week_change", type number}, {"week_ending", type datetime}, {"week_number", Int64.Type}}),

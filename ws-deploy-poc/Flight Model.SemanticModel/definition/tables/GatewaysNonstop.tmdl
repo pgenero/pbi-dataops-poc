@@ -1,0 +1,51 @@
+table GatewaysNonstop
+	lineageTag: 0075e436-1669-4e15-a894-7600572ac8a7
+
+	column gateway_airport
+		dataType: string
+		lineageTag: df612f16-d9d5-45af-9a47-64a3bc924b42
+		summarizeBy: none
+		sourceColumn: gateway_airport
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 8195154f-f44d-4ba5-a649-3c1408aa4c17
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 26b717e6-5cb1-49e1-8174-595c4df95255
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition GatewaysNonstop = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov", [RelativePath = "/api/v3/views/hpjf-p2n3/query.csv"]),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Column8", "Column7", "Column6", "Column5"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Other Columns", [PromoteAllScalars=true]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{"change_2022_2023"}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Removed Columns", {"gateway_airport"}, "Date", "Value"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"Value", Int64.Type}}),
+				    #"Extracted Text After Delimiter" = Table.TransformColumns(#"Changed Type", {{"Date", each Text.AfterDelimiter(_, "_"), type text}}),
+				    #"Added Prefix" = Table.TransformColumns(#"Extracted Text After Delimiter", {{"Date", each _ & "-01-01", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Prefix",{{"Date", type date}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

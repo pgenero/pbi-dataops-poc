@@ -1,0 +1,49 @@
+table GA_Performance
+	lineageTag: 4e4a1e34-5407-46fa-aa0d-a27777886901
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8b9e4857-af05-4c92-bd32-0407dba10bab
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ga_type
+		dataType: string
+		lineageTag: 74d30163-891c-4d49-8495-7d1304d18eb4
+		summarizeBy: none
+		sourceColumn: ga_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: int64
+		formatString: 0
+		lineageTag: 4df8aa84-8753-4c62-93d2-3c08bc1e479f
+		summarizeBy: sum
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GA_Performance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov", [RelativePath="/api/v3/views/kxxg-a7c6/query.csv"]),[Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column1", "Column2", "Column3", "Column4", "Column11"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Columns", [PromoteAllScalars=true]),
+				    #"Added Suffix" = Table.TransformColumns(#"Promoted Headers", {{"year", each _ & "-01-01", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Suffix",{{"year", "date"}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Renamed Columns", {"date"}, "ga_type", "value"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Unpivoted Other Columns",{{"value", Int64.Type}, {"date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

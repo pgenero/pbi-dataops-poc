@@ -14,3 +14,7 @@ relationship 853e81c1-fa16-7f56-3929-25403ac0b2f9
 	fromColumn: GatewaysNonstop.Date
 	toColumn: dim_Calendar.Date
 
+relationship 650992d5-ef99-d6b5-6a7a-569ea5ce51f7
+	fromColumn: GA_Performance.date
+	toColumn: dim_Calendar.Date
+

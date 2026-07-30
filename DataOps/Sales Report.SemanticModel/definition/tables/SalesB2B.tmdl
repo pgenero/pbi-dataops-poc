@@ -35,7 +35,7 @@ table SalesB2B
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/sspm/dataset/456/distribution/456.1/download/ventas-totales-autoservicios-mayoristas.csv"),[Delimiter=",", Columns=26, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/sspm/dataset/456/distribution/456.1/download/ventas-totales-autoservicios-mayoristas.csv"]),[Delimiter=",", Columns=26, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Promoted Headers", {"indice_tiempo"}, "Attribute", "Value"),
 				    #"Inserted Replaced Text" = Table.AddColumn(#"Unpivoted Other Columns", "Category", each Text.Replace(Text.Proper([Attribute]), "_", " "), type text),

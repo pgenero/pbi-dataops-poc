@@ -28,22 +28,31 @@
       "ordinal": 1,
       "visualContainers": [
         {
-          "config": "{\"name\":\"67266607309d93627539\",\"layouts\":[{\"id\":0,\"position\":{\"x\":25.288753799392097,\"y\":58.358662613981764,\"z\":0,\"width\":393.9209726443769,\"height\":552.4620060790273,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GatewaysNonstop.gateway_airport\"},{\"queryRef\":\"Sum(GatewaysNonstop.Value)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GatewaysNonstop\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"gateway_airport\"},\"Name\":\"GatewaysNonstop.gateway_airport\",\"NativeReferenceName\":\"gateway_airport\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(GatewaysNonstop.Value)\",\"NativeReferenceName\":\"Sum of Value\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"2c300a10aaab9d1b35ec\",\"layouts\":[{\"id\":0,\"position\":{\"x\":530.0911854103343,\"y\":29.179331306990882,\"z\":2000,\"width\":578.7234042553192,\"height\":660.4255319148937,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"pivotTable\",\"projections\":{\"Rows\":[{\"queryRef\":\"dim_Calendar.YEAR\",\"active\":true}],\"Values\":[{\"queryRef\":\"Sum(GA_Performance.value)\"}],\"Columns\":[{\"queryRef\":\"GA_Performance.ga_type\",\"active\":true}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GA_Performance\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dim_Calendar\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"value\"}},\"Function\":0},\"Name\":\"Sum(GA_Performance.value)\",\"NativeReferenceName\":\"Sum of value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"YEAR\"},\"Name\":\"dim_Calendar.YEAR\",\"NativeReferenceName\":\"Sum of YEAR\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"ga_type\"},\"Name\":\"GA_Performance.ga_type\",\"NativeReferenceName\":\"ga_type\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
-          "height": 552.46,
-          "width": 393.92,
-          "x": 25.29,
-          "y": 58.36,
+          "height": 660.43,
+          "width": 578.72,
+          "x": 530.09,
+          "y": 29.18,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"67266607309d93627539\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":200.3647416413374,\"z\":0,\"width\":491.1854103343465,\"height\":519.3920972644377,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GatewaysNonstop.city\"},{\"queryRef\":\"Sum(GatewaysNonstop.Value)\"},{\"queryRef\":\"GatewaysNonstop.airport_state\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GatewaysNonstop\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(GatewaysNonstop.Value)\",\"NativeReferenceName\":\"Sum of Value\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"airport_state\"},\"Name\":\"GatewaysNonstop.airport_state\",\"NativeReferenceName\":\"airport_state\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"city\"},\"Name\":\"GatewaysNonstop.city\",\"NativeReferenceName\":\"city\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 519.39,
+          "width": 491.19,
+          "x": 0.00,
+          "y": 200.36,
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"cde2136d23556a601e09\",\"layouts\":[{\"id\":0,\"position\":{\"x\":428.936170212766,\"y\":58.358662613981764,\"z\":1,\"width\":360.8510638297872,\"height\":200.3647416413374,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Noise.a_weighted_24_hour_laeq_dba\"},{\"queryRef\":\"Sum(Noise.People2016)\"},{\"queryRef\":\"Sum(Noise.People2018)\"},{\"queryRef\":\"Sum(Noise.change_2016_to_2018)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"n\",\"Entity\":\"Noise\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"a_weighted_24_hour_laeq_dba\"},\"Name\":\"Noise.a_weighted_24_hour_laeq_dba\",\"NativeReferenceName\":\"Range\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"change_2016_to_2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.change_2016_to_2018)\",\"NativeReferenceName\":\"Change\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2016\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2016)\",\"NativeReferenceName\":\"2016\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2018)\",\"NativeReferenceName\":\"2018\"}]},\"columnProperties\":{\"Sum(Noise.People2016)\":{\"displayName\":\"2016\"},\"Sum(Noise.People2018)\":{\"displayName\":\"2018\"},\"Sum(Noise.change_2016_to_2018)\":{\"displayName\":\"Change\"},\"Noise.a_weighted_24_hour_laeq_dba\":{\"displayName\":\"Range\"}},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"77.39817175496046D\"}}}},\"selector\":{\"metadata\":\"Sum(Noise.change_2016_to_2018)\"}}],\"columnHeaders\":[{\"properties\":{}}]}}}",
+          "config": "{\"name\":\"cde2136d23556a601e09\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":360.8510638297872,\"height\":185.77507598784194,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Noise.a_weighted_24_hour_laeq_dba\"},{\"queryRef\":\"Sum(Noise.People2016)\"},{\"queryRef\":\"Sum(Noise.People2018)\"},{\"queryRef\":\"Sum(Noise.change_2016_to_2018)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"n\",\"Entity\":\"Noise\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"a_weighted_24_hour_laeq_dba\"},\"Name\":\"Noise.a_weighted_24_hour_laeq_dba\",\"NativeReferenceName\":\"Range\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"change_2016_to_2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.change_2016_to_2018)\",\"NativeReferenceName\":\"Change\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2016\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2016)\",\"NativeReferenceName\":\"2016\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2018)\",\"NativeReferenceName\":\"2018\"}]},\"columnProperties\":{\"Sum(Noise.People2016)\":{\"displayName\":\"2016\"},\"Sum(Noise.People2018)\":{\"displayName\":\"2018\"},\"Sum(Noise.change_2016_to_2018)\":{\"displayName\":\"Change\"},\"Noise.a_weighted_24_hour_laeq_dba\":{\"displayName\":\"Range\"}},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"77.39817175496046D\"}}}},\"selector\":{\"metadata\":\"Sum(Noise.change_2016_to_2018)\"}}],\"columnHeaders\":[{\"properties\":{}}]}}}",
           "filters": "[]",
-          "height": 200.36,
+          "height": 185.78,
           "width": 360.85,
-          "x": 428.94,
-          "y": 58.36,
-          "z": 1.00
+          "x": 0.00,
+          "y": 0.00,
+          "z": 1000.00
         }
       ],
       "width": 1280.00

@@ -1,0 +1,548 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "e08be7155ac36900d53c",
+  "position": {
+    "x": 17.896138482023968,
+    "y": 11.078561917443409,
+    "z": 0,
+    "height": 193.44873501997338,
+    "width": 686.01864181091878,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "PassengerIndicators"
+                    }
+                  },
+                  "Property": "indicator"
+                }
+              },
+              "queryRef": "PassengerIndicators.indicator",
+              "nativeQueryRef": "Indicator",
+              "displayName": "Indicator"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "PassengerIndicators"
+                    }
+                  },
+                  "Property": "mode"
+                }
+              },
+              "queryRef": "PassengerIndicators.mode",
+              "nativeQueryRef": "Mode",
+              "displayName": "Mode"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PassengerIndicators"
+                        }
+                      },
+                      "Property": "week_change"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Sum(PassengerIndicators.week_change)",
+              "nativeQueryRef": "AVG Week Change",
+              "displayName": "AVG Week Change"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PassengerIndicators"
+                        }
+                      },
+                      "Property": "week_change"
+                    }
+                  },
+                  "Function": 4
+                }
+              },
+              "queryRef": "Divide(Sum(PassengerIndicators.week_change), ScopedEval(Sum(PassengerIndicators.week_change), []))",
+              "nativeQueryRef": "Max Change",
+              "displayName": "Max Change"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "PassengerIndicators"
+                        }
+                      },
+                      "Property": "week_change"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Sum(PassengerIndicators.week_change)1",
+              "nativeQueryRef": "Min Change",
+              "displayName": "Min Change"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "239.04420577518786D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "PassengerIndicators.indicator"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "110.33954517064622D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "PassengerIndicators.mode"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "102.74988725500897D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Divide(Sum(PassengerIndicators.week_change), ScopedEval(Sum(PassengerIndicators.week_change), []))"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "94.78348981922564D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(PassengerIndicators.week_change)1"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "dataBars": {
+              "positiveColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'maxColor'"
+                      }
+                    }
+                  }
+                }
+              },
+              "negativeColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'minColor'"
+                      }
+                    }
+                  }
+                }
+              },
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'foreground'"
+                      }
+                    }
+                  }
+                }
+              },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "totalMatchingOption": {
+                "expr": {
+                  "Literal": {
+                    "Value": "1L"
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(PassengerIndicators.week_change)"
+          }
+        },
+        {
+          "properties": {},
+          "selector": {
+            "metadata": "Divide(Sum(PassengerIndicators.week_change), ScopedEval(Sum(PassengerIndicators.week_change), []))"
+          }
+        },
+        {
+          "properties": {},
+          "selector": {
+            "metadata": "Sum(PassengerIndicators.week_change)1"
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Aggregation": {
+                          "Expression": {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "PassengerIndicators"
+                                }
+                              },
+                              "Property": "week_change"
+                            }
+                          },
+                          "Function": 3
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient2": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#de6a73'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#FFF0F1'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Sum(PassengerIndicators.week_change)1"
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Aggregation": {
+                          "Expression": {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "PassengerIndicators"
+                                }
+                              },
+                              "Property": "week_change"
+                            }
+                          },
+                          "Function": 4
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient2": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#F0FFF4'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#83FDA4'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "Divide(Sum(PassengerIndicators.week_change), ScopedEval(Sum(PassengerIndicators.week_change), []))"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BoldHeader'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fb1de6d8b9a7d000d8e4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "PassengerIndicators"
+              }
+            },
+            "Property": "indicator"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5509dfd1700d8043b8eb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "PassengerIndicators"
+              }
+            },
+            "Property": "mode"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "be5116c60700e5cc0141",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "PassengerIndicators"
+                  }
+                },
+                "Property": "week_change"
+              }
+            },
+            "Function": 1
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9b102b387308a2184032",
+        "field": {
+          "Arithmetic": {
+            "Left": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "PassengerIndicators"
+                      }
+                    },
+                    "Property": "week_change"
+                  }
+                },
+                "Function": 4
+              }
+            },
+            "Right": {
+              "ScopedEval": {
+                "Expression": {
+                  "Aggregation": {
+                    "Expression": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "PassengerIndicators"
+                          }
+                        },
+                        "Property": "week_change"
+                      }
+                    },
+                    "Function": 4
+                  }
+                },
+                "Scope": []
+              }
+            },
+            "Operator": 3
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "2ef1345a435d519d08e5",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "PassengerIndicators"
+                  }
+                },
+                "Property": "week_change"
+              }
+            },
+            "Function": 4
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ea798b0abd33003a0052",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "PassengerIndicators"
+                  }
+                },
+                "Property": "week_change"
+              }
+            },
+            "Function": 3
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

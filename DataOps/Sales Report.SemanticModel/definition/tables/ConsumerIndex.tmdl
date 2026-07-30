@@ -33,7 +33,7 @@ table ConsumerIndex
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/sspm/dataset/380/distribution/380.1/download/indice-confianza-consumidor-valores-anuales.csv"]),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar/catalog/sspm/dataset/380/distribution/380.1/download/indice-confianza-consumidor-valores-anuales.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([icc_nacional] <> "")),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"indice_tiempo", type date}}),

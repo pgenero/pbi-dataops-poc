@@ -28,12 +28,12 @@
       "ordinal": 1,
       "visualContainers": [
         {
-          "config": "{\"name\":\"d11e46682b026985cc00\",\"layouts\":[{\"id\":0,\"position\":{\"x\":13.617021276595745,\"y\":9.72644376899696,\"z\":0,\"width\":426.9908814589666,\"height\":688.6322188449848,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"dim_carriers.carrier_name\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_carriers\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"carrier_name\"},\"Name\":\"dim_carriers.carrier_name\",\"NativeReferenceName\":\"carrier_name\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"67266607309d93627539\",\"layouts\":[{\"id\":0,\"position\":{\"x\":25.288753799392097,\"y\":58.358662613981764,\"z\":0,\"width\":393.9209726443769,\"height\":552.4620060790273,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GatewaysNonstop.gateway_airport\"},{\"queryRef\":\"Sum(GatewaysNonstop.Value)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GatewaysNonstop\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"gateway_airport\"},\"Name\":\"GatewaysNonstop.gateway_airport\",\"NativeReferenceName\":\"gateway_airport\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(GatewaysNonstop.Value)\",\"NativeReferenceName\":\"Sum of Value\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
-          "height": 688.63,
-          "width": 426.99,
-          "x": 13.62,
-          "y": 9.73,
+          "height": 552.46,
+          "width": 393.92,
+          "x": 25.29,
+          "y": 58.36,
           "z": 0.00
         }
       ],

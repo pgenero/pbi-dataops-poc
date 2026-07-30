@@ -10,3 +10,7 @@ relationship 8a1c3f71-2267-b2e0-5a65-02d5fb6c4813
 	fromColumn: PassengerIndicators.week_ending
 	toColumn: dim_Calendar.Date
 
+relationship 853e81c1-fa16-7f56-3929-25403ac0b2f9
+	fromColumn: GatewaysNonstop.Date
+	toColumn: dim_Calendar.Date
+

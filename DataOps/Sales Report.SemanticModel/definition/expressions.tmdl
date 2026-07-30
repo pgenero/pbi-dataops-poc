@@ -1,6 +1,6 @@
 expression Names3034 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.4/download/nombres-1930-1934.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.4/download/nombres-1930-1934.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -13,7 +13,7 @@ expression Names3034 =
 
 expression Names3539 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.5/download/nombres-1935-1939.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.5/download/nombres-1935-1939.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -26,7 +26,7 @@ expression Names3539 =
 
 expression Names4044 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.6/download/nombres-1940-1944.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.6/download/nombres-1940-1944.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -39,7 +39,7 @@ expression Names4044 =
 
 expression Names4549 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.7/download/nombres-1945-1949.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.7/download/nombres-1945-1949.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -52,7 +52,7 @@ expression Names4549 =
 
 expression Names5054 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.8/download/nombres-1950-1954.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.8/download/nombres-1950-1954.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -65,7 +65,7 @@ expression Names5054 =
 
 expression Names5559 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.9/download/nombres-1955-1959.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.9/download/nombres-1955-1959.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -78,7 +78,7 @@ expression Names5559 =
 
 expression Names6064 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.10/download/nombres-1960-1964.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.10/download/nombres-1960-1964.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -91,7 +91,7 @@ expression Names6064 =
 
 expression Names6569 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.11/download/nombres-1965-1969.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.11/download/nombres-1965-1969.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -104,7 +104,7 @@ expression Names6569 =
 
 expression Names7074 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.12/download/nombres-1970-1974.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.12/download/nombres-1970-1974.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -117,7 +117,7 @@ expression Names7074 =
 
 expression Names7579 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.13/download/nombres-1975-1979.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.13/download/nombres-1975-1979.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -130,7 +130,7 @@ expression Names7579 =
 
 expression Names8084 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.14/download/nombres-1980-1984.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.14/download/nombres-1980-1984.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -143,7 +143,7 @@ expression Names8084 =
 
 expression Names8589 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.15/download/nombres-1985-1989.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.15/download/nombres-1985-1989.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -156,7 +156,7 @@ expression Names8589 =
 
 expression Names2529 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath = "/catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath = "catalog/otros/dataset/2/distribution/2.3/download/nombres-1925-1929.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -169,7 +169,7 @@ expression Names2529 =
 
 expression Names9094 =
 		let
-		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="/catalog/otros/dataset/2/distribution/2.16/download/nombres-1990-1994.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents("https://infra.datos.gob.ar", [RelativePath="catalog/otros/dataset/2/distribution/2.16/download/nombres-1990-1994.csv"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -178,5 +178,5 @@ expression Names9094 =
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 

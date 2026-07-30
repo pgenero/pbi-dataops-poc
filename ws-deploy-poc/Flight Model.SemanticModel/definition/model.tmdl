@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["PassengerIndicators","AirFareCarrier","dim_carriers","GatewaysNonstop"]
+annotation PBI_QueryOrder = ["PassengerIndicators","AirFareCarrier","dim_carriers","GatewaysNonstop","Noise"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -17,6 +17,7 @@ ref table AirFareCarrier
 ref table dim_carriers
 ref table dim_Calendar
 ref table GatewaysNonstop
+ref table Noise
 
 ref cultureInfo en-US
 

@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "3e413aad37a04d3042b4",
+  "name": "df8c50c82bc35db41609",
   "position": {
-    "x": 9.8630136986301373,
-    "y": 84.38356164383562,
-    "z": 0,
-    "height": 615.89041095890411,
-    "width": 1255.8904109589041,
-    "tabOrder": 0
+    "x": 18.19397993311037,
+    "y": 218.32775919732441,
+    "z": 2000,
+    "height": 483.74581939799333,
+    "width": 686.02006688963218,
+    "tabOrder": 2000
   },
   "visual": {
-    "visualType": "lineClusteredColumnComboChart",
+    "visualType": "scatterChart",
     "query": {
       "queryState": {
         "Category": {
@@ -27,7 +27,31 @@
                 }
               },
               "queryRef": "dim_Calendar.YEAR",
-              "nativeQueryRef": "YEAR",
+              "nativeQueryRef": "Sum of YEAR",
+              "active": true
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AirFareCarrier"
+                        }
+                      },
+                      "Property": "market_revenue_real"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(AirFareCarrier.market_revenue_real)",
+              "nativeQueryRef": "Sum of market_revenue_real",
               "active": true
             }
           ]
@@ -51,58 +75,80 @@
                 }
               },
               "queryRef": "Sum(AirFareCarrier.average_market_miles_flown)",
-              "nativeQueryRef": "AVG Miles",
-              "displayName": "AVG Miles"
-            }
-          ]
-        },
-        "Y2": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "AirFareCarrier"
-                        }
-                      },
-                      "Property": "market_revenue_real"
-                    }
-                  },
-                  "Function": 0
-                }
-              },
-              "queryRef": "Sum(AirFareCarrier.market_revenue_real)",
-              "nativeQueryRef": "Revenue",
-              "displayName": "Revenue"
+              "nativeQueryRef": "Sum of average_market_miles_flown"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "dim_Calendar"
-                  }
-                },
-                "Property": "YEAR"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ]
       }
     },
     "objects": {
-      "categoryAxis": [
+      "categoryLabels": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "trend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Trend line 1'"
+                }
+              }
+            },
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "gridlineShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
             "showAxisTitle": {
               "expr": {
                 "Literal": {
@@ -116,12 +162,18 @@
                   "expr": {
                     "ThemeDataColor": {
                       "ColorId": 0,
-                      "Percent": -0.1
+                      "Percent": 0
                     }
                   }
                 }
               }
-            },
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
             "gridlineShow": {
               "expr": {
                 "Literal": {
@@ -129,49 +181,10 @@
                 }
               }
             },
-            "axisType": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "'Categorical'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.1
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "90D"
-                }
-              }
-            },
-            "gridlineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'solid'"
+                  "Value": "false"
                 }
               }
             },
@@ -181,33 +194,7 @@
                   "expr": {
                     "ThemeDataColor": {
                       "ColorId": 0,
-                      "Percent": -0.1
-                    }
-                  }
-                }
-              }
-            },
-            "secShowAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "secShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "secLabelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.1
+                      "Percent": 0
                     }
                   }
                 }
@@ -224,7 +211,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 2,
+                      "ColorId": 9,
                       "Percent": 0.6
                     }
                   }
@@ -232,80 +219,27 @@
               }
             }
           }
-        },
+        }
+      ],
+      "markers": [
         {
           "properties": {
-            "fill": {
+            "borderColorMatchFill": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "borderColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 6,
+                      "ColorId": 9,
                       "Percent": 0
                     }
                   }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "Sum(AirFareCarrier.market_revenue_real)"
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.1
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "lineStyles": [
-        {
-          "properties": {
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "lineChartType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'smooth'"
-                }
-              }
-            },
-            "interpolationSmooth": {
-              "expr": {
-                "Literal": {
-                  "Value": "'cardinal'"
-                }
-              }
-            },
-            "interpolationSmoothParam": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
                 }
               }
             }
@@ -323,7 +257,7 @@
                   "expr": {
                     "ThemeDataColor": {
                       "ColorId": 1,
-                      "Percent": 0
+                      "Percent": 0.2
                     }
                   }
                 }
@@ -332,7 +266,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "54D"
+                  "Value": "5D"
                 }
               }
             }
@@ -342,13 +276,6 @@
       "title": [
         {
           "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'AVG Miles & Revenue'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -358,6 +285,13 @@
                       "Percent": 0
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Revenue & Miles by Year'"
                 }
               }
             },
@@ -386,7 +320,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 2,
+                      "ColorId": 9,
                       "Percent": 0
                     }
                   }
@@ -402,21 +336,26 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "fcfbce33c60039e5025b",
+        "name": "b0c2c4551a68dd99d3b0",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "dim_Calendar"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "market_revenue_real"
               }
             },
-            "Property": "YEAR"
+            "Function": 0
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "0d84bf3e1daaac63151a",
+        "name": "e2a2bfa6b1040980c08c",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -435,20 +374,15 @@
         "type": "Advanced"
       },
       {
-        "name": "81c95b4a032740155002",
+        "name": "efe22bd552016e8dcc17",
         "field": {
-          "Aggregation": {
+          "Column": {
             "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "AirFareCarrier"
-                  }
-                },
-                "Property": "market_revenue_real"
+              "SourceRef": {
+                "Entity": "dim_Calendar"
               }
             },
-            "Function": 0
+            "Property": "YEAR"
           }
         },
         "type": "Advanced"

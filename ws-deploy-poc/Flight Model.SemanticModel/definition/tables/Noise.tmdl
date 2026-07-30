@@ -1,0 +1,55 @@
+table Noise
+	lineageTag: 9df79d14-fdcd-491f-9890-b605dcc20190
+
+	column a_weighted_24_hour_laeq_dba
+		dataType: string
+		lineageTag: 587fccfa-1b29-4210-a0bc-072a1e228069
+		summarizeBy: none
+		sourceColumn: a_weighted_24_hour_laeq_dba
+
+		annotation SummarizationSetBy = Automatic
+
+	column People2016
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3d35c460-ae45-4909-95fe-8ce9c1a72ce0
+		summarizeBy: sum
+		sourceColumn: People2016
+
+		annotation SummarizationSetBy = Automatic
+
+	column People2018
+		dataType: int64
+		formatString: #,0
+		lineageTag: 95af7d25-a818-4fb3-b07f-e359a58cae18
+		summarizeBy: sum
+		sourceColumn: People2018
+
+		annotation SummarizationSetBy = Automatic
+
+	column change_2016_to_2018
+		dataType: decimal
+		formatString: #,0.00
+		lineageTag: 8f2e6722-45eb-443f-86c0-ffa84c955639
+		summarizeBy: sum
+		sourceColumn: change_2016_to_2018
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Noise = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov", [RelativePath = "/api/v3/views/iqwy-f8z4/query.csv?query=SELECT%0A%20%20%60a_weighted_24_hour_laeq_dba%60%2C%0A%20%20%60number_of_people_in_2016%60%2C%0A%20%20%60percent_of_total_population%60%2C%0A%20%20%60number_of_people_in_2018%60%2C%0A%20%20%60percent_of_total_population_1%60%2C%0A%20%20%60change_2016_to_2018%60"]),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([a_weighted_24_hour_laeq_dba] <> "Total aviation noise")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{":id", ":version", ":created_at", ":updated_at", "percent_of_total_population", "percent_of_total_population_1"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"number_of_people_in_2016", Int64.Type}, {"number_of_people_in_2018", Int64.Type}, {"change_2016_to_2018", Currency.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"number_of_people_in_2016", "People2016"}, {"number_of_people_in_2018", "People2018"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"type\":2,\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.73\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU05\",\"type\":2,\"version\":{\"visual\":\"2.9.0\",\"report\":\"3.3.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":1,\"landingPageName\":\"f8bdd1ff0377e93dda0d\",\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -20,7 +20,7 @@
   "sections": [
     {
       "config": "{}",
-      "displayName": "Page 1",
+      "displayName": "Check Data",
       "displayOption": 1,
       "filters": "[]",
       "height": 720.00,
@@ -28,13 +28,22 @@
       "ordinal": 1,
       "visualContainers": [
         {
-          "config": "{\"name\":\"d11e46682b026985cc00\",\"layouts\":[{\"id\":0,\"position\":{\"x\":13.617021276595745,\"y\":9.72644376899696,\"z\":0,\"width\":426.9908814589666,\"height\":688.6322188449848,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"dim_carriers.carrier_name\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dim_carriers\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"carrier_name\"},\"Name\":\"dim_carriers.carrier_name\",\"NativeReferenceName\":\"carrier_name\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"67266607309d93627539\",\"layouts\":[{\"id\":0,\"position\":{\"x\":25.288753799392097,\"y\":58.358662613981764,\"z\":0,\"width\":393.9209726443769,\"height\":552.4620060790273,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GatewaysNonstop.gateway_airport\"},{\"queryRef\":\"Sum(GatewaysNonstop.Value)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GatewaysNonstop\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"gateway_airport\"},\"Name\":\"GatewaysNonstop.gateway_airport\",\"NativeReferenceName\":\"gateway_airport\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Value\"}},\"Function\":0},\"Name\":\"Sum(GatewaysNonstop.Value)\",\"NativeReferenceName\":\"Sum of Value\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
-          "height": 688.63,
-          "width": 426.99,
-          "x": 13.62,
-          "y": 9.73,
+          "height": 552.46,
+          "width": 393.92,
+          "x": 25.29,
+          "y": 58.36,
           "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"cde2136d23556a601e09\",\"layouts\":[{\"id\":0,\"position\":{\"x\":428.936170212766,\"y\":58.358662613981764,\"z\":1,\"width\":360.8510638297872,\"height\":200.3647416413374,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Noise.a_weighted_24_hour_laeq_dba\"},{\"queryRef\":\"Sum(Noise.People2016)\"},{\"queryRef\":\"Sum(Noise.People2018)\"},{\"queryRef\":\"Sum(Noise.change_2016_to_2018)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"n\",\"Entity\":\"Noise\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"a_weighted_24_hour_laeq_dba\"},\"Name\":\"Noise.a_weighted_24_hour_laeq_dba\",\"NativeReferenceName\":\"Range\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"change_2016_to_2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.change_2016_to_2018)\",\"NativeReferenceName\":\"Change\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2016\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2016)\",\"NativeReferenceName\":\"2016\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"n\"}},\"Property\":\"People2018\"}},\"Function\":0},\"Name\":\"Sum(Noise.People2018)\",\"NativeReferenceName\":\"2018\"}]},\"columnProperties\":{\"Sum(Noise.People2016)\":{\"displayName\":\"2016\"},\"Sum(Noise.People2018)\":{\"displayName\":\"2018\"},\"Sum(Noise.change_2016_to_2018)\":{\"displayName\":\"Change\"},\"Noise.a_weighted_24_hour_laeq_dba\":{\"displayName\":\"Range\"}},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"77.39817175496046D\"}}}},\"selector\":{\"metadata\":\"Sum(Noise.change_2016_to_2018)\"}}],\"columnHeaders\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 200.36,
+          "width": 360.85,
+          "x": 428.94,
+          "y": 58.36,
+          "z": 1.00
         }
       ],
       "width": 1280.00

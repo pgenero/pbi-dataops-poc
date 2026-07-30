@@ -82,7 +82,7 @@ table AirFareCarrier
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://data.bts.gov/api/v3/views/gjp5-nh2u/query.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(Web.Contents("https://data.bts.gov", [RelativePath = "/api/v3/views/gjp5-nh2u/query.csv"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Removed Columns" = Table.RemoveColumns(#"Promoted Headers",{":id", ":version", ":created_at", ":updated_at", "carrier_name"}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"average_market_fare_real", Int64.Type}, {"market_passengers", Int64.Type}, {"market_revenue_real", Int64.Type}, {"market_passenger_miles_flown", Int64.Type}, {"average_market_yield_real", Currency.Type}, {"average_market_miles_flown", Currency.Type}}),

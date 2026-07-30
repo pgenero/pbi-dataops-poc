@@ -27,38 +27,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detect changed folder
-        run: |
-          echo "Detecting changed folder..."
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
-
-          echo "$CHANGED_FILES"
-
-          TARGETS=""
-
-          if echo "$CHANGED_FILES" | grep -q "^DataOps/"; then
-            TARGETS="$TARGETS sales"
-          fi
-
-          if echo "$CHANGED_FILES" | grep -q "^ws-finance/"; then
-            TARGETS="$TARGETS finance"
-          fi
-
-          if echo "$CHANGED_FILES" | grep -q "^ws-deploy-poc/"; then
-            TARGETS="$TARGETS operations"
-          fi
-
-          # clean spaces
-          TARGETS=$(echo "$TARGETS" | xargs)
-
-          if [ -z "$TARGETS" ]; then
-            echo "SKIPPING PIPELINE → No relevant changes"
-            echo "SKIP_PIPELINE=true" >> $GITHUB_ENV
-          else
-            echo "Detected targets: $TARGETS"
-            echo "TARGETS=$TARGETS" >> $GITHUB_ENV
-          fi
+      - name: Detect Changed Workspaces and Models
+        id: detect_changes
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python ci/scripts/detect_workspace_changes.py
 
       - name: Get Fabric token
         if: env.SKIP_PIPELINE != 'true'
@@ -72,14 +51,6 @@ jobs:
           | jq -r .access_token)
 
           echo "TOKEN=$TOKEN" >> $GITHUB_ENV
-
-      - name: Set up Python
-        if: env.SKIP_PIPELINE != 'true'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: 'ci/requirements/requirements.txt'
 
       - name: Install dependencies
         if: env.SKIP_PIPELINE != 'true'

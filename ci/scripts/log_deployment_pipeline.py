@@ -98,7 +98,9 @@ def get_items(pipeline_id, token):
     # Debug
     print("Debug #2")
     print(f"✅ Items retrieved: {len(items)}")
-    return items
+
+    # Return the items and the workspace_id to use later in the script
+    return items, workspace_id
 
 # ========================
 # 2. Loop per target
@@ -132,6 +134,7 @@ for target in targets:
             "target": target,
             "commit": remote_commit,
             "github_url": github_run_url,
+            "test_workspace_id": None,
             "items": []
         }
 
@@ -146,7 +149,10 @@ for target in targets:
 
             # Request the workspace existing items to build the Log json file
             # When the item is deleted, no pipeline operations are related to it
-            workspace_items = get_items(pipeline_id, token)
+            workspace_items, workspace_id = get_items(pipeline_id, token)
+
+            # Store the workspace_id once the function has been invoked
+            result["test_workspace_id"] = workspace_id
 
             with open(deleted_file_name, "r") as f:
                 result_file = json.load(f)
@@ -194,7 +200,10 @@ for target in targets:
             # 2.5.2 Once the deployment is complete, all the deployed items should be updated in Test.
             # Small pause to wait the Fabric API for index - Then, list the Test Workspace Items
             time.sleep(2) 
-            workspace_items = get_items(pipeline_id, token)
+            workspace_items, workspace_id = get_items(pipeline_id, token)
+
+            # Store the workspace_id once the function has been invoked
+            result["test_workspace_id"] = workspace_id
 
             # 2.5.3 Log Level 2 - Operations details for normal deploy
             for step in pipelineOperationRaw.get("executionPlan", {}).get("steps", []):

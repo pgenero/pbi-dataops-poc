@@ -39,6 +39,20 @@ jobs:
           GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python ci/scripts/detect_workspace_changes.py
 
+      - name: Check PR Refresh Option
+        id: check_refresh
+        if: env.SKIP_PIPELINE != 'true'
+        run: |
+          PR_BODY="${{ github.event.pull_request.body }}"
+          
+          if echo "$PR_BODY" | grep -qiE "\[x\] \s*🔄 \*\*Trigger Semantic Model Refresh in TEST\*\*"; then
+            echo "PR Option: Refresh in TEST is ENABLED"
+            echo "RUN_TEST_REFRESH=true" >> $GITHUB_ENV
+          else
+            echo "PR Option: Refresh in TEST is DISABLED (Skipping to prevent deployment lock)"
+            echo "RUN_TEST_REFRESH=false" >> $GITHUB_ENV
+          fi
+
       - name: Get Fabric token
         if: env.SKIP_PIPELINE != 'true'
         run: |

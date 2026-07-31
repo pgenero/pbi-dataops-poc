@@ -2,3 +2,7 @@ relationship AutoDetected_2909fdb1-fa5b-477f-9ff3-bc487ec6fc06
 	fromColumn: ShopHealthyStoresNYC.LocationId
 	toColumn: dim_NYCLocation.LocationId
 
+relationship 6a85ddd1-3c1e-9b36-79b1-7b82e04ab59d
+	fromColumn: ShopHealthyStoresNYC.'Year Awarded'
+	toColumn: Calendar.Date
+

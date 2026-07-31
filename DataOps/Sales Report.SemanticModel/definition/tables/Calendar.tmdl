@@ -38,7 +38,7 @@ table Calendar
 		source =
 				
 				CALENDAR(
-				    DATE( 1920,1,1 ),
+				    DATE( 2013,1,1 ),
 				    DATE( YEAR( TODAY() ), 12, 31 )
 				)
 

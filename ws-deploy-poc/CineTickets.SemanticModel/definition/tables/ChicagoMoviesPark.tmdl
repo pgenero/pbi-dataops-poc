@@ -28,6 +28,7 @@ table ChicagoMoviesPark
 	column ' ZipCode'
 		dataType: string
 		lineageTag: 3a604377-fd88-4a4f-9241-cb7e1d1a5c69
+		dataCategory: PostalCode
 		summarizeBy: none
 		sourceColumn: " ZipCode"
 

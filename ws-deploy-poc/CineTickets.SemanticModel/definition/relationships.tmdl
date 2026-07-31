@@ -1,4 +1,5 @@
 relationship fe9b6a9f-9bb6-8dad-7d27-a03ef14c7434
+	crossFilteringBehavior: bothDirections
 	toCardinality: many
 	fromColumn: ChicagoMoviesPark.' MovieName'
 	toColumn: dimChicagoMovies.' MovieName'

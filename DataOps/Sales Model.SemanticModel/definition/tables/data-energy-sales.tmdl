@@ -1,0 +1,40 @@
+table data-energy-sales
+	lineageTag: bc2f7130-51ac-4287-8369-f5749e01b39a
+
+	column Years
+		dataType: string
+		lineageTag: 4815ea25-b495-4d60-aa22-52929eda3d19
+		summarizeBy: none
+		sourceColumn: Years
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Historical Data'
+		dataType: string
+		lineageTag: 2fbc68c0-bf9b-44d5-9781-c8ec7abcb1c2
+		summarizeBy: none
+		sourceColumn: Historical Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column Target
+		dataType: string
+		lineageTag: 89a9e104-dbdf-4578-a1b0-79c702b06d73
+		summarizeBy: none
+		sourceColumn: Target
+
+		annotation SummarizationSetBy = Automatic
+
+	partition data-energy-sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.ok.gov/dataset/1d142f87-261b-4a83-8686-b91f282c3a9d/resource/7c52b13b-efc5-4df4-8a6d-1ed761b54fcf/download/data-energy-sales.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

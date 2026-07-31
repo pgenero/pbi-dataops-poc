@@ -4,7 +4,7 @@
   "artifacts": [
     {
       "report": {
-        "path": "Sales Report.Report"
+        "path": "Sales Model.Report"
       }
     }
   ],

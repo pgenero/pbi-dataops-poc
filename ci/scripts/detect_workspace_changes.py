@@ -144,7 +144,6 @@ def print_summary(targets, payloads):
                 print(f"   📌 Model: {model_name} [Mode: Full Model Refresh]")
                 print("      • Root TMDL files modified")
 
-
 if __name__ == "__main__":
     targets, payloads = analyze_repository_changes()
 

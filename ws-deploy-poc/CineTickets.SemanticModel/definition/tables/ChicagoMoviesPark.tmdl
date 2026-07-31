@@ -79,22 +79,6 @@ table ChicagoMoviesPark
 
 		annotation SummarizationSetBy = Automatic
 
-	column ' MovieClosedCaption'
-		dataType: string
-		lineageTag: 4b45d986-4625-4b60-95a0-89bc6536116a
-		summarizeBy: none
-		sourceColumn: " MovieClosedCaption"
-
-		annotation SummarizationSetBy = Automatic
-
-	column ' MovieRating'
-		dataType: string
-		lineageTag: 5cfa27a9-215c-4159-b325-36c224ba3426
-		summarizeBy: none
-		sourceColumn: " MovieRating"
-
-		annotation SummarizationSetBy = Automatic
-
 	column 'Location 1'
 		dataType: string
 		lineageTag: d4185245-20e5-4715-9a4b-46dc11895ad2
@@ -127,6 +111,7 @@ table ChicagoMoviesPark
 
 	partition ChicagoMoviesPark = m
 		mode: import
+		queryGroup: ChicagoEvents
 		source =
 				let
 				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
@@ -136,9 +121,12 @@ table ChicagoMoviesPark
 				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{" StartDate", DateTime.Date, type date}}),
 				    #"Inserted Time1" = Table.AddColumn(#"Extracted Date", "EndTime", each DateTime.Time([#" EndDate"]), type time),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Time1",{{" EndDate", type date}}),
-				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"})
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Removed Columns",{{" MovieName", Text.Clean, type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{" MovieName", Text.Trim, type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Trimmed Text",{" MovieClosedCaption", " MovieRating"})
 				in
-				    #"Removed Columns"
+				    #"Removed Columns1"
 
 	annotation PBI_NavigationStepName = Navigation
 

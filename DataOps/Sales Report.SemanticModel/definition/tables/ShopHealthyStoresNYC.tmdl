@@ -9,31 +9,6 @@ table ShopHealthyStoresNYC
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Street Address'
-		dataType: string
-		lineageTag: 6ad9468a-0f00-4409-93ff-25fb00ce478f
-		summarizeBy: none
-		sourceColumn: Street Address
-
-		annotation SummarizationSetBy = Automatic
-
-	column Borough
-		dataType: string
-		lineageTag: 74f1146c-a96b-4fbe-8ba0-4a456895d0e9
-		summarizeBy: none
-		sourceColumn: Borough
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Zip Code'
-		dataType: int64
-		formatString: 0
-		lineageTag: 917b4fb2-4fd8-4dd3-a623-1651d0606400
-		summarizeBy: count
-		sourceColumn: Zip Code
-
-		annotation SummarizationSetBy = Automatic
-
 	column 'Year Awarded'
 		dataType: dateTime
 		formatString: Long Date
@@ -50,38 +25,6 @@ table ShopHealthyStoresNYC
 		lineageTag: d294e15f-fdc4-40ab-b0c9-c498b9f2b2a7
 		summarizeBy: none
 		sourceColumn: Program Wave
-
-		annotation SummarizationSetBy = Automatic
-
-	column Latitude
-		dataType: string
-		lineageTag: 5d73c7d3-9d44-4717-a7c6-f63d88ed2577
-		summarizeBy: none
-		sourceColumn: Latitude
-
-		annotation SummarizationSetBy = Automatic
-
-	column Longitude
-		dataType: string
-		lineageTag: a8b43656-2684-4c59-bf5c-3612fce0cc02
-		summarizeBy: none
-		sourceColumn: Longitude
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Community Board'
-		dataType: string
-		lineageTag: 722b1808-360a-4914-a102-a88776243140
-		summarizeBy: none
-		sourceColumn: Community Board
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Council District'
-		dataType: string
-		lineageTag: 1cf1e355-e36f-4978-8ce1-1ec2fcea0b83
-		summarizeBy: none
-		sourceColumn: Council District
 
 		annotation SummarizationSetBy = Automatic
 
@@ -109,24 +52,29 @@ table ShopHealthyStoresNYC
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Neighborhood Tabulation Area (NTA) (2020)'
-		dataType: string
-		lineageTag: 3a56aca1-4857-4612-a6b0-487986e81afa
+	column LocationId
+		dataType: int64
+		formatString: 0
+		lineageTag: e3804d88-c2fe-49a8-a80a-9905bf300e64
 		summarizeBy: none
-		sourceColumn: Neighborhood Tabulation Area (NTA) (2020)
+		sourceColumn: LocationId
 
 		annotation SummarizationSetBy = Automatic
 
 	partition ShopHealthyStoresNYC = m
 		mode: import
+		queryGroup: ShopsNYC
 		source =
 				let
 				    Source = Csv.Document(Web.Contents("https://data.cityofnewyork.us", [RelativePath="/api/v3/views/ud4g-9x9z/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Added Suffix" = Table.TransformColumns(#"Promoted Headers", {{"Year Awarded", each _ & "-01-01", type text}}),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"Year Awarded", type date}, {"Zip #(lf)Code", Int64.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"Year Awarded", type date}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Store Name", "Street Address"}, dim_NYCLocation, {"Store Name", "Street Address"}, "dim_NYCLocation", JoinKind.LeftOuter),
+				    #"Expanded dim_NYCLocation" = Table.ExpandTableColumn(#"Merged Queries", "dim_NYCLocation", {"LocationId"}, {"LocationId"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded dim_NYCLocation",{"Street Address", "Borough", "Zip #(lf)Code", "Latitude", "Longitude", "Community Board", "Council District", "Neighborhood Tabulation Area (NTA) (2020)"})
 				in
-				    #"Changed Type"
+				    #"Removed Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

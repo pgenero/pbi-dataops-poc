@@ -12,6 +12,7 @@ table dim_NYCLocation
 	column 'Street Address'
 		dataType: string
 		lineageTag: ff967cdc-5714-4349-a0c6-8f6a35dca669
+		dataCategory: Address
 		summarizeBy: none
 		sourceColumn: Street Address
 
@@ -20,6 +21,7 @@ table dim_NYCLocation
 	column Borough
 		dataType: string
 		lineageTag: 8386cfb1-f533-49d7-9ae3-adb4a8c63f2e
+		dataCategory: Place
 		summarizeBy: none
 		sourceColumn: Borough
 
@@ -37,6 +39,7 @@ table dim_NYCLocation
 	column Latitude
 		dataType: double
 		lineageTag: 38ede685-5381-45be-b4dd-f529d2fe55cb
+		dataCategory: Latitude
 		summarizeBy: none
 		sourceColumn: Latitude
 
@@ -47,6 +50,7 @@ table dim_NYCLocation
 	column Longitude
 		dataType: double
 		lineageTag: 94faff13-890d-4b16-b694-48971206b735
+		dataCategory: Longitude
 		summarizeBy: none
 		sourceColumn: Longitude
 

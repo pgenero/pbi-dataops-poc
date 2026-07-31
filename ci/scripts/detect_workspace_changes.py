@@ -98,20 +98,13 @@ def analyze_repository_changes():
     for target in detected_targets:
         payloads_by_target[target] = {}
 
-        # Map partial refreshes by table and partition
+        # Map partial refreshes by table
         if target in tables_by_target:
             for model_name, tables in tables_by_target[target].items():
                 payloads_by_target[target][model_name] = {
                     "refresh_mode": "partial_tables",
-                    "api_payload": {
-                        "type": "full",
-                        "commitMode": "transactional",
-                        "objects": [
-                            {"table": t, "partition": t}
-                            for t in sorted(list(tables))
-                        ],
-                    },
-                }
+                    "objects": [{"table": t} for t in sorted(list(tables))],
+                    }
 
         # Map full model refreshes
         if target in external_tmdl_by_target:
@@ -119,10 +112,7 @@ def analyze_repository_changes():
                 if model_name not in payloads_by_target[target]:
                     payloads_by_target[target][model_name] = {
                         "refresh_mode": "full_model",
-                        "api_payload": {
-                            "type": "full",
-                            "commitMode": "transactional",
-                        },
+                        "objects": None,
                     }
 
     return detected_targets, payloads_by_target

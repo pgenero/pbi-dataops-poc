@@ -86,3 +86,10 @@ jobs:
         if: env.SKIP_PIPELINE != 'true'
         run: |
           python ci/scripts/save_log_fabric.py
+
+      - name: Trigger Semantic Model Refreshes in TEST
+        if: env.SKIP_PIPELINE != 'true' && env.RUN_TEST_REFRESH == 'true'
+        env:
+          REFRESH_PAYLOADS: ${{ steps.detect_changes.outputs.refresh_payloads }}
+        run: |
+          python ci/scripts/trigger_semantic_model_refreshes.py

@@ -1,0 +1,111 @@
+table dim_NYCLocation
+	lineageTag: cad9227b-542e-4afd-850a-98ec183c94e4
+
+	column 'Store Name'
+		dataType: string
+		lineageTag: d406c38d-1a56-486b-a5b4-8de5aee49268
+		summarizeBy: none
+		sourceColumn: Store Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Street Address'
+		dataType: string
+		lineageTag: ff967cdc-5714-4349-a0c6-8f6a35dca669
+		summarizeBy: none
+		sourceColumn: Street Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Borough
+		dataType: string
+		lineageTag: 8386cfb1-f533-49d7-9ae3-adb4a8c63f2e
+		summarizeBy: none
+		sourceColumn: Borough
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 67346e6d-c9d5-4c77-b1c3-7b6a79a8194e
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 38ede685-5381-45be-b4dd-f529d2fe55cb
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 94faff13-890d-4b16-b694-48971206b735
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Community Board'
+		dataType: string
+		lineageTag: 1cb025da-1dce-4995-8e3c-37dedcd483ca
+		summarizeBy: none
+		sourceColumn: Community Board
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Council District'
+		dataType: string
+		lineageTag: 938c9cc0-40ce-484a-b4c8-9d1d377c49a4
+		summarizeBy: none
+		sourceColumn: Council District
+
+		annotation SummarizationSetBy = Automatic
+
+	column NeighborhoodTabArea
+		dataType: string
+		lineageTag: 7566f8a8-f508-4d8a-8075-3a39d2fdac1c
+		summarizeBy: none
+		sourceColumn: NeighborhoodTabArea
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 58b0b360-3a4c-4458-8996-bda89d6f3c3a
+		summarizeBy: none
+		sourceColumn: LocationId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_NYCLocation = m
+		mode: import
+		queryGroup: ShopsNYC
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofnewyork.us", [RelativePath="/api/v3/views/ud4g-9x9z/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Added Suffix" = Table.TransformColumns(#"Promoted Headers", {{"Year Awarded", each _ & "-01-01", type text}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"Year Awarded", type date}, {"Zip #(lf)Code", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"Store Name", "Street Address", "Borough", "Zip #(lf)Code", "Latitude", "Longitude", "Community Board", "Council District", "Neighborhood Tabulation Area (NTA) (2020)"}),
+				    #"Sorted Rows" = Table.Sort(#"Removed Other Columns",{{"Store Name", Order.Ascending}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "LocationId", 1, 1, Int64.Type),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Index",{{"Latitude", type number}, {"Longitude", type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Neighborhood Tabulation Area (NTA) (2020)", "NeighborhoodTabArea"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -88,21 +88,8 @@
         },
         {
           "location": {
-            "x": 1186,
-            "y": 14
-          },
-          "nodeIndex": "Invoices",
-          "nodeLineageTag": "770033d9-e9c6-4dfc-9491-d42eea7ffe26",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1362,
-            "y": 245.5
+            "x": 0,
+            "y": 871.2439173740695
           },
           "nodeIndex": "Names",
           "nodeLineageTag": "a46173ad-6e54-44ea-8fd1-f75999ad8322",
@@ -114,12 +101,26 @@
         },
         {
           "location": {
-            "x": 1612.6386300060624,
-            "y": 316.62998743862545
+            "x": 1222.2533482208885,
+            "y": 308.9099818557923
           },
-          "nodeIndex": "Menor",
+          "nodeIndex": "ShopHealthyStoresNYC",
+          "nodeLineageTag": "d8b95239-83d4-41ba-bba2-f83d15f3a450",
           "size": {
-            "height": 200,
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1626.5092912759903,
+            "y": 100.3286760644358
+          },
+          "nodeIndex": "dim_NYCLocation",
+          "nodeLineageTag": "cad9227b-542e-4afd-850a-98ec183c94e4",
+          "size": {
+            "height": 300,
             "width": 234
           },
           "zIndex": 0

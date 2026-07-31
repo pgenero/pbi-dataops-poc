@@ -1,0 +1,120 @@
+table ChicagoMoviesPark
+	lineageTag: 5b7f629b-192f-43d9-a02d-b981263d2cff
+
+	column EventName
+		dataType: string
+		lineageTag: 62a67b7f-3cb3-460b-ac1f-9b62000b9e70
+		summarizeBy: none
+		sourceColumn: EventName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieName'
+		dataType: string
+		lineageTag: e09b598e-df01-4c19-98a4-75ebc7893d47
+		summarizeBy: none
+		sourceColumn: " MovieName"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Location '
+		dataType: string
+		lineageTag: 3f118237-2797-471c-97f6-f3ece922e34f
+		summarizeBy: none
+		sourceColumn: " Location "
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' ZipCode'
+		dataType: string
+		lineageTag: 3a604377-fd88-4a4f-9241-cb7e1d1a5c69
+		summarizeBy: none
+		sourceColumn: " ZipCode"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Phone'
+		dataType: string
+		lineageTag: ab990c9e-28af-4014-a308-562ae66bd0cc
+		summarizeBy: none
+		sourceColumn: " Phone"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' StartDate'
+		dataType: string
+		lineageTag: a300c7a7-30d8-4a36-bf85-38dfec0ab7bc
+		summarizeBy: none
+		sourceColumn: " StartDate"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' EndDate'
+		dataType: string
+		lineageTag: 79f65aa0-2b39-4930-957b-c8ae87f1bc99
+		summarizeBy: none
+		sourceColumn: " EndDate"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' EventUrl'
+		dataType: string
+		lineageTag: 8d639bd4-0b59-4174-9b41-ff32f6af8432
+		summarizeBy: none
+		sourceColumn: " EventUrl"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' ParkUrl'
+		dataType: string
+		lineageTag: 6ff93e27-e0ed-4193-b036-e361edccaf2e
+		summarizeBy: none
+		sourceColumn: " ParkUrl"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Community'
+		dataType: string
+		lineageTag: 2bacf371-5c53-4776-bfa8-c9e21f8a340f
+		summarizeBy: none
+		sourceColumn: " Community"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieClosedCaption'
+		dataType: string
+		lineageTag: 4b45d986-4625-4b60-95a0-89bc6536116a
+		summarizeBy: none
+		sourceColumn: " MovieClosedCaption"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieRating'
+		dataType: string
+		lineageTag: 5cfa27a9-215c-4159-b325-36c224ba3426
+		summarizeBy: none
+		sourceColumn: " MovieRating"
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Location 1'
+		dataType: string
+		lineageTag: d4185245-20e5-4715-9a4b-46dc11895ad2
+		summarizeBy: none
+		sourceColumn: Location 1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ChicagoMoviesPark = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

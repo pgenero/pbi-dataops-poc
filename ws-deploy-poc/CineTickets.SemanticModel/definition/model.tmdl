@@ -8,12 +8,13 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["valores_entrada"]
+annotation PBI_QueryOrder = ["LocalFilmFestivals","ChicagoMoviesPark","ParkSpecialEventsNYC"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table valores_entrada
-ref table Calendar
+ref table LocalFilmFestivals
+ref table ChicagoMoviesPark
+ref table ParkSpecialEventsNYC
 
 ref cultureInfo en-US
 

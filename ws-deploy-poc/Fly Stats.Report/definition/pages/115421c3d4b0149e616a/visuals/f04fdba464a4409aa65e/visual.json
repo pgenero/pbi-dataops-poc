@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "3e413aad37a04d3042b4",
+  "name": "f04fdba464a4409aa65e",
   "position": {
     "x": 9.8630136986301373,
     "y": 84.38356164383562,
@@ -68,15 +68,15 @@
                           "Entity": "AirFareCarrier"
                         }
                       },
-                      "Property": "market_revenue_real"
+                      "Property": "market_passengers"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(AirFareCarrier.market_revenue_real)",
-              "nativeQueryRef": "Revenue",
-              "displayName": "Revenue"
+              "queryRef": "Sum(AirFareCarrier.market_passengers)",
+              "nativeQueryRef": "Passengers",
+              "displayName": "Passengers"
             }
           ]
         }
@@ -239,9 +239,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 6,
-                      "Percent": 0
+                    "Literal": {
+                      "Value": "'#00D95A'"
                     }
                   }
                 }
@@ -249,7 +248,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(AirFareCarrier.market_revenue_real)"
+            "metadata": "Sum(AirFareCarrier.market_passengers)"
           }
         }
       ],
@@ -345,7 +344,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'AVG Miles & Revenue'"
+                  "Value": "'AVG Miles & Passengers'"
                 }
               }
             },
@@ -398,5 +397,61 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9335f329a40e95098556",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_Calendar"
+              }
+            },
+            "Property": "YEAR"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2a9f64fca960820a55b1",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "average_market_miles_flown"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "08539170d3d18559b209",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AirFareCarrier"
+                  }
+                },
+                "Property": "market_passengers"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

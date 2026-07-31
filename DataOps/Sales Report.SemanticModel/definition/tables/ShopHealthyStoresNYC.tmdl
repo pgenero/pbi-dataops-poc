@@ -11,7 +11,7 @@ table ShopHealthyStoresNYC
 
 	column 'Year Awarded'
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 20f477ab-5f85-42c6-92b8-2ae344308950
 		summarizeBy: none
 		sourceColumn: Year Awarded

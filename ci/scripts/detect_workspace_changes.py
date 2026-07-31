@@ -135,7 +135,8 @@ def print_summary(targets, payloads):
         for model_name, data in models.items():
             mode = data["refresh_mode"]
             if mode == "partial_tables":
-                tables = [obj["table"] for obj in data["api_payload"]["objects"]]
+                objects = data.get("objects") or []
+                tables = [obj["table"] for obj in objects]
                 print(f"   📌 Model: {model_name} [Mode: Partial Refresh]")
                 for t in tables:
                     print(f"      • Table: {t}")

@@ -45,7 +45,13 @@ jobs:
         run: |
           PR_BODY="${{ github.event.pull_request.body }}"
           
-          if echo "$PR_BODY" | grep -qiE "\[x\] \s*🔄 \*\*Trigger Semantic Model Refresh in TEST\*\*"; then
+          # Print log body for debug
+          echo "=== PR BODY START ==="
+          echo "$PR_BODY"
+          echo "=== PR BODY END ==="
+          
+          # Check if [x] o [X] exists followed by key text
+          if echo "$PR_BODY" | grep -iE "\[x\].*Trigger Semantic Model Refresh in TEST"; then
             echo "PR Option: Refresh in TEST is ENABLED"
             echo "RUN_TEST_REFRESH=true" >> $GITHUB_ENV
           else

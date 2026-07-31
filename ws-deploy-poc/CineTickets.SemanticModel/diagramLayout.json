@@ -16,15 +16,15 @@
           "nodeIndex": "ChicagoMoviesPark",
           "nodeLineageTag": "5b7f629b-192f-43d9-a02d-b981263d2cff",
           "size": {
-            "height": 300,
+            "height": 465,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
-            "x": 285,
-            "y": 390
+            "x": 438,
+            "y": 308
           },
           "nodeIndex": "LocalFilmFestivals",
           "nodeLineageTag": "000baaff-3ee9-4eb3-9fd9-5a09aa5e0725",
@@ -32,12 +32,12 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 561,
-            "y": 267
+            "x": 709,
+            "y": 304
           },
           "nodeIndex": "ParkSpecialEventsNYC",
           "nodeLineageTag": "79374ea7-b666-41e7-b6a4-4883e54c63de",
@@ -45,12 +45,12 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 852,
-            "y": 74
+            "x": 388,
+            "y": 0
           },
           "nodeIndex": "dimChicagoMovies",
           "nodeLineageTag": "e4cac071-c5ab-46ae-801e-8d2adaeeab9c",
@@ -58,7 +58,7 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         }
       ],
       "name": "All tables",

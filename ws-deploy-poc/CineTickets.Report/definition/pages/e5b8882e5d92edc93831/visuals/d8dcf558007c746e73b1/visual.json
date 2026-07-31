@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "d8dcf558007c746e73b1",
+  "position": {
+    "x": 47.659574468085111,
+    "y": 25.288753799392097,
+    "z": 0,
+    "height": 668.20668693009122,
+    "width": 490.21276595744683
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " Community"
+                }
+              },
+              "queryRef": "ChicagoMoviesPark. Community",
+              "nativeQueryRef": " Community"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "38f6cbce9b941e28d0b8",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ChicagoMoviesPark"
+              }
+            },
+            "Property": " Community"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

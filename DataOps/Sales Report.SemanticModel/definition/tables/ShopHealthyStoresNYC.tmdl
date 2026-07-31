@@ -1,0 +1,128 @@
+table ShopHealthyStoresNYC
+	lineageTag: d8b95239-83d4-41ba-bba2-f83d15f3a450
+
+	column 'Store Name'
+		dataType: string
+		lineageTag: 5658d82a-59f8-41c0-9758-42c9f96d22e8
+		summarizeBy: none
+		sourceColumn: Store Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Street Address'
+		dataType: string
+		lineageTag: 6ad9468a-0f00-4409-93ff-25fb00ce478f
+		summarizeBy: none
+		sourceColumn: Street Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Borough
+		dataType: string
+		lineageTag: 74f1146c-a96b-4fbe-8ba0-4a456895d0e9
+		summarizeBy: none
+		sourceColumn: Borough
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: string
+		lineageTag: 917b4fb2-4fd8-4dd3-a623-1651d0606400
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Awarded'
+		dataType: string
+		lineageTag: 20f477ab-5f85-42c6-92b8-2ae344308950
+		summarizeBy: none
+		sourceColumn: Year Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Program Wave'
+		dataType: string
+		lineageTag: d294e15f-fdc4-40ab-b0c9-c498b9f2b2a7
+		summarizeBy: none
+		sourceColumn: Program Wave
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: string
+		lineageTag: 5d73c7d3-9d44-4717-a7c6-f63d88ed2577
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitude
+		dataType: string
+		lineageTag: a8b43656-2684-4c59-bf5c-3612fce0cc02
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Community Board'
+		dataType: string
+		lineageTag: 722b1808-360a-4914-a102-a88776243140
+		summarizeBy: none
+		sourceColumn: Community Board
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Council District'
+		dataType: string
+		lineageTag: 1cf1e355-e36f-4978-8ce1-1ec2fcea0b83
+		summarizeBy: none
+		sourceColumn: Council District
+
+		annotation SummarizationSetBy = Automatic
+
+	column BIN
+		dataType: string
+		lineageTag: 0bfa67b1-1d37-4a53-b5f4-4cbf121f4271
+		summarizeBy: none
+		sourceColumn: BIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column BBL
+		dataType: string
+		lineageTag: e7e73266-e035-46ed-9a8d-38b8950845a6
+		summarizeBy: none
+		sourceColumn: BBL
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Census Tract (2020)'
+		dataType: string
+		lineageTag: 7cbc6150-4f39-497f-8178-58a12e5fb3f6
+		summarizeBy: none
+		sourceColumn: Census Tract (2020)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Neighborhood Tabulation Area (NTA) (2020)'
+		dataType: string
+		lineageTag: 3a56aca1-4857-4612-a6b0-487986e81afa
+		summarizeBy: none
+		sourceColumn: Neighborhood Tabulation Area (NTA) (2020)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ShopHealthyStoresNYC = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofnewyork.us", [RelativePath="/api/v3/views/ud4g-9x9z/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

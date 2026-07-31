@@ -33,29 +33,27 @@ table ChicagoMoviesPark
 
 		annotation SummarizationSetBy = Automatic
 
-	column ' Phone'
-		dataType: string
-		lineageTag: ab990c9e-28af-4014-a308-562ae66bd0cc
-		summarizeBy: none
-		sourceColumn: " Phone"
-
-		annotation SummarizationSetBy = Automatic
-
 	column ' StartDate'
-		dataType: string
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: a300c7a7-30d8-4a36-bf85-38dfec0ab7bc
 		summarizeBy: none
 		sourceColumn: " StartDate"
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column ' EndDate'
-		dataType: string
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: 79f65aa0-2b39-4930-957b-c8ae87f1bc99
 		summarizeBy: none
 		sourceColumn: " EndDate"
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column ' EventUrl'
 		dataType: string
@@ -105,14 +103,42 @@ table ChicagoMoviesPark
 
 		annotation SummarizationSetBy = Automatic
 
+	column StartTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: ce4f3b6c-4356-430f-87c2-765f5711b14d
+		summarizeBy: none
+		sourceColumn: StartTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column EndTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 152f9769-9d67-4533-af09-33ecf0eeb5bc
+		summarizeBy: none
+		sourceColumn: EndTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
 	partition ChicagoMoviesPark = m
 		mode: import
 		source =
 				let
 				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{" StartDate", type datetime}, {" EndDate", type datetime}}),
+				    #"Inserted Time" = Table.AddColumn(#"Changed Type", "StartTime", each DateTime.Time([#" StartDate"]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{" StartDate", DateTime.Date, type date}}),
+				    #"Inserted Time1" = Table.AddColumn(#"Extracted Date", "EndTime", each DateTime.Time([#" EndDate"]), type time),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Time1",{{" EndDate", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"})
 				in
-				    #"Promoted Headers"
+				    #"Removed Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

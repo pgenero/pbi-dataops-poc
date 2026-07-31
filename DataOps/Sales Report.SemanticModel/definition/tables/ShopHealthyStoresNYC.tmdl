@@ -21,34 +21,11 @@ table ShopHealthyStoresNYC
 		annotation UnderlyingDateTimeDataType = Date
 
 	column 'Program Wave'
-		dataType: string
+		dataType: int64
+		formatString: 0
 		lineageTag: d294e15f-fdc4-40ab-b0c9-c498b9f2b2a7
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Program Wave
-
-		annotation SummarizationSetBy = Automatic
-
-	column BIN
-		dataType: string
-		lineageTag: 0bfa67b1-1d37-4a53-b5f4-4cbf121f4271
-		summarizeBy: none
-		sourceColumn: BIN
-
-		annotation SummarizationSetBy = Automatic
-
-	column BBL
-		dataType: string
-		lineageTag: e7e73266-e035-46ed-9a8d-38b8950845a6
-		summarizeBy: none
-		sourceColumn: BBL
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Census Tract (2020)'
-		dataType: string
-		lineageTag: 7cbc6150-4f39-497f-8178-58a12e5fb3f6
-		summarizeBy: none
-		sourceColumn: Census Tract (2020)
 
 		annotation SummarizationSetBy = Automatic
 
@@ -72,9 +49,10 @@ table ShopHealthyStoresNYC
 				    #"Changed Type" = Table.TransformColumnTypes(#"Added Suffix",{{"Year Awarded", type date}}),
 				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Store Name", "Street Address"}, dim_NYCLocation, {"Store Name", "Street Address"}, "dim_NYCLocation", JoinKind.LeftOuter),
 				    #"Expanded dim_NYCLocation" = Table.ExpandTableColumn(#"Merged Queries", "dim_NYCLocation", {"LocationId"}, {"LocationId"}),
-				    #"Removed Columns" = Table.RemoveColumns(#"Expanded dim_NYCLocation",{"Street Address", "Borough", "Zip #(lf)Code", "Latitude", "Longitude", "Community Board", "Council District", "Neighborhood Tabulation Area (NTA) (2020)"})
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded dim_NYCLocation",{"Street Address", "Borough", "Zip #(lf)Code", "Latitude", "Longitude", "Community Board", "Council District", "Neighborhood Tabulation Area (NTA) (2020)", "BIN", "BBL", "Census Tract (2020)"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"Program #(lf)Wave", Int64.Type}})
 				in
-				    #"Removed Columns"
+				    #"Changed Type1"
 
 	annotation PBI_NavigationStepName = Navigation
 

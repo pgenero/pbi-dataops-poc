@@ -36,13 +36,13 @@
           "z": 0.00
         },
         {
-          "config": "{\"name\":\"a8663201994ed35adb60\",\"layouts\":[{\"id\":0,\"position\":{\"x\":650,\"y\":0,\"width\":630,\"height\":675,\"z\":1,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"ShopHealthyStoresNYC.Program Wave\",\"active\":true}],\"Y\":[{\"queryRef\":\"CountNonNull(ShopHealthyStoresNYC.Store Name)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"ShopHealthyStoresNYC\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Program Wave\"},\"Name\":\"ShopHealthyStoresNYC.Program Wave\",\"NativeReferenceName\":\"Program Wave\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Store Name\"}},\"Function\":5},\"Name\":\"CountNonNull(ShopHealthyStoresNYC.Store Name)\",\"NativeReferenceName\":\"Count of Store Name\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Program Wave\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"axisType\":{\"expr\":{\"Literal\":{\"Value\":\"'Categorical'\"}}}}}]}}}",
+          "config": "{\"name\":\"a8663201994ed35adb60\",\"layouts\":[{\"id\":0,\"position\":{\"x\":650,\"y\":0,\"width\":630,\"height\":675,\"z\":1000,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"lineClusteredColumnComboChart\",\"projections\":{\"Category\":[{\"queryRef\":\"ShopHealthyStoresNYC.Program Wave\",\"active\":true}],\"Y\":[{\"queryRef\":\"CountNonNull(ShopHealthyStoresNYC.Store Name)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"s\",\"Entity\":\"ShopHealthyStoresNYC\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Program Wave\"},\"Name\":\"ShopHealthyStoresNYC.Program Wave\",\"NativeReferenceName\":\"Program Wave\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Store Name\"}},\"Function\":5},\"Name\":\"CountNonNull(ShopHealthyStoresNYC.Store Name)\",\"NativeReferenceName\":\"Count of Store Name\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"s\"}},\"Property\":\"Program Wave\"}}}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"axisType\":{\"expr\":{\"Literal\":{\"Value\":\"'Categorical'\"}}}}}]}}}",
           "filters": "[]",
           "height": 675.00,
           "width": 630.00,
           "x": 650.00,
           "y": 0.00,
-          "z": 1.00
+          "z": 1000.00
         }
       ],
       "width": 1280.00

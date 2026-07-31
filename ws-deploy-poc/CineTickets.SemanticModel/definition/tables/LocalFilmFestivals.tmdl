@@ -10,20 +10,26 @@ table LocalFilmFestivals
 		annotation SummarizationSetBy = Automatic
 
 	column From
-		dataType: string
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: bae7be28-223b-4acc-a92f-e51d90ab2c3e
 		summarizeBy: none
 		sourceColumn: From
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column To
-		dataType: string
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: 43e6bd0c-51ee-4713-857b-5312f4c49720
 		summarizeBy: none
 		sourceColumn: To
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column Website
 		dataType: string
@@ -42,9 +48,13 @@ table LocalFilmFestivals
 				    #"Removed Top Rows" = Table.Skip(#"Promoted Headers",1),
 				    #"Replaced Value" = Table.ReplaceValue(#"Removed Top Rows","– ","-",Replacer.ReplaceText,{"Date"}),
 				    #"Split Column by Delimiter" = Table.SplitColumn(#"Replaced Value", "Date", Splitter.SplitTextByDelimiter("-", QuoteStyle.Csv), {"Date.1", "Date.2"}),
-				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Date.1", "From"}, {"Date.2", "To"}})
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Date.1", "From"}, {"Date.2", "To"}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Renamed Columns",".","/",Replacer.ReplaceText,{"From", "To"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","TBD","",Replacer.ReplaceText,{"From", "To"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","/10/10/10","10/10/10",Replacer.ReplaceText,{"To"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value3",{{"From", type date}, {"To", type date}})
 				in
-				    #"Renamed Columns"
+				    #"Changed Type"
 
 	annotation PBI_NavigationStepName = Navigation
 

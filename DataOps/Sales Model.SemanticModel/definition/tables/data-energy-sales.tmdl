@@ -2,37 +2,45 @@ table data-energy-sales
 	lineageTag: bc2f7130-51ac-4287-8369-f5749e01b39a
 
 	column Years
-		dataType: string
-		lineageTag: 4815ea25-b495-4d60-aa22-52929eda3d19
-		summarizeBy: none
+		dataType: int64
+		formatString: 0
+		lineageTag: 156dcf3f-8098-43fd-a511-b8277dc781b9
+		summarizeBy: sum
 		sourceColumn: Years
 
 		annotation SummarizationSetBy = Automatic
 
 	column 'Historical Data'
-		dataType: string
-		lineageTag: 2fbc68c0-bf9b-44d5-9781-c8ec7abcb1c2
-		summarizeBy: none
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d89bf193-d52c-4e06-80da-bbd8f84df068
+		summarizeBy: sum
 		sourceColumn: Historical Data
 
 		annotation SummarizationSetBy = Automatic
 
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	column Target
-		dataType: string
-		lineageTag: 89a9e104-dbdf-4578-a1b0-79c702b06d73
-		summarizeBy: none
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2740bfc5-6f40-4bbf-86d9-765218042581
+		summarizeBy: sum
 		sourceColumn: Target
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	partition data-energy-sales = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(Web.Contents("https://data.ok.gov/dataset/1d142f87-261b-4a83-8686-b91f282c3a9d/resource/7c52b13b-efc5-4df4-8a6d-1ed761b54fcf/download/data-energy-sales.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				    Source = Csv.Document(Web.Contents("https://data.ok.gov", [RelativePath="/dataset/1d142f87-261b-4a83-8686-b91f282c3a9d/resource/7c52b13b-efc5-4df4-8a6d-1ed761b54fcf/download/data-energy-sales.csv"]),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Years", Int64.Type}, {"Historical Data", Currency.Type}, {"Target", Currency.Type}})
 				in
-				    #"Promoted Headers"
+				    #"Changed Type"
 
 	annotation PBI_NavigationStepName = Navigation
 

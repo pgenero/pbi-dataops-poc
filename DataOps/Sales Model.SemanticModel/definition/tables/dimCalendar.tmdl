@@ -1,7 +1,9 @@
 table dimCalendar
 	lineageTag: 44ee1a56-a264-42c9-b105-6972787b96db
+	dataCategory: Time
 
 	column Date
+		isKey
 		formatString: Short Date
 		lineageTag: 4acd816d-ed98-4f41-b4d1-c4635addc0c0
 		summarizeBy: none
@@ -13,9 +15,9 @@ table dimCalendar
 	column YEAR = YEAR( dimCalendar[Date] )
 		formatString: 0
 		lineageTag: 6ef24c07-6f5d-482d-acc2-e969d3c2b805
-		summarizeBy: sum
+		summarizeBy: none
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	partition dimCalendar = calculated
 		mode: import

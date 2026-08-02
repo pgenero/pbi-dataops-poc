@@ -1,6 +1,4 @@
-relationship 961ed72e-9739-4f22-31f2-15d7c5a4730f
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: dimCalendar.Date
-	toColumn: data-energy-sales.Years
+relationship 91546208-d574-0199-1cfe-25bd9ff6ee8a
+	fromColumn: data-energy-sales.Years
+	toColumn: dimCalendar.Date
 

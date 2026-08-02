@@ -1,0 +1,4 @@
+relationship 91546208-d574-0199-1cfe-25bd9ff6ee8a
+	fromColumn: data-energy-sales.Years
+	toColumn: dimCalendar.Date
+

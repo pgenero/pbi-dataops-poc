@@ -1,0 +1,64 @@
+table data-energy-sales
+	lineageTag: bc2f7130-51ac-4287-8369-f5749e01b39a
+
+	column Years
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 156dcf3f-8098-43fd-a511-b8277dc781b9
+		summarizeBy: none
+		sourceColumn: Years
+
+		annotation SummarizationSetBy = User
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Historical Data'
+		dataType: decimal
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: d89bf193-d52c-4e06-80da-bbd8f84df068
+		summarizeBy: sum
+		sourceColumn: Historical Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Target
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2740bfc5-6f40-4bbf-86d9-765218042581
+		summarizeBy: sum
+		sourceColumn: Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Subtraction
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a6b8a67e-e603-49dd-8a75-32668b393f60
+		summarizeBy: sum
+		sourceColumn: Subtraction
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition data-energy-sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.ok.gov", [RelativePath="/dataset/1d142f87-261b-4a83-8686-b91f282c3a9d/resource/7c52b13b-efc5-4df4-8a6d-1ed761b54fcf/download/data-energy-sales.csv"]),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Years", Int64.Type}, {"Historical Data", Currency.Type}, {"Target", Currency.Type}}),
+				    #"Added Suffix" = Table.TransformColumns(#"Changed Type", {{"Years", each Text.From(_, "en-US") & "-01-01", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Suffix",{{"Years", type date}}),
+				    #"Inserted Subtraction" = Table.AddColumn(#"Changed Type1", "Subtraction", each [Historical Data] - [Target], Currency.Type)
+				in
+				    #"Inserted Subtraction"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

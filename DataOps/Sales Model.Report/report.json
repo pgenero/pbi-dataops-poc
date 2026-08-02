@@ -1,0 +1,42 @@
+{
+  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"type\":2,\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU07",
+            "path": "BaseThemes/CY26SU07.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "a70b47e07c070eec3d76",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"c0a16064413665c070b6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":467.84194528875383,\"y\":230.51671732522797,\"z\":0,\"width\":398.7841945288754,\"height\":208.14589665653497,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Sum(dimCalendar.YEAR)\"},{\"queryRef\":\"Sum(data-energy-sales.Target)\"},{\"queryRef\":\"Sum(data-energy-sales.Historical Data)\"},{\"queryRef\":\"Sum(data-energy-sales.Subtraction)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"data-energy-sales\",\"Type\":0},{\"Name\":\"d1\",\"Entity\":\"dimCalendar\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Target\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Target)\",\"NativeReferenceName\":\"Target\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Historical Data\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Historical Data)\",\"NativeReferenceName\":\"Historical Data\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\"YEAR\"},\"Name\":\"Sum(dimCalendar.YEAR)\",\"NativeReferenceName\":\"YEAR\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Subtraction\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Subtraction)\",\"NativeReferenceName\":\"Subtraction\"}]},\"columnProperties\":{\"Sum(data-energy-sales.Historical Data)\":{\"displayName\":\"Historical Data\"},\"Sum(data-energy-sales.Target)\":{\"displayName\":\"Target\"},\"Sum(data-energy-sales.Subtraction)\":{\"displayName\":\"Subtraction\"}},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnHeaders\":[{\"properties\":{}}],\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"60D\"}}}},\"selector\":{\"metadata\":\"Sum(dimCalendar.YEAR)\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}},\"selector\":{\"metadata\":\"Sum(data-energy-sales.Target)\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"100D\"}}}},\"selector\":{\"metadata\":\"Sum(data-energy-sales.Historical Data)\"}}]},\"vcObjects\":{\"stylePreset\":[{\"properties\":{\"name\":{\"expr\":{\"Literal\":{\"Value\":\"'Condensed'\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 208.15,
+          "width": 398.78,
+          "x": 467.84,
+          "y": 230.52,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

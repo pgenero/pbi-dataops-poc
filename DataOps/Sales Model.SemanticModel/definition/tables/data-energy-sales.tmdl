@@ -3,12 +3,12 @@ table data-energy-sales
 
 	column Years
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 156dcf3f-8098-43fd-a511-b8277dc781b9
 		summarizeBy: none
 		sourceColumn: Years
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 		annotation UnderlyingDateTimeDataType = Date
 

@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"type\":2,\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -27,11 +27,11 @@
       "name": "a70b47e07c070eec3d76",
       "visualContainers": [
         {
-          "config": "{\"name\":\"43e71fe4c3370ab27c12\",\"layouts\":[{\"id\":0,\"position\":{\"x\":10,\"y\":0,\"width\":280,\"height\":280,\"z\":0,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"data-energy-sales.Historical Data\"},{\"queryRef\":\"data-energy-sales.Target\"},{\"queryRef\":\"data-energy-sales.Years\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"data-energy-sales\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Historical Data\"},\"Name\":\"data-energy-sales.Historical Data\",\"NativeReferenceName\":\"Historical Data\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Target\"},\"Name\":\"data-energy-sales.Target\",\"NativeReferenceName\":\"Target\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Years\"},\"Name\":\"data-energy-sales.Years\",\"NativeReferenceName\":\"Years\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"c0a16064413665c070b6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.72644376899696,\"y\":0,\"z\":0,\"width\":404.62006079027356,\"height\":254.8328267477204,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Sum(data-energy-sales.Years)\"},{\"queryRef\":\"Sum(data-energy-sales.Target)\"},{\"queryRef\":\"Sum(data-energy-sales.Historical Data)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"data-energy-sales\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Years\"},\"Name\":\"Sum(data-energy-sales.Years)\",\"NativeReferenceName\":\"Years\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Target\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Target)\",\"NativeReferenceName\":\"Sum of Target\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Historical Data\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Historical Data)\",\"NativeReferenceName\":\"Sum of Historical Data\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
-          "height": 280.00,
-          "width": 280.00,
-          "x": 10.00,
+          "height": 254.83,
+          "width": 404.62,
+          "x": 9.73,
           "y": 0.00,
           "z": 0.00
         }

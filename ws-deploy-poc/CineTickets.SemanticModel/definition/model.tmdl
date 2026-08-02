@@ -6,14 +6,21 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
+queryGroup ChicagoEvents
+
+	annotation PBI_QueryGroupOrder = 0
+
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["valores_entrada"]
+annotation PBI_QueryOrder = ["LocalFilmFestivals","ChicagoMoviesPark","ParkSpecialEventsNYC","dimChicagoMovies","dimChicagoEvents"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table valores_entrada
-ref table Calendar
+ref table LocalFilmFestivals
+ref table ChicagoMoviesPark
+ref table ParkSpecialEventsNYC
+ref table dimChicagoMovies
+ref table dimChicagoEvents
 
 ref cultureInfo en-US
 

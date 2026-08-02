@@ -1,0 +1,62 @@
+table LocalFilmFestivals
+	lineageTag: 000baaff-3ee9-4eb3-9fd9-5a09aa5e0725
+
+	column 'Local Festivals'
+		dataType: string
+		lineageTag: 88fd946f-de53-41ad-95e5-a33439fbfb85
+		summarizeBy: none
+		sourceColumn: Local Festivals
+
+		annotation SummarizationSetBy = Automatic
+
+	column From
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bae7be28-223b-4acc-a92f-e51d90ab2c3e
+		summarizeBy: none
+		sourceColumn: From
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column To
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 43e6bd0c-51ee-4713-857b-5312f4c49720
+		summarizeBy: none
+		sourceColumn: To
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Website
+		dataType: string
+		lineageTag: 3b11daee-af31-4f0c-865d-8191f7353613
+		summarizeBy: none
+		sourceColumn: Website
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LocalFilmFestivals = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofnewyork.us", [RelativePath = "/api/v3/views/yggg-xf4b/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Top Rows" = Table.Skip(#"Promoted Headers",1),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Top Rows","– ","-",Replacer.ReplaceText,{"Date"}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Replaced Value", "Date", Splitter.SplitTextByDelimiter("-", QuoteStyle.Csv), {"Date.1", "Date.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Date.1", "From"}, {"Date.2", "To"}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Renamed Columns",".","/",Replacer.ReplaceText,{"From", "To"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","TBD","",Replacer.ReplaceText,{"From", "To"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","/10/10/10","10/10/10",Replacer.ReplaceText,{"To"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value3",{{"From", type date}, {"To", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,47 @@
+table dimChicagoMovies
+	lineageTag: e4cac071-c5ab-46ae-801e-8d2adaeeab9c
+
+	column ' MovieName'
+		dataType: string
+		lineageTag: 033bb75a-2b8c-4249-9af3-6d6f112695cf
+		summarizeBy: none
+		sourceColumn: " MovieName"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieRating'
+		dataType: string
+		lineageTag: 3861c3b2-ffdc-412a-a5b1-a7822bb75039
+		summarizeBy: none
+		sourceColumn: " MovieRating"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieClosedCaption'
+		dataType: string
+		lineageTag: 6b210aa3-e8b8-4c0e-ade8-67d2a9076d0d
+		summarizeBy: none
+		sourceColumn: " MovieClosedCaption"
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimChicagoMovies = m
+		mode: import
+		queryGroup: ChicagoEvents
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{" MovieName", " MovieRating", " MovieClosedCaption"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([#" MovieName"] <> "")),
+				    #"Sorted Rows" = Table.Sort(#"Filtered Rows",{{" MovieName", Order.Ascending}}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Sorted Rows",{{" MovieName", Text.Clean, type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{" MovieName", Text.Trim, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Trimmed Text", {" MovieName"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

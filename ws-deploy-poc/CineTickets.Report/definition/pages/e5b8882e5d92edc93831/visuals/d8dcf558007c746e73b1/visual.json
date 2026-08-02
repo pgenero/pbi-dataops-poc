@@ -1,0 +1,148 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "d8dcf558007c746e73b1",
+  "position": {
+    "x": 48.183306055646483,
+    "y": 25.139116202945988,
+    "z": 0,
+    "height": 668.28150572831419,
+    "width": 501.73486088379707
+  },
+  "visual": {
+    "visualType": "azureMap",
+    "query": {
+      "queryState": {
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dimChicagoMovies"
+                    }
+                  },
+                  "Property": " MovieRating"
+                }
+              },
+              "queryRef": "dimChicagoMovies. MovieRating",
+              "nativeQueryRef": " MovieRating"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dimChicagoEvents"
+                    }
+                  },
+                  "Property": "Long"
+                }
+              },
+              "queryRef": "dimChicagoEvents.Long",
+              "nativeQueryRef": "Long"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dimChicagoEvents"
+                    }
+                  },
+                  "Property": "Lat"
+                }
+              },
+              "queryRef": "dimChicagoEvents.Lat",
+              "nativeQueryRef": "Lat"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "mapControls": [
+        {
+          "properties": {
+            "zoom": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.64D"
+                }
+              }
+            },
+            "centerLatitude": {
+              "expr": {
+                "Literal": {
+                  "Value": "41.83976425922884D"
+                }
+              }
+            },
+            "centerLongitude": {
+              "expr": {
+                "Literal": {
+                  "Value": "-87.67323398500002D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6dcd55708069cd90e9de",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimChicagoEvents"
+              }
+            },
+            "Property": "Lat"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d2b28c31447704aa5a70",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimChicagoEvents"
+              }
+            },
+            "Property": "Long"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ad40140e1c0c24354e66",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimChicagoMovies"
+              }
+            },
+            "Property": " MovieRating"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

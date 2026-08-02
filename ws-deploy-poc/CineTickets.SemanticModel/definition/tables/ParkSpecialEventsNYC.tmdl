@@ -1,0 +1,120 @@
+table ParkSpecialEventsNYC
+	lineageTag: 79374ea7-b666-41e7-b6a4-4883e54c63de
+
+	column Unit
+		dataType: string
+		lineageTag: 8c87ebaf-9d45-492f-ad15-c0a148376818
+		summarizeBy: none
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Group Name/Partner'
+		dataType: string
+		lineageTag: 5efad795-d474-490d-9a04-5f0c7cf971a2
+		summarizeBy: none
+		sourceColumn: Group Name/Partner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date and Time'
+		dataType: string
+		lineageTag: 9d65930f-c30e-43af-aa67-abf9f54f4ef8
+		summarizeBy: none
+		sourceColumn: Date and Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Borough
+		dataType: string
+		lineageTag: 79a13ac4-5cd1-4aa7-bde2-87b5946fd793
+		summarizeBy: none
+		sourceColumn: Borough
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationType
+		dataType: string
+		lineageTag: 5fc09cc6-d02c-4a38-b391-776411ebeef4
+		summarizeBy: none
+		sourceColumn: LocationType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 1619f777-e828-4320-8ce8-a3eeea63ff6e
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Event Name'
+		dataType: string
+		lineageTag: efb6dae2-0158-42f0-8111-ab316faa8cad
+		summarizeBy: none
+		sourceColumn: Event Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Event Type'
+		dataType: string
+		lineageTag: 99ff036c-1f99-443d-9eee-8e504e252c4c
+		summarizeBy: none
+		sourceColumn: Event Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 7ba7814e-7b83-4651-bf7f-50cba25844d9
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classification
+		dataType: string
+		lineageTag: 9c47a81f-b962-423e-8ecc-710787d4d50a
+		summarizeBy: none
+		sourceColumn: Classification
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attendance
+		dataType: string
+		lineageTag: 44736027-b62d-4c10-879f-a74cdc77b366
+		summarizeBy: none
+		sourceColumn: Attendance
+
+		annotation SummarizationSetBy = Automatic
+
+	column Audience
+		dataType: string
+		lineageTag: 490a7487-844c-42c4-8d38-6d7740502523
+		summarizeBy: none
+		sourceColumn: Audience
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 4e468230-7f9b-42fb-91b5-2f5c5f95262d
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ParkSpecialEventsNYC = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofnewyork.us",[RelativePath="/api/v3/views/6v4b-5gp4/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

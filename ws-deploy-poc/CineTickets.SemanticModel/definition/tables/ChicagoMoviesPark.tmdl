@@ -1,0 +1,115 @@
+table ChicagoMoviesPark
+	lineageTag: 5b7f629b-192f-43d9-a02d-b981263d2cff
+
+	column EventName
+		dataType: string
+		lineageTag: 62a67b7f-3cb3-460b-ac1f-9b62000b9e70
+		summarizeBy: none
+		sourceColumn: EventName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' MovieName'
+		dataType: string
+		lineageTag: e09b598e-df01-4c19-98a4-75ebc7893d47
+		summarizeBy: none
+		sourceColumn: " MovieName"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' StartDate'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a300c7a7-30d8-4a36-bf85-38dfec0ab7bc
+		summarizeBy: none
+		sourceColumn: " StartDate"
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ' EndDate'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 79f65aa0-2b39-4930-957b-c8ae87f1bc99
+		summarizeBy: none
+		sourceColumn: " EndDate"
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ' EventUrl'
+		dataType: string
+		lineageTag: 8d639bd4-0b59-4174-9b41-ff32f6af8432
+		summarizeBy: none
+		sourceColumn: " EventUrl"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' ParkUrl'
+		dataType: string
+		lineageTag: 6ff93e27-e0ed-4193-b036-e361edccaf2e
+		summarizeBy: none
+		sourceColumn: " ParkUrl"
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: ce4f3b6c-4356-430f-87c2-765f5711b14d
+		summarizeBy: none
+		sourceColumn: StartTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column EndTime
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 152f9769-9d67-4533-af09-33ecf0eeb5bc
+		summarizeBy: none
+		sourceColumn: EndTime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column EventID
+		dataType: int64
+		formatString: 0
+		lineageTag: aac85178-fce2-40ff-a9e3-8ec6f64a9143
+		summarizeBy: count
+		sourceColumn: EventID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ChicagoMoviesPark = m
+		mode: import
+		queryGroup: ChicagoEvents
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{" StartDate", type datetime}, {" EndDate", type datetime}}),
+				    #"Inserted Time" = Table.AddColumn(#"Changed Type", "StartTime", each DateTime.Time([#" StartDate"]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{" StartDate", DateTime.Date, type date}}),
+				    #"Inserted Time1" = Table.AddColumn(#"Extracted Date", "EndTime", each DateTime.Time([#" EndDate"]), type time),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Time1",{{" EndDate", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Removed Columns",{{" MovieName", Text.Clean, type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{" MovieName", Text.Trim, type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Trimmed Text",{" MovieClosedCaption", " MovieRating"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Columns1",{{" ZipCode", Int64.Type}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type2", {"EventName", " Location ", " ZipCode"}, dimChicagoEvents, {"EventName", " Location ", " ZipCode"}, "dimChicagoEvents", JoinKind.LeftOuter),
+				    #"Expanded dimChicagoEvents" = Table.ExpandTableColumn(#"Merged Queries", "dimChicagoEvents", {"EventID"}, {"EventID"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Expanded dimChicagoEvents",{" Location ", " ZipCode", " Community", "Location 1"})
+				in
+				    #"Removed Columns2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

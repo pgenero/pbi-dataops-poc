@@ -12,7 +12,7 @@ queryGroup ChicagoEvents
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["LocalFilmFestivals","ChicagoMoviesPark","ParkSpecialEventsNYC","dimChicagoMovies"]
+annotation PBI_QueryOrder = ["LocalFilmFestivals","ChicagoMoviesPark","ParkSpecialEventsNYC","dimChicagoMovies","dimChicagoEvents"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -20,6 +20,7 @@ ref table LocalFilmFestivals
 ref table ChicagoMoviesPark
 ref table ParkSpecialEventsNYC
 ref table dimChicagoMovies
+ref table dimChicagoEvents
 
 ref cultureInfo en-US
 

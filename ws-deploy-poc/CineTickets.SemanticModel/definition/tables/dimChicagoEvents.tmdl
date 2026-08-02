@@ -1,0 +1,108 @@
+table dimChicagoEvents
+	lineageTag: ac958d9f-e680-466b-9770-40517616f8cc
+
+	column EventName
+		dataType: string
+		lineageTag: a23911f8-7bb1-46e8-9ba7-a5d5eda83716
+		summarizeBy: none
+		sourceColumn: EventName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Location '
+		dataType: string
+		lineageTag: 10a5f487-7c31-429b-8a2a-225fb3a04c31
+		summarizeBy: none
+		sourceColumn: " Location "
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' ZipCode'
+		dataType: int64
+		formatString: 0
+		lineageTag: a0602664-6faa-4d48-a75c-211dd47221bd
+		summarizeBy: none
+		sourceColumn: " ZipCode"
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		lineageTag: 76980141-32d1-46aa-b072-7b7d79ead795
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Community'
+		dataType: string
+		lineageTag: fecca68c-fccc-4df8-95e3-ebb3678a01f6
+		summarizeBy: none
+		sourceColumn: " Community"
+
+		annotation SummarizationSetBy = Automatic
+
+	column Lat
+		dataType: double
+		lineageTag: e3e8c5fa-0254-4dee-9b15-6f21acddb00e
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Lat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Long
+		dataType: double
+		lineageTag: e8ff371f-768c-4682-bb85-e93ae54eedd3
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Long
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EventID
+		dataType: int64
+		formatString: 0
+		lineageTag: 368e0cc2-7bd5-4e65-b49e-0c547e97e558
+		summarizeBy: none
+		sourceColumn: EventID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimChicagoEvents = m
+		mode: import
+		queryGroup: ChicagoEvents
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://data.cityofchicago.org", [RelativePath="/api/v3/views/cyqk-tzjs/export.csv?accessType=DOWNLOAD"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{" StartDate", type datetime}, {" EndDate", type datetime}}),
+				    #"Inserted Time" = Table.AddColumn(#"Changed Type", "StartTime", each DateTime.Time([#" StartDate"]), type time),
+				    #"Extracted Date" = Table.TransformColumns(#"Inserted Time",{{" StartDate", DateTime.Date, type date}}),
+				    #"Inserted Time1" = Table.AddColumn(#"Extracted Date", "EndTime", each DateTime.Time([#" EndDate"]), type time),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Time1",{{" EndDate", type date}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Removed Columns",{{" MovieName", Text.Clean, type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{" MovieName", Text.Trim, type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Trimmed Text",{" MovieClosedCaption", " MovieRating"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns1",{"EventName", " Location ", " ZipCode", "Location 1", " Community"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Other Columns",{{" ZipCode", Int64.Type}}),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Changed Type2", "Text Between Delimiters", each Text.BetweenDelimiters([Location 1], "(", ")"), type text),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Inserted Text Between Delimiters", "Text Between Delimiters", Splitter.SplitTextByDelimiter(", ", QuoteStyle.Csv), {"Lat", "Long"}),
+				    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Split Column by Delimiter", {{"Location 1", each Text.BeforeDelimiter(_, " ("), type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Extracted Text Before Delimiter",{{"Location 1", "Address"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns",{{"Lat", type number}, {"Long", type number}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Changed Type3"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"EventName"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates1", "EventID", 1, 1, Int64.Type)
+				in
+				    #"Added Index"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -4,3 +4,7 @@ relationship fe9b6a9f-9bb6-8dad-7d27-a03ef14c7434
 	fromColumn: ChicagoMoviesPark.' MovieName'
 	toColumn: dimChicagoMovies.' MovieName'
 
+relationship AutoDetected_d1e3fe88-7276-41f7-8ad1-354b157a2630
+	fromColumn: ChicagoMoviesPark.EventName
+	toColumn: dimChicagoEvents.EventName
+

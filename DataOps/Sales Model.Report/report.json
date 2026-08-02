@@ -27,12 +27,12 @@
       "name": "a70b47e07c070eec3d76",
       "visualContainers": [
         {
-          "config": "{\"name\":\"c0a16064413665c070b6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.72644376899696,\"y\":0,\"z\":0,\"width\":404.62006079027356,\"height\":254.8328267477204,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Sum(data-energy-sales.Years)\"},{\"queryRef\":\"Sum(data-energy-sales.Target)\"},{\"queryRef\":\"Sum(data-energy-sales.Historical Data)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"data-energy-sales\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Years\"},\"Name\":\"Sum(data-energy-sales.Years)\",\"NativeReferenceName\":\"Years\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Target\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Target)\",\"NativeReferenceName\":\"Sum of Target\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Historical Data\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Historical Data)\",\"NativeReferenceName\":\"Sum of Historical Data\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"c0a16064413665c070b6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":58.358662613981764,\"y\":47.65957446808511,\"z\":0,\"width\":462.00607902735567,\"height\":228.57142857142858,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Sum(dimCalendar.YEAR)\"},{\"queryRef\":\"Sum(data-energy-sales.Target)\"},{\"queryRef\":\"Sum(data-energy-sales.Historical Data)\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"data-energy-sales\",\"Type\":0},{\"Name\":\"d1\",\"Entity\":\"dimCalendar\",\"Type\":0}],\"Select\":[{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Target\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Target)\",\"NativeReferenceName\":\"Sum of Target\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Historical Data\"}},\"Function\":0},\"Name\":\"Sum(data-energy-sales.Historical Data)\",\"NativeReferenceName\":\"Sum of Historical Data\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\"YEAR\"},\"Name\":\"Sum(dimCalendar.YEAR)\",\"NativeReferenceName\":\"YEAR\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
-          "height": 254.83,
-          "width": 404.62,
-          "x": 9.73,
-          "y": 0.00,
+          "height": 228.57,
+          "width": 462.01,
+          "x": 58.36,
+          "y": 47.66,
           "z": 0.00
         }
       ],

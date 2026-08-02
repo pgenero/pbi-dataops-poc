@@ -1,0 +1,25 @@
+table dimCalendar
+	lineageTag: 44ee1a56-a264-42c9-b105-6972787b96db
+
+	column Date
+		formatString: Short Date
+		lineageTag: 4acd816d-ed98-4f41-b4d1-c4635addc0c0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR = YEAR( dimCalendar[Date] )
+		formatString: 0
+		lineageTag: 6ef24c07-6f5d-482d-acc2-e969d3c2b805
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimCalendar = calculated
+		mode: import
+		source = CALENDARAUTO()
+
+	annotation PBI_Id = a8f1e989addf4906995b29de329a4a9a
+

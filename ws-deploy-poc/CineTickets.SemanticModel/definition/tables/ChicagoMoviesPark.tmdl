@@ -17,23 +17,6 @@ table ChicagoMoviesPark
 
 		annotation SummarizationSetBy = Automatic
 
-	column ' Location '
-		dataType: string
-		lineageTag: 3f118237-2797-471c-97f6-f3ece922e34f
-		summarizeBy: none
-		sourceColumn: " Location "
-
-		annotation SummarizationSetBy = Automatic
-
-	column ' ZipCode'
-		dataType: string
-		lineageTag: 3a604377-fd88-4a4f-9241-cb7e1d1a5c69
-		dataCategory: PostalCode
-		summarizeBy: none
-		sourceColumn: " ZipCode"
-
-		annotation SummarizationSetBy = Automatic
-
 	column ' StartDate'
 		dataType: dateTime
 		formatString: Long Date
@@ -72,22 +55,6 @@ table ChicagoMoviesPark
 
 		annotation SummarizationSetBy = Automatic
 
-	column ' Community'
-		dataType: string
-		lineageTag: 2bacf371-5c53-4776-bfa8-c9e21f8a340f
-		summarizeBy: none
-		sourceColumn: " Community"
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Location 1'
-		dataType: string
-		lineageTag: d4185245-20e5-4715-9a4b-46dc11895ad2
-		summarizeBy: none
-		sourceColumn: Location 1
-
-		annotation SummarizationSetBy = Automatic
-
 	column StartTime
 		dataType: dateTime
 		formatString: Long Time
@@ -110,6 +77,15 @@ table ChicagoMoviesPark
 
 		annotation UnderlyingDateTimeDataType = Time
 
+	column EventID
+		dataType: int64
+		formatString: 0
+		lineageTag: aac85178-fce2-40ff-a9e3-8ec6f64a9143
+		summarizeBy: count
+		sourceColumn: EventID
+
+		annotation SummarizationSetBy = Automatic
+
 	partition ChicagoMoviesPark = m
 		mode: import
 		queryGroup: ChicagoEvents
@@ -125,9 +101,13 @@ table ChicagoMoviesPark
 				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{" Phone"}),
 				    #"Cleaned Text" = Table.TransformColumns(#"Removed Columns",{{" MovieName", Text.Clean, type text}}),
 				    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{" MovieName", Text.Trim, type text}}),
-				    #"Removed Columns1" = Table.RemoveColumns(#"Trimmed Text",{" MovieClosedCaption", " MovieRating"})
+				    #"Removed Columns1" = Table.RemoveColumns(#"Trimmed Text",{" MovieClosedCaption", " MovieRating"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Columns1",{{" ZipCode", Int64.Type}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type2", {"EventName", " Location ", " ZipCode"}, dimChicagoEvents, {"EventName", " Location ", " ZipCode"}, "dimChicagoEvents", JoinKind.LeftOuter),
+				    #"Expanded dimChicagoEvents" = Table.ExpandTableColumn(#"Merged Queries", "dimChicagoEvents", {"EventID"}, {"EventID"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Expanded dimChicagoEvents",{" Location ", " ZipCode", " Community", "Location 1"})
 				in
-				    #"Removed Columns1"
+				    #"Removed Columns2"
 
 	annotation PBI_NavigationStepName = Navigation
 

@@ -1,0 +1,6 @@
+relationship 961ed72e-9739-4f22-31f2-15d7c5a4730f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dimCalendar.Date
+	toColumn: data-energy-sales.Years
+

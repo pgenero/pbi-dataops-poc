@@ -2,13 +2,15 @@ table data-energy-sales
 	lineageTag: bc2f7130-51ac-4287-8369-f5749e01b39a
 
 	column Years
-		dataType: int64
-		formatString: 0
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: 156dcf3f-8098-43fd-a511-b8277dc781b9
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Years
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column 'Historical Data'
 		dataType: decimal
@@ -38,9 +40,11 @@ table data-energy-sales
 				let
 				    Source = Csv.Document(Web.Contents("https://data.ok.gov", [RelativePath="/dataset/1d142f87-261b-4a83-8686-b91f282c3a9d/resource/7c52b13b-efc5-4df4-8a6d-1ed761b54fcf/download/data-energy-sales.csv"]),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Years", Int64.Type}, {"Historical Data", Currency.Type}, {"Target", Currency.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Years", Int64.Type}, {"Historical Data", Currency.Type}, {"Target", Currency.Type}}),
+				    #"Added Suffix" = Table.TransformColumns(#"Changed Type", {{"Years", each Text.From(_, "en-US") & "-01-01", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Suffix",{{"Years", type date}})
 				in
-				    #"Changed Type"
+				    #"Changed Type1"
 
 	annotation PBI_NavigationStepName = Navigation
 

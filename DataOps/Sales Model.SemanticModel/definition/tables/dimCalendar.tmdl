@@ -19,6 +19,13 @@ table dimCalendar
 
 		annotation SummarizationSetBy = User
 
+	column MONTH = MONTH( dimCalendar[Date] )
+		formatString: 0
+		lineageTag: a6f7f152-20cd-467a-9f68-f6fa37547f8d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition dimCalendar = calculated
 		mode: import
 		source = CALENDARAUTO()

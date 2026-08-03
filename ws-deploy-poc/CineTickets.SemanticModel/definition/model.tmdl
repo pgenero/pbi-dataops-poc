@@ -21,7 +21,6 @@ ref table ChicagoMoviesPark
 ref table ParkSpecialEventsNYC
 ref table dimChicagoMovies
 ref table dimChicagoEvents
-ref table dimCalendar
 
 ref cultureInfo en-US
 

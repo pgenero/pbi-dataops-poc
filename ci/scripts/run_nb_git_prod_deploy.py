@@ -144,12 +144,17 @@ while True:
                     target = item.get("target", "Unknown")
                     deploy_st = item.get("deploy_status", "N/A")
                     git_st = item.get("git_commit_status", "N/A")
+                    refresh_st = item.get("refresh_status", "Not Triggered")
                     err_msg = item.get("error_message")
 
                     print(f"\n📌 Target: {target}")
                     print(f"   ├─ Deploy Status:     {deploy_st}")
                     print(f"   ├─ Git Push Status:   {git_st}")
                     
+                    # Condicional: solo se imprime si hubo un modelo semántico en el deploy
+                    if refresh_st not in ["No Models Deployed", "Not Triggered"]:
+                        print(f"   ├─ Model Refresh:     {refresh_st}")
+
                     if err_msg:
                         print(f"   └─ ⚠️ Error Detail:    {err_msg}")
                         has_internal_errors = True

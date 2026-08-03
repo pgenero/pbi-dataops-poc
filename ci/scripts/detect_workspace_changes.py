@@ -11,25 +11,35 @@ FOLDER_TO_TARGET = {
 }
 
 
-def get_git_diff_files():
-    """Retrieves the list of modified files using Git Diff."""
+def get_git_diff_file_statuses():
+    """Retrieves the list of modified files with their Git status (Added, Modified, Deleted)."""
     base_sha = os.getenv("GITHUB_BASE_SHA")
     head_sha = os.getenv("GITHUB_HEAD_SHA")
 
     # 1. Execution in Pull Request / CI/CD environment with explicit SHAs
     if base_sha and head_sha:
-        cmd = ["git", "diff", "--name-only", base_sha, head_sha]
+        cmd = ["git", "diff", "--name-status", base_sha, head_sha]
         print(f"🚀 CI/CD Mode: Comparing PR commit range ({base_sha[:7]}...{head_sha[:7]})")
     else:
         # 2. Local Git execution or fallback to base branch
         base_ref = os.getenv("GITHUB_BASE_REF", "main")
         target_branch = f"origin/{base_ref}"
-        cmd = ["git", "diff", "--name-only", f"{target_branch}...HEAD"]
+        cmd = ["git", "diff", "--name-status", f"{target_branch}...HEAD"]
         print(f"🚀 Git Mode: Comparing HEAD against target branch ({target_branch})")
 
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        return result.stdout.splitlines()
+        changes = []
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("\t")
+            status = parts[0]
+            # In case of rename (e.g. R100), parts[1] is old path, parts[2] is new path
+            file_path = parts[-1] 
+            changes.append((status, file_path))
+        return changes
     except subprocess.CalledProcessError as e:
         print(f"❌ Error executing git diff: {e.stderr}")
         sys.exit(1)
@@ -37,13 +47,14 @@ def get_git_diff_files():
 
 def analyze_repository_changes():
     """Analyzes modified files and builds refresh payloads grouped by Target."""
-    changed_files = get_git_diff_files()
+    file_changes = get_git_diff_file_statuses()
 
     tables_by_target = {}
     external_tmdl_by_target = {}
+    deleted_tables_reasons = {}  # Tracks if full refresh is due to table deletion
     detected_targets = set()
 
-    for file_path in changed_files:
+    for status, file_path in file_changes:
         file_path = file_path.strip()
         if not file_path:
             continue
@@ -77,16 +88,28 @@ def analyze_repository_changes():
                 else "UnknownModel"
             )
 
-            # CASE A: Modification inside the 'tables' directory
+            is_deleted = status.startswith("D")
+
+            # CASE A: Modification/Deletion inside the 'tables' directory
             if "/definition/tables/" in normalized_path:
                 tables_index = parts.index("tables")
                 if len(parts) > tables_index + 1:
                     table_file = parts[tables_index + 1]
                     table_name = os.path.splitext(table_file)[0]
 
-                    if model_name not in tables_by_target[target]:
-                        tables_by_target[target][model_name] = set()
-                    tables_by_target[target][model_name].add(table_name)
+                    if is_deleted:
+                        # 🚨 Table DELETED -> Force Full Model Refresh
+                        external_tmdl_by_target[target].add(model_name)
+                        if target not in deleted_tables_reasons:
+                            deleted_tables_reasons[target] = {}
+                        if model_name not in deleted_tables_reasons[target]:
+                            deleted_tables_reasons[target][model_name] = []
+                        deleted_tables_reasons[target][model_name].append(table_name)
+                    else:
+                        # Table Added or Modified -> Partial Refresh
+                        if model_name not in tables_by_target[target]:
+                            tables_by_target[target][model_name] = set()
+                        tables_by_target[target][model_name].add(table_name)
 
             # CASE B: Modification in root .tmdl files (model.tmdl, relationships.tmdl, etc.)
             elif normalized_path.endswith(".tmdl"):
@@ -98,27 +121,27 @@ def analyze_repository_changes():
     for target in detected_targets:
         payloads_by_target[target] = {}
 
-        # Map partial refreshes by table
-        if target in tables_by_target:
-            for model_name, tables in tables_by_target[target].items():
-                payloads_by_target[target][model_name] = {
-                    "refresh_mode": "partial_tables",
-                    "objects": [{"table": t} for t in sorted(list(tables))],
-                    }
-
-        # Map full model refreshes
+        # First priority: Full model refresh (Root TMDL modified OR table deleted)
         if target in external_tmdl_by_target:
             for model_name in external_tmdl_by_target[target]:
+                payloads_by_target[target][model_name] = {
+                    "refresh_mode": "full_model",
+                    "objects": None,
+                }
+
+        # Second priority: Partial refreshes (Only if full_model was not triggered)
+        if target in tables_by_target:
+            for model_name, tables in tables_by_target[target].items():
                 if model_name not in payloads_by_target[target]:
                     payloads_by_target[target][model_name] = {
-                        "refresh_mode": "full_model",
-                        "objects": None,
+                        "refresh_mode": "partial_tables",
+                        "objects": [{"table": t} for t in sorted(list(tables))],
                     }
 
-    return detected_targets, payloads_by_target
+    return detected_targets, payloads_by_target, deleted_tables_reasons
 
 
-def print_summary(targets, payloads):
+def print_summary(targets, payloads, deleted_reasons):
     """Prints a clean human-readable summary for pipeline logs."""
     print("\n==============================================")
     print(f"🎯 DETECTED TARGETS: {', '.join(sorted(targets)) if targets else 'None'}")
@@ -142,13 +165,18 @@ def print_summary(targets, payloads):
                     print(f"      • Table: {t}")
             elif mode == "full_model":
                 print(f"   📌 Model: {model_name} [Mode: Full Model Refresh]")
-                print("      • Root TMDL files modified")
+                deleted_tbls = deleted_reasons.get(target, {}).get(model_name, [])
+                if deleted_tbls:
+                    print(f"      • Reason: Table deletion detected ({', '.join(deleted_tbls)})")
+                else:
+                    print("      • Reason: Root TMDL file(s) modified")
+
 
 if __name__ == "__main__":
-    targets, payloads = analyze_repository_changes()
+    targets, payloads, deleted_reasons = analyze_repository_changes()
 
     # 1. Print console summary
-    print_summary(targets, payloads)
+    print_summary(targets, payloads, deleted_reasons)
 
     targets_str = " ".join(sorted(list(targets)))
     payloads_json_str = json.dumps(payloads)

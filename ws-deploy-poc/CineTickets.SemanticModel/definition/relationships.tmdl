@@ -8,3 +8,7 @@ relationship AutoDetected_d1e3fe88-7276-41f7-8ad1-354b157a2630
 	fromColumn: ChicagoMoviesPark.EventName
 	toColumn: dimChicagoEvents.EventName
 
+relationship 3f9f1d28-8b1c-d1c5-6e27-cc471ee398fa
+	fromColumn: ChicagoMoviesPark.' StartDate'
+	toColumn: dimCalendar.Date
+

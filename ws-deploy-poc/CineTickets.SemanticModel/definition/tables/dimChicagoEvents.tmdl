@@ -98,9 +98,11 @@ table dimChicagoEvents
 				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns",{{"Lat", type number}, {"Long", type number}}),
 				    #"Removed Duplicates" = Table.Distinct(#"Changed Type3"),
 				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"EventName"}),
-				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates1", "EventID", 1, 1, Int64.Type)
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates1", "EventID", 1, 1, Int64.Type),
+				    #"Extracted Text Before Delimiter1" = Table.TransformColumns(#"Added Index", {{"Address", each Text.BeforeDelimiter(_, ", IL "), type text}}),
+				    #"Extracted Text Before Delimiter2" = Table.TransformColumns(#"Extracted Text Before Delimiter1", {{"Address", each Text.BeforeDelimiter(_, " IL "), type text}})
 				in
-				    #"Added Index"
+				    #"Extracted Text Before Delimiter2"
 
 	annotation PBI_NavigationStepName = Navigation
 

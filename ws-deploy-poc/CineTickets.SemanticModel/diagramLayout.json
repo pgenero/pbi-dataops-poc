@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 209,
+        "x": 0,
         "y": 0
       },
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 0
+            "x": 12.570207430874433,
+            "y": 324.31135171656013
           },
           "nodeIndex": "ChicagoMoviesPark",
           "nodeLineageTag": "5b7f629b-192f-43d9-a02d-b981263d2cff",
@@ -23,8 +23,8 @@
         },
         {
           "location": {
-            "x": 249,
-            "y": 655
+            "x": 945.38949167044325,
+            "y": 383.48351949311251
           },
           "nodeIndex": "LocalFilmFestivals",
           "nodeLineageTag": "000baaff-3ee9-4eb3-9fd9-5a09aa5e0725",
@@ -36,8 +36,8 @@
         },
         {
           "location": {
-            "x": 628,
-            "y": 674
+            "x": 645.59829040322427,
+            "y": 387.39927057606315
           },
           "nodeIndex": "ParkSpecialEventsNYC",
           "nodeLineageTag": "79374ea7-b666-41e7-b6a4-4883e54c63de",
@@ -49,8 +49,8 @@
         },
         {
           "location": {
-            "x": 388,
-            "y": 0
+            "x": 0,
+            "y": 2.5140414861748859
           },
           "nodeIndex": "dimChicagoMovies",
           "nodeLineageTag": "e4cac071-c5ab-46ae-801e-8d2adaeeab9c",
@@ -62,8 +62,8 @@
         },
         {
           "location": {
-            "x": 993,
-            "y": 166
+            "x": 334.32113062218014,
+            "y": 0
           },
           "nodeIndex": "dimChicagoEvents",
           "nodeLineageTag": "ac958d9f-e680-466b-9770-40517616f8cc",
@@ -75,10 +75,11 @@
         },
         {
           "location": {
-            "x": 1277,
-            "y": 387
+            "x": 721.39683155535056,
+            "y": 14.92186004611699
           },
           "nodeIndex": "dimCalendar",
+          "nodeLineageTag": "3f59bd47-a79c-451a-b30b-00e7e7e751cb",
           "size": {
             "height": 200,
             "width": 234
@@ -87,7 +88,7 @@
         }
       ],
       "name": "All tables",
-      "zoomValue": 100,
+      "zoomValue": 79.553182037699813,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

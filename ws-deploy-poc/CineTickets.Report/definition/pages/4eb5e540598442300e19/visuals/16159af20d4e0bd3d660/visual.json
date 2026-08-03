@@ -1,0 +1,140 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "16159af20d4e0bd3d660",
+  "position": {
+    "x": 133.25227963525836,
+    "y": 79.756838905775084,
+    "z": 0,
+    "height": 640,
+    "width": 1018.3586626139818,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalFilmFestivals"
+                    }
+                  },
+                  "Property": "Website"
+                }
+              },
+              "queryRef": "LocalFilmFestivals.Website",
+              "nativeQueryRef": "Website"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalFilmFestivals"
+                    }
+                  },
+                  "Property": "To"
+                }
+              },
+              "queryRef": "LocalFilmFestivals.To",
+              "nativeQueryRef": "To"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalFilmFestivals"
+                    }
+                  },
+                  "Property": "Local Festivals"
+                }
+              },
+              "queryRef": "LocalFilmFestivals.Local Festivals",
+              "nativeQueryRef": "Local Festivals"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalFilmFestivals"
+                    }
+                  },
+                  "Property": "From"
+                }
+              },
+              "queryRef": "LocalFilmFestivals.From",
+              "nativeQueryRef": "From"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "590f116238acd398a60d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "LocalFilmFestivals"
+              }
+            },
+            "Property": "Website"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "56b9c763e2e503c06400",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "LocalFilmFestivals"
+              }
+            },
+            "Property": "To"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "ec444db0e4085ec6e1c4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "LocalFilmFestivals"
+              }
+            },
+            "Property": "Local Festivals"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "51e6b80f2db63780d080",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "LocalFilmFestivals"
+              }
+            },
+            "Property": "From"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

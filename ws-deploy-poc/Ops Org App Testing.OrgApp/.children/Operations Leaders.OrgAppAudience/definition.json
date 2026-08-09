@@ -2,19 +2,19 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/orgappaudience/definition/orgAppAudienceDefinition/1.0.0/schema.json",
   "settings": {
     "hasAccessToHiddenContent": false,
-    "tabOrder": 0
+    "tabOrder": 1
   },
   "parentAppId": "0fcb0df6-1a85-993b-43e8-a65afd3a71e8",
   "elementReferences": [
     {
-      "elementId": "350591e5-3571-4c46-8887-831401cd75cf",
+      "elementId": "b8d9920a-9845-4dd8-8541-c275c34ffcb7",
       "itemType": "Report",
-      "itemLogicalId": "1b1deb88-ed08-a482-44ce-e12e3d37187a"
+      "itemLogicalId": "2a503720-4e20-49bc-8c13-3b3a373ce098"
     },
     {
-      "elementId": "a1fda099-1a0e-4c6a-918d-1bc0d19b04db",
+      "elementId": "8aaafea3-edab-4af2-95a3-6184fac7e31b",
       "itemType": "Report",
-      "itemLogicalId": "559b5247-d364-9276-4acc-3621ecc423ec"
+      "itemLogicalId": "60db4044-defd-474c-811b-bf8a18959909"
     },
     {
       "elementId": "6ee3b062-cb0c-4097-83e5-c1355fc1707c"

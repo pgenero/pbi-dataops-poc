@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "OrgAppAudience",
+    "displayName": "Flight Data"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4e3c537d-7d7d-a1b2-4dd9-a651c18c98cc"
+  }
+}

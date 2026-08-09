@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/orgapp/definition/orgAppDefinition/2.0.0/schema.json",
+  "settings": {},
+  "elements": [
+    {
+      "elementType": "item",
+      "elementId": "350591e5-3571-4c46-8887-831401cd75cf",
+      "itemType": "Report",
+      "itemLogicalId": "1b1deb88-ed08-a482-44ce-e12e3d37187a",
+      "displayName": "Flight Model"
+    },
+    {
+      "elementType": "item",
+      "elementId": "a1fda099-1a0e-4c6a-918d-1bc0d19b04db",
+      "itemType": "Report",
+      "itemLogicalId": "559b5247-d364-9276-4acc-3621ecc423ec",
+      "displayName": "Fly Stats"
+    }
+  ]
+}

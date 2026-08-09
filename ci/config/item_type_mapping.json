@@ -1,5 +1,7 @@
 
 {
   "dataset": "SemanticModel",
-  "report": "Report"
+  "report": "Report",
+  "OrgApp": "OrgApp",
+  "OrgAppAudience": "OrgAppAudience"
 }

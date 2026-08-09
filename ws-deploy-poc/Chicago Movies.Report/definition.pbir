@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
   "version": "4.0",
   "datasetReference": {
-    "byConnection": {
-      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg/fw-pablo-operations;initial catalog=CineTickets;access mode=readonly;integrated security=ClaimsToken;semanticmodelid=71d8f88e-d702-4f98-988d-8aa94f4860a9"
+    "byPath": {
+      "path": "../CineTickets.SemanticModel"
     }
   }
 }

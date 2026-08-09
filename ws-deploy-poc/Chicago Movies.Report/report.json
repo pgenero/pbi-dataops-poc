@@ -1,0 +1,62 @@
+{
+  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"type\":2,\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"visible\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU07",
+            "path": "BaseThemes/CY26SU07.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{\"objects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.2}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"15D\"}}}}}]}}",
+      "displayName": "Chicago Movies",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "95cbbb905cd5a2be64d3",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"5c5b4e306cd4d076980b\",\"layouts\":[{\"id\":0,\"position\":{\"x\":450.7465557724405,\"y\":71.84135336218846,\"z\":2000,\"width\":801.8422020424906,\"height\":617.6038926136524,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"azureMap\",\"projections\":{\"Y\":[{\"queryRef\":\"dimChicagoEvents.Lat\"}],\"X\":[{\"queryRef\":\"dimChicagoEvents.Long\"}],\"Series\":[{\"queryRef\":\"dimChicagoMovies. MovieRating\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dimChicagoEvents\",\"Type\":0},{\"Name\":\"d1\",\"Entity\":\"dimChicagoMovies\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Lat\"},\"Name\":\"dimChicagoEvents.Lat\",\"NativeReferenceName\":\"Lat\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Long\"},\"Name\":\"dimChicagoEvents.Long\",\"NativeReferenceName\":\"Long\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d1\"}},\"Property\":\" MovieRating\"},\"Name\":\"dimChicagoMovies. MovieRating\",\"NativeReferenceName\":\" MovieRating\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"mapControls\":[{\"properties\":{\"zoom\":{\"expr\":{\"Literal\":{\"Value\":\"9.44D\"}}},\"centerLatitude\":{\"expr\":{\"Literal\":{\"Value\":\"41.83976425922887D\"}}},\"centerLongitude\":{\"expr\":{\"Literal\":{\"Value\":\"-87.67323398500002D\"}}},\"defaultStyle\":{\"expr\":{\"Literal\":{\"Value\":\"'grayscale_dark'\"}}}}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.1}}}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"55D\"}}}}}],\"title\":[{\"properties\":{\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":9,\"Percent\":0}}}}},\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Movies Locations'\"}}}}}],\"border\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}}}}],\"divider\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}}}]}}}",
+          "filters": "[]",
+          "height": 617.60,
+          "queryBinary": "H4sIAAAAAAAEAKWTTU/DMAyG/wryOZrWHTj0yCgIwWBsaAKhHqLUbEFNUqVptWnqf8dOB9sQQ0JcqtivP5447hbGzhhpixrS1y3Mkc5Bq8cG/eZSBjlfyQp3IZBuIQp8WKCvtbOQjgRceWdi+r00CCkUICCjMmHDhjbjlVZy6bIWbahJe9pUFDbsxD4j+Tll4lqNhym5IMYSVYj9xq5sjGWcbF15rHsiuoZrvMIZvu2NiNV1AqbeVehjnzsZgDyfDN9AByyzGnTLtdCjVbgL7lP/T+Ds8lcE1k8y9Ml/hki+U5zFMc+oyQma/hkGR3GnqI6L5VTuQtuCDYKYem1kv0DX3jUVufvFI5p3elUCZ3uU87WOfUOR5LEcr+UMiyYqXIkdCx4BtT8Xhz0eWvSlrLjN1Gka6FyaqkSWnvlzYwtcQ5pQ1ZcDe9h1PKGvFWc9W6NquOMEg9eqvtX8QyQdIX0Ax8hgZEQDAAA=",
+          "width": 801.84,
+          "x": 450.75,
+          "y": 71.84,
+          "z": 2000.00
+        },
+        {
+          "config": "{\"name\":\"5e56f57c9ed1ed0900bc\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":0,\"z\":1000,\"width\":1280.0043452431469,\"height\":55.61911228040397,\"tabOrder\":1000}}],\"singleVisual\":{\"visualType\":\"textbox\",\"drillFilterOtherVisuals\":true,\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"CHICAGO MOVIE EVENTS\",\"textStyle\":{\"fontWeight\":\"bold\",\"fontFamily\":\"Corbel\",\"fontSize\":\"20pt\",\"color\":\"#e68f96\"}}]}]}}]},\"vcObjects\":{\"background\":[{\"properties\":{\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.1}}}}}}}]}}}",
+          "filters": "[]",
+          "height": 55.62,
+          "width": 1280.00,
+          "x": 0.00,
+          "y": 0.00,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"c9e88e8cd78d08ec7ac9\",\"layouts\":[{\"id\":0,\"position\":{\"x\":15.063509575942742,\"y\":71.84135336218846,\"z\":0,\"width\":414.8258790913463,\"height\":617.6038926136524,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"barChart\",\"projections\":{\"Category\":[{\"queryRef\":\"dimChicagoMovies. MovieRating\",\"active\":true}],\"Y\":[{\"queryRef\":\"Count(ChicagoMoviesPark. MovieName)\"}],\"Series\":[{\"queryRef\":\"dimChicagoMovies. MovieRating\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"ChicagoMoviesPark\",\"Type\":0},{\"Name\":\"d\",\"Entity\":\"dimChicagoMovies\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\" MovieRating\"},\"Name\":\"dimChicagoMovies. MovieRating\",\"NativeReferenceName\":\" MovieRating\"},{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\" MovieName\"}},\"Function\":2},\"Name\":\"Count(ChicagoMoviesPark. MovieName)\",\"NativeReferenceName\":\"Count of  MovieName\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Aggregation\":{\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\" MovieName\"}},\"Function\":2}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true,\"objects\":{\"categoryAxis\":[{\"properties\":{\"labelColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":9,\"Percent\":0.6}}}}},\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"valueAxis\":[{\"properties\":{\"labelColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":9,\"Percent\":0.6}}}}},\"gridlineShow\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"showAxisTitle\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"legend\":[{\"properties\":{\"showGradientLegend\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"show\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"vcObjects\":{\"title\":[{\"properties\":{\"text\":{\"expr\":{\"Literal\":{\"Value\":\"'Movies by Rating'\"}}},\"titleWrap\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"fontColor\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":9,\"Percent\":0}}}}}}}],\"spacing\":[{\"properties\":{\"spaceAbovePlotArea\":{\"expr\":{\"Literal\":{\"Value\":\"16D\"}}},\"spaceAboveDivider\":{\"expr\":{\"Literal\":{\"Value\":\"4D\"}}},\"spaceAboveSubtitle\":{\"expr\":{\"Literal\":{\"Value\":\"2D\"}}}}}],\"background\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"transparency\":{\"expr\":{\"Literal\":{\"Value\":\"55D\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":1,\"Percent\":0.1}}}}}}}],\"border\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"1D\"}}},\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"radius\":{\"expr\":{\"Literal\":{\"Value\":\"5D\"}}}}}],\"divider\":[{\"properties\":{\"show\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}},\"color\":{\"solid\":{\"color\":{\"expr\":{\"ThemeDataColor\":{\"ColorId\":0,\"Percent\":0}}}}}}}]}}}",
+          "filters": "[]",
+          "height": 617.60,
+          "queryBinary": "H4sIAAAAAAAEAMVTzU4CMRB+FdKTJg1ZiKe9yQIeDIpg8GA4NN1hqbLtZrZFyWbf3WlXYEE8ePLW6cz3M9NpxRKT50KnJYtfKzYHOlslnxzgbiismK9FAd8lLK5YSPjDArBURrO4z9kYTR7gDyIHFjPJOBsRjaVKlqyVFJmZmK2CcirwnZLPu4LqopofIGkbkqr8BNVCLDl53IC0QS8xG5drb2f0WSCUjSNqwziUMIPVMQgadc3ZFE0BGHQ6gX4mrNIZo9Tey5l896TOl1m19eyAoCV8o87IKnabZQgZxeaCw785l5edB2WfGTstG53+sY3EOG2vfoy/e8Re/9pMwHbMqtMWotk/Ygo42IXhDxXCXpWftfFPvdf1km4GSqf+EYhliioXzcLeoXEFXTeLTnxvjXsfR7y3DFC/8jNIndw79xcL75es3PA23wupmI+mHxoWyUdR7Q0dfkav9mMB6TzZBCwqWd4r/4963ugXCmkNu3sDAAA=",
+          "width": 414.83,
+          "x": 15.06,
+          "y": 71.84,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

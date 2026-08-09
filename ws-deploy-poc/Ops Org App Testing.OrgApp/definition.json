@@ -30,6 +30,13 @@
           "itemType": "Report",
           "itemLogicalId": "2a503720-4e20-49bc-8c13-3b3a373ce098",
           "displayName": "CineTickets"
+        },
+        {
+          "elementType": "item",
+          "elementId": "19b7e64f-ba07-44e3-b3df-59286eb026ea",
+          "itemType": "Report",
+          "itemLogicalId": "160d88ac-3018-4ed4-8bb8-49bae4b91b21",
+          "displayName": "Chicago Movies"
         }
       ],
       "displayName": "Entertainment"

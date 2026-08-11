@@ -1,5 +1,18 @@
+# ==============================================================================
+# Workflow: Fabric CICD - Prod Deploy
+# Description: Triggers production deployments in Fabric by executing a dedicated 
+#              Microsoft Fabric Notebook that orchestrates Git deployment to PROD.
+#             In addition, the Notebook makes an API call to synchronize the 
+#             content of the Prod workspace with a snapshot branch in Git, 
+#             versioning and securing the production code.
+# Trigger: Manual trigger (workflow_dispatch) requiring input parameters.
+# Permissions: Requires repository write permissions to validate branches and 
+#              delete feature/release branches post-production deployment.
+# ==============================================================================
+
 name: Fabric CICD - Prod Deploy
 
+# Manual trigger configuration
 on:
   workflow_dispatch:
     inputs:
@@ -7,11 +20,11 @@ on:
         description: "Deploy to PROD - Use MAIN"
         required: true
 
-# Requires permissions
+# Permissions needed for branch validation and post-deployment branch deletion
 permissions:
-  # contents: read   # validate branch name
   contents: write  # Read and Write allowe - For branch name validation and branch deletion after the deploy to Prod
 
+# Global environment variables for Service Principal authentication
 env:
   TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
   APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
@@ -19,12 +32,15 @@ env:
 
 jobs:
   deploy_to_prod:
+    name: Execute Production Deployment
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository code
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # Step 2: Invoke Python script to run the Fabric deployment notebook
       - name: Call Fabric Notebook
         env:
           BRANCH_NAME: ${{ github.event.inputs.branch_name }}

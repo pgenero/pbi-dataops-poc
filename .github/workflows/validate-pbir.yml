@@ -1,5 +1,15 @@
+# ==============================================================================
+# Workflow: Validate Power BI Report Connection
+# Description: Automates the analysis and validation checks of definition.pbir files 
+#             whenever a pull request targeting the main branch is updated or opened.
+# Objective: Verify that live connections reports are not pointing to models in the 
+#            feature workspace under cross-workspace scenarios 
+#           (the source semantic model is located in another pipeline).
+# ==============================================================================
+
 name: Validate PBIR
 
+# Trigger configuration for Pull Request events
 on:
   pull_request:
     branches:
@@ -11,18 +21,20 @@ on:
 
 jobs:
   validate-pbir:
-
+    name: Execute PBIR Validation Routine
     runs-on: ubuntu-latest
 
     steps:
-
+      # Step 1: Checkout repository code to the runner workspace
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Python runtime environment
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # Step 3: Run the validation script against the definition.pbir files
       - name: Run validation
         run: python ci/scripts/validate_pbir.py

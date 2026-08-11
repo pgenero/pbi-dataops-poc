@@ -1,12 +1,27 @@
+# ==============================================================================
+# Workflow: Fabric CICD - Dev to Test
+# Description: Orchestrates continuous deployment (CD) of Microsoft Fabric 
+#              artifacts from Development to Test environments upon PR merge.
+# Trigger: Automatically runs when a Pull Request targeting 'main' is merged.
+# Key Features:
+#   - Change detection across workspaces and semantic models
+#   - PR body checkbox inspection for optional semantic model refresh
+#   - OAuth2 Service Principal authentication against Fabric REST API
+#   - Automated workspace deployment/synchronization
+#   - Audit logging compliance (SOX)
+# ==============================================================================
+
 name: Fabric CICD - Dev to Test
 
+# Trigger configuration: Executes when a PR targeting 'main' is closed
 on:
   pull_request:
     branches:
       - main
     types:
-      - closed # start the action when the pull request to main is closed
+      - closed # Trigger the action when a PR to main is closed
 
+# Global environment variables extracted from repository secrets and PR context
 env:
   TENANT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}
   APP_CLIENT_ID: ${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }}
@@ -16,41 +31,46 @@ env:
   PR_TITLE: ${{ github.event.pull_request.title }}
 
 jobs:
-
   deploy_to_test:
+    name: Deploy Artifacts DEV to TEST
+    # Ensures the workflow only executes if the PR was actually merged (not closed without merge)
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository code with full commit history for git diff analysis
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Step 2: Set up Python 3.11 environment
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Detect Changed Workspaces and Models
+      # Step 3: Identify modifications in workspaces
+      - name: Detect Changed Workspaces
         id: detect_changes
         env:
           GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python ci/scripts/detect_workspace_changes.py
 
+      # Step 4: Parse PR body text to check if optional semantic model refresh in TEST was requested
       - name: Check PR Refresh Option
         id: check_refresh
         if: env.SKIP_PIPELINE != 'true'
         run: |
           PR_BODY="${{ github.event.pull_request.body }}"
           
-          # Print log body for debug
+          # Print PR body for traceability
           echo "=== PR BODY START ==="
           echo "$PR_BODY"
           echo "=== PR BODY END ==="
           
-          # Check if [x] o [X] exists followed by key text
+          # Inspect PR body for selected '[x]' checkbox requesting model refresh in TEST
           if echo "$PR_BODY" | grep -iE "\[x\].*Trigger Semantic Model Refresh in TEST"; then
             echo "PR Option: Refresh in TEST is ENABLED"
             echo "RUN_TEST_REFRESH=true" >> $GITHUB_ENV
@@ -59,6 +79,7 @@ jobs:
             echo "RUN_TEST_REFRESH=false" >> $GITHUB_ENV
           fi
 
+      # Step 5: Authenticate and get a bearer token for Fabric and Power BI REST API
       - name: Get Fabric token
         if: env.SKIP_PIPELINE != 'true'
         run: |
@@ -72,27 +93,32 @@ jobs:
 
           echo "TOKEN=$TOKEN" >> $GITHUB_ENV
 
+      # Step 6: Install required Python dependencies for pipeline automation scripts
       - name: Install dependencies
         if: env.SKIP_PIPELINE != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r ci/requirements/requirements.txt
 
+      # Step 7: Synchronize and deploy workspace changes from DEV to TEST environment
       - name: Deploy DEV → TEST
         if: env.SKIP_PIPELINE != 'true'
         run: |
           python ci/scripts/sync_workspace.py
 
+      # Step 8: Capture the deployment logs metadata for SOX compliance auditing
       - name: Log deployment (SOX)
         if: env.SKIP_PIPELINE != 'true'
         run: |
           python ci/scripts/log_deployment_pipeline.py
 
+      # Step 9: Save the deployment logs into Microsoft Fabric Lakehouse
       - name: Save deployment log in Fabric
         if: env.SKIP_PIPELINE != 'true'
         run: |
           python ci/scripts/save_log_fabric.py
 
+      # Step 10: Trigger semantic model refreshes in TEST (only if enabled in PR)
       - name: Trigger Semantic Model Refreshes in TEST
         if: env.SKIP_PIPELINE != 'true' && env.RUN_TEST_REFRESH == 'true'
         env:

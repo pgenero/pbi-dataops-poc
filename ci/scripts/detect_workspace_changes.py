@@ -2,26 +2,50 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
-# Mapping from Root Folders to Fabric Targets / Workspaces
-FOLDER_TO_TARGET = {
-    "DataOps": "sales",
-    "ws-finance": "finance",
-    "ws-deploy-poc": "operations",
-}
+# Path to the JSON configuration mapping Git Repository root folders to Fabric targets
+CONFIG_PATH = Path("ci/config/folder_target_mapping.json")
 
 
-def get_git_diff_file_statuses():
-    """Retrieves the list of modified files with their Git status (Added, Modified, Deleted)."""
+def load_folder_target_mapping() -> dict:
+    """Loads the folder-to-target mapping dictionary from a JSON configuration file.
+    
+    Returns:
+        dict: Mapping between Git Repository root folder names and Fabric target identifiers.
+    """
+    if not CONFIG_PATH.exists():
+        print(f"❌ Configuration file not found at: {CONFIG_PATH}")
+        sys.exit(1)
+
+    try:
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            mapping = json.load(f)
+            print(f"⚙️ Loaded folder-to-target mapping from {CONFIG_PATH}")
+            return mapping
+    except json.JSONDecodeError as e:
+        print(f"❌ Invalid JSON format in {CONFIG_PATH}: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ Unable to read configuration file {CONFIG_PATH}: {e}")
+        sys.exit(1)
+
+
+def get_git_diff_file_statuses() -> list:
+    """Retrieves the list of modified files with their Git status (Added, Modified, Deleted).
+    
+    Returns:
+        list: Tuples containing (status_code, file_path).
+    """
     base_sha = os.getenv("GITHUB_BASE_SHA")
     head_sha = os.getenv("GITHUB_HEAD_SHA")
 
-    # 1. Execution in Pull Request / CI/CD environment with explicit SHAs
+    # 1. Execution in Pull Request / CI/CD environment with explicit commit SHAs
     if base_sha and head_sha:
         cmd = ["git", "diff", "--name-status", base_sha, head_sha]
         print(f"🚀 CI/CD Mode: Comparing PR commit range ({base_sha[:7]}...{head_sha[:7]})")
     else:
-        # 2. Local Git execution or fallback to base branch
+        # 2. Local Git execution or fallback comparing HEAD against target branch
         base_ref = os.getenv("GITHUB_BASE_REF", "main")
         target_branch = f"origin/{base_ref}"
         cmd = ["git", "diff", "--name-status", f"{target_branch}...HEAD"]
@@ -36,22 +60,29 @@ def get_git_diff_file_statuses():
                 continue
             parts = line.split("\t")
             status = parts[0]
-            # In case of rename (e.g. R100), parts[1] is old path, parts[2] is new path
+            # Handle git file rename (e.g., R100 where parts[1]=old, parts[2]=new)
             file_path = parts[-1] 
             changes.append((status, file_path))
         return changes
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error executing git diff: {e.stderr}")
+        print(f"❌ Error executing git diff command: {e.stderr}")
         sys.exit(1)
 
 
-def analyze_repository_changes():
-    """Analyzes modified files and builds refresh payloads grouped by Target."""
+def analyze_repository_changes(folder_to_target: dict):
+    """Analyzes modified files from git diff and builds dataset refresh payloads grouped by Target.
+    
+    Args:
+        folder_to_target (dict): Dynamic folder-to-target mapping loaded from JSON config.
+
+    Returns:
+        tuple: (detected_targets, payloads_by_target, deleted_tables_reasons)
+    """
     file_changes = get_git_diff_file_statuses()
 
     tables_by_target = {}
     external_tmdl_by_target = {}
-    deleted_tables_reasons = {}  # Tracks if full refresh is due to table deletion
+    deleted_tables_reasons = {}  # Track table deletion events triggering full refresh
     detected_targets = set()
 
     for status, file_path in file_changes:
@@ -62,22 +93,22 @@ def analyze_repository_changes():
         normalized_path = file_path.replace("\\", "/")
         parts = normalized_path.split("/")
 
-        # 1. Identify Target/Workspace based on the root folder
+        # 1. Identify Target/Workspace based on the root folder name
         root_folder = parts[0]
-        target = FOLDER_TO_TARGET.get(root_folder)
+        target = folder_to_target.get(root_folder)
 
         if not target:
-            continue  # The file does not belong to a monitored workspace folder
+            continue  # Ignore files outside monitored workspace folders
 
         detected_targets.add(target)
 
-        # Initialize collections for the target
+        # Initialize tracking data structures for the target workspace
         if target not in tables_by_target:
             tables_by_target[target] = {}
         if target not in external_tmdl_by_target:
             external_tmdl_by_target[target] = set()
 
-        # 2. Analyze if the file modification corresponds to a Semantic Model
+        # 2. Inspect if the file modification belongs to a Semantic Model definition
         if ".SemanticModel/definition/" in normalized_path:
             model_folder = next(
                 (p for p in parts if p.endswith(".SemanticModel")), None
@@ -90,7 +121,7 @@ def analyze_repository_changes():
 
             is_deleted = status.startswith("D")
 
-            # CASE A: Modification/Deletion inside the 'tables' directory
+            # CASE A: Changes detected inside the 'tables' sub-folder
             if "/definition/tables/" in normalized_path:
                 tables_index = parts.index("tables")
                 if len(parts) > tables_index + 1:
@@ -98,7 +129,7 @@ def analyze_repository_changes():
                     table_name = os.path.splitext(table_file)[0]
 
                     if is_deleted:
-                        # 🚨 Table DELETED -> Force Full Model Refresh
+                        # 🚨 Table DELETED -> Force Full Semantic Model Refresh
                         external_tmdl_by_target[target].add(model_name)
                         if target not in deleted_tables_reasons:
                             deleted_tables_reasons[target] = {}
@@ -106,22 +137,23 @@ def analyze_repository_changes():
                             deleted_tables_reasons[target][model_name] = []
                         deleted_tables_reasons[target][model_name].append(table_name)
                     else:
-                        # Table Added or Modified -> Partial Refresh
+                        # Table ADDED or MODIFIED -> Eligible for Partial Table Refresh
                         if model_name not in tables_by_target[target]:
                             tables_by_target[target][model_name] = set()
                         tables_by_target[target][model_name].add(table_name)
 
-            # CASE B: Modification in root .tmdl files (model.tmdl, relationships.tmdl, etc.)
+            # CASE B: Changes in root TMDL files (model.tmdl, relationships.tmdl, etc.)
+            # Full Semantic Model Refresh
             elif normalized_path.endswith(".tmdl"):
                 external_tmdl_by_target[target].add(model_name)
 
-    # 3. Build the final JSON payloads grouped by Target
+    # 3. Build the final JSON payload structure grouped by Target
     payloads_by_target = {}
 
     for target in detected_targets:
         payloads_by_target[target] = {}
 
-        # First priority: Full model refresh (Root TMDL modified OR table deleted)
+        # Priority 1: Full Model Refresh → If any root TMDL file is modified OR any table deleted
         if target in external_tmdl_by_target:
             for model_name in external_tmdl_by_target[target]:
                 payloads_by_target[target][model_name] = {
@@ -129,7 +161,7 @@ def analyze_repository_changes():
                     "objects": None,
                 }
 
-        # Second priority: Partial refreshes (Only if full_model was not triggered)
+        # Priority 2: Partial Refresh → Only applied if full model refresh was not triggered
         if target in tables_by_target:
             for model_name, tables in tables_by_target[target].items():
                 if model_name not in payloads_by_target[target]:
@@ -141,8 +173,8 @@ def analyze_repository_changes():
     return detected_targets, payloads_by_target, deleted_tables_reasons
 
 
-def print_summary(targets, payloads, deleted_reasons):
-    """Prints a clean human-readable summary for pipeline logs."""
+def print_summary(targets: set, payloads: dict, deleted_reasons: dict):
+    """Prints a structured, human-readable summary for pipeline log visibility."""
     print("\n==============================================")
     print(f"🎯 DETECTED TARGETS: {', '.join(sorted(targets)) if targets else 'None'}")
     print("==============================================")
@@ -173,16 +205,21 @@ def print_summary(targets, payloads, deleted_reasons):
 
 
 if __name__ == "__main__":
-    targets, payloads, deleted_reasons = analyze_repository_changes()
+    # Load mapping configuration from JSON
+    folder_mapping = load_folder_target_mapping()
 
-    # 1. Print console summary
+    # Analyze git changes
+    targets, payloads, deleted_reasons = analyze_repository_changes(folder_mapping)
+
+    # Print human-readable logs
     print_summary(targets, payloads, deleted_reasons)
 
+    # Format variables for GitHub Actions environment export
     targets_str = " ".join(sorted(list(targets)))
     payloads_json_str = json.dumps(payloads)
     has_changes_str = str(len(targets) > 0).lower()
 
-    # 2. Export to GITHUB_OUTPUT (for GitHub Actions step parameters)
+    # 1. Export outputs via GITHUB_OUTPUT (for GitHub Actions step outputs)
     github_output = os.getenv("GITHUB_OUTPUT")
     if github_output:
         with open(github_output, "a", encoding="utf-8") as f:
@@ -190,7 +227,7 @@ if __name__ == "__main__":
             f.write(f"targets={targets_str}\n")
             f.write(f"refresh_payloads={payloads_json_str}\n")
 
-    # 3. Export to GITHUB_ENV (maintains backwards compatibility with existing .py scripts)
+    # 2. Export variables via GITHUB_ENV (for environment variable access in downstream steps)
     github_env = os.getenv("GITHUB_ENV")
     if github_env:
         with open(github_env, "a", encoding="utf-8") as f:

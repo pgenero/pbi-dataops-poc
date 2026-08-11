@@ -1,0 +1,276 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "82ca526d0605aee4217a",
+  "displayName": "Page 1",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "autoPageGenerationConfig": {
+    "selectedFields": [
+      {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "ChicagoMoviesPark"
+            }
+          },
+          "Property": "StartTime"
+        }
+      },
+      {
+        "Aggregation": {
+          "Expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "ChicagoMoviesPark"
+                }
+              },
+              "Property": "EventID"
+            }
+          },
+          "Function": 5
+        }
+      }
+    ],
+    "visualContainerConfigurations": [
+      {
+        "name": "c625eb9b5e8c73193d8e",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "ChicagoMoviesPark"
+                }
+              },
+              "Property": "StartTime"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": "EventID"
+                }
+              },
+              "Function": 5
+            }
+          }
+        ]
+      },
+      {
+        "name": "50c63a48601b55d44979",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "ChicagoMoviesPark"
+                }
+              },
+              "Property": "StartTime"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " MovieName"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "7ff394e7373682dd9c2c",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "ChicagoMoviesPark"
+                }
+              },
+              "Property": "StartTime"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " ParkUrl"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "f3af7b6446146ecc0230",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "ChicagoMoviesPark"
+                }
+              },
+              "Property": "StartTime"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " StartDate"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "c6357576992101a07bdc",
+        "fields": []
+      },
+      {
+        "name": "d634ba76ad806e8db4ac",
+        "fields": []
+      },
+      {
+        "name": "38fcd86962e030d001d5",
+        "fields": []
+      },
+      {
+        "name": "8366e1be19b3cda0450e",
+        "fields": []
+      },
+      {
+        "name": "0c2b6b486e50dee0e049",
+        "fields": []
+      },
+      {
+        "name": "f7cf5bd51c1ae08ae742",
+        "fields": []
+      },
+      {
+        "name": "b0d630694b6b19609697",
+        "fields": []
+      },
+      {
+        "name": "92b4d1633581ab02e996",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": "EventID"
+                }
+              },
+              "Function": 5
+            }
+          }
+        ]
+      },
+      {
+        "name": "5b6a8106dcea9a85ec7d",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " MovieName"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "a7a9ac2560dae16d6327",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " ParkUrl"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "2ff8e1bb43cb6ae1decb",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ChicagoMoviesPark"
+                    }
+                  },
+                  "Property": " StartDate"
+                }
+              },
+              "Function": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "6db36e08289311b52c02",
+        "fields": []
+      }
+    ],
+    "layout": {
+      "related": {
+        "version": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Pablo Cine Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c13250a0-30f7-41b2-8185-c37f07712bf9"
+  }
+}

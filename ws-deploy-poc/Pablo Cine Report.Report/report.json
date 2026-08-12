@@ -1,0 +1,42 @@
+{
+  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY26SU07",
+            "path": "BaseThemes/CY26SU07.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "6970d6074903e0c2a850",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"4e863a40a3a95c607dc0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.974811083123425,\"y\":9.06801007556675,\"z\":0,\"width\":1115.3652392947101,\"height\":686.448362720403,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"ParkSpecialEventsNYC.Event Name\"},{\"queryRef\":\"ParkSpecialEventsNYC.Classification\"},{\"queryRef\":\"ParkSpecialEventsNYC.Category\"},{\"queryRef\":\"ParkSpecialEventsNYC.Date and Time\"},{\"queryRef\":\"ParkSpecialEventsNYC.Borough\"},{\"queryRef\":\"ParkSpecialEventsNYC.Audience\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"ParkSpecialEventsNYC\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Event Name\"},\"Name\":\"ParkSpecialEventsNYC.Event Name\",\"NativeReferenceName\":\"Event Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Classification\"},\"Name\":\"ParkSpecialEventsNYC.Classification\",\"NativeReferenceName\":\"Classification\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Category\"},\"Name\":\"ParkSpecialEventsNYC.Category\",\"NativeReferenceName\":\"Category\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Date and Time\"},\"Name\":\"ParkSpecialEventsNYC.Date and Time\",\"NativeReferenceName\":\"Date and Time\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Borough\"},\"Name\":\"ParkSpecialEventsNYC.Borough\",\"NativeReferenceName\":\"Borough\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Audience\"},\"Name\":\"ParkSpecialEventsNYC.Audience\",\"NativeReferenceName\":\"Audience\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 686.45,
+          "width": 1115.37,
+          "x": 9.97,
+          "y": 9.07,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

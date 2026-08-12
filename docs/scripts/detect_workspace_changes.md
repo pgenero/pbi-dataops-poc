@@ -56,6 +56,49 @@ In the script, this is done with the `load_folder_target_mapping()` function.
 
 If the script it's running in GitHub Actions (where the commit variables `base_sha` and `head_sha` exist), it compares that specific range of commits. If the script runs locally, it compares the branch against `origin/main`.
 
+### Function: `analyze_repository_changes()`
+
+This is the core analysis engine that inspects changed file paths and builds refresh strategies.
+
+1. *Path Mapping & Filtering:*
+
+    Normalizes slashes (\ -> /) and extracts the root_folder. Checks folder_to_target: If the root folder is not mapped to a Fabric target, the file is ignored.
+
+2. *Semantic Model Inspection:*
+
+    Evaluates if the path contains .SemanticModel/definition/. Then, extracts the model_name (e.g., SalesModel from SalesModel.SemanticModel).
+
+3. *Logic Decision Tree:*
+
+    - Case A — Tables Directory (/definition/tables/):
+
+      - Deleted Tables (D status): Deleting a table disrupts structural relationships. It forces a Full Model Refresh (full_model) and logs the deletion reason.
+
+      - Added or Modified Tables: Adds the table name to tables_by_target to qualify for a Partial Table Refresh (partial_tables).
+
+    - Case B — Root TMDL Files:
+
+    Modifications to root definition files (e.g., model.tmdl, relationships.tmdl, cultures) trigger a mandatory Full Model Refresh (full_model).
+
+4. *Payload Building:*
+
+    - Priority 1 (full_model): If root TMDL files were modified or any table was deleted, refresh_mode: "full_model" is set with objects: None.
+
+    - Priority 2 (partial_tables): If no full refresh was triggered, builds a payload containing refresh_mode: "partial_tables" along with an array of specific table objects [{"table": "TableName"}].
+
+5. *Print Output:*
+
+    Outputs structured, human-readable logging to stdout for GitHub Actions step logs visibility. It displays all detected target workspaces.
+
+6. *Entry Point (if `__name__` == `__main__`:)*
+
+    Coordinates execution and exposes environment variables to subsequent pipeline steps.
+
+    GitHub Actions Output Exports:
+
+    - `GITHUB_OUTPUT`: Writes step outputs (has_changes, targets, refresh_payloads) for downstream steps in the same job.
+
+    - `GITHUB_ENV`: Sets TARGETS environment variable.
 ---
 
 ## 🛠️ Technical Execution Logic

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Eli-cine-report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "05c004c8-5a25-46c5-bc12-9d306e36dc63"
+  }
+}

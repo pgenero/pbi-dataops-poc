@@ -1,0 +1,84 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "fc8feae58b3019be581d",
+  "position": {
+    "x": 10,
+    "y": 0,
+    "z": 0,
+    "height": 280,
+    "width": 280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Borough"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Borough",
+              "nativeQueryRef": "Borough"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Category"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Category",
+              "nativeQueryRef": "Category"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ccab71d93bbd0609ce84",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Borough"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eebac5ea6d36c356a17e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Category"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

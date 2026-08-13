@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Cine_Ramon"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7aab718c-2035-4eac-8c7a-87b64bc2ff70"
+  }
+}

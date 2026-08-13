@@ -1,0 +1,140 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "5515d23e119c6000944e",
+  "position": {
+    "x": 908.0254777070063,
+    "y": 181.91082802547771,
+    "z": 1,
+    "height": 632.86624203821657,
+    "width": 961.52866242038215,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Attendance"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Attendance",
+              "nativeQueryRef": "Attendance"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Audience"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Audience",
+              "nativeQueryRef": "Audience"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Classification"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Classification",
+              "nativeQueryRef": "Classification"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ParkSpecialEventsNYC"
+                    }
+                  },
+                  "Property": "Event Name"
+                }
+              },
+              "queryRef": "ParkSpecialEventsNYC.Event Name",
+              "nativeQueryRef": "Event Name"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "46c9a297b553ebd10055",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Attendance"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "52150d10eda00db02a8c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Audience"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a5601ef52a69461ebdc8",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Classification"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "267e56043821b287d98c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "ParkSpecialEventsNYC"
+              }
+            },
+            "Property": "Event Name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

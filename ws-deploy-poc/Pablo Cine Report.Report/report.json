@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
+  "config": "{\"version\":\"5.75\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY26SU07\",\"type\":2,\"version\":{\"visual\":\"2.11.0\",\"report\":\"3.4.0\",\"page\":\"2.3.1\"}}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -27,13 +27,33 @@
       "name": "6970d6074903e0c2a850",
       "visualContainers": [
         {
-          "config": "{\"name\":\"4e863a40a3a95c607dc0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":9.974811083123425,\"y\":9.06801007556675,\"z\":0,\"width\":1115.3652392947101,\"height\":686.448362720403,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"ParkSpecialEventsNYC.Event Name\"},{\"queryRef\":\"ParkSpecialEventsNYC.Classification\"},{\"queryRef\":\"ParkSpecialEventsNYC.Category\"},{\"queryRef\":\"ParkSpecialEventsNYC.Date and Time\"},{\"queryRef\":\"ParkSpecialEventsNYC.Borough\"},{\"queryRef\":\"ParkSpecialEventsNYC.Audience\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"ParkSpecialEventsNYC\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Event Name\"},\"Name\":\"ParkSpecialEventsNYC.Event Name\",\"NativeReferenceName\":\"Event Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Classification\"},\"Name\":\"ParkSpecialEventsNYC.Classification\",\"NativeReferenceName\":\"Classification\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Category\"},\"Name\":\"ParkSpecialEventsNYC.Category\",\"NativeReferenceName\":\"Category\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Date and Time\"},\"Name\":\"ParkSpecialEventsNYC.Date and Time\",\"NativeReferenceName\":\"Date and Time\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Borough\"},\"Name\":\"ParkSpecialEventsNYC.Borough\",\"NativeReferenceName\":\"Borough\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Audience\"},\"Name\":\"ParkSpecialEventsNYC.Audience\",\"NativeReferenceName\":\"Audience\"}]},\"drillFilterOtherVisuals\":true}}",
+          "config": "{\"name\":\"4e863a40a3a95c607dc0\",\"layouts\":[{\"id\":0,\"position\":{\"x\":52.59445843828715,\"y\":16.32241813602015,\"z\":0,\"width\":1115.3652392947101,\"height\":686.448362720403,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"ParkSpecialEventsNYC.Event Name\"},{\"queryRef\":\"ParkSpecialEventsNYC.Classification\"},{\"queryRef\":\"ParkSpecialEventsNYC.Category\"},{\"queryRef\":\"ParkSpecialEventsNYC.Date and Time\"},{\"queryRef\":\"ParkSpecialEventsNYC.Borough\"},{\"queryRef\":\"ParkSpecialEventsNYC.Audience\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"p\",\"Entity\":\"ParkSpecialEventsNYC\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Event Name\"},\"Name\":\"ParkSpecialEventsNYC.Event Name\",\"NativeReferenceName\":\"Event Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Classification\"},\"Name\":\"ParkSpecialEventsNYC.Classification\",\"NativeReferenceName\":\"Classification\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Category\"},\"Name\":\"ParkSpecialEventsNYC.Category\",\"NativeReferenceName\":\"Category\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Date and Time\"},\"Name\":\"ParkSpecialEventsNYC.Date and Time\",\"NativeReferenceName\":\"Date and Time\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Borough\"},\"Name\":\"ParkSpecialEventsNYC.Borough\",\"NativeReferenceName\":\"Borough\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"p\"}},\"Property\":\"Audience\"},\"Name\":\"ParkSpecialEventsNYC.Audience\",\"NativeReferenceName\":\"Audience\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
           "height": 686.45,
-          "queryBinary": "H4sIAAAAAAAEAKWUXU/CMBSG/wrpdWMGyM3uZE4vjASBYIzxonYHqG7t0rUIIfvvnpaPAbrsYnf9eM/7Pk3bsyORyjImk4KE7zsyBRwbwV8s6O09M2y6YjkcJCTcEb/hBnPQhVCShD1KHrTKfPmIZUBCkhNKYrQxqCRjpr+nOXDB0ngN0hSjtwj3Z9scpUH5QTE0BW68QaRSm0nnH29yDcU+ArmU1RwmsKgmPqcsKRlrlYP2WT6g4ylw40DzH8DNmdIJjVg7d9AgORzqLsxao0Upw5KF4JiFhQ14V+o6xD+m7TGZgaXCK24CPOpq0Sqj1lD4EKGDD7AzE803eymuw7u2bM04VFrZ5aqJ7iir46psWhPd2UQ45yakk66OqTL6QKuhkImQS5c91iJj+3bwiNg5Lu/bCFJ84ZdGXjcPaJf2aJ/e0oH77fbTKMNSEna9n+syE0islzsrtzB3R8fsPj0PecVo9eNGkbISO8YgCEp36lMz6uIk3gC3zuwZjBa8eBKudXVLTPsFmxPiCu4EAAA=",
           "width": 1115.37,
-          "x": 9.97,
-          "y": 9.07,
+          "x": 52.59,
+          "y": 16.32,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Page 2",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "cdf27b53d30a35e68141",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"9db41429a5c09a01dc1d\",\"layouts\":[{\"id\":0,\"position\":{\"x\":42.85298398835516,\"y\":11.179039301310043,\"z\":0,\"width\":1211.0625909752546,\"height\":696.8267831149927,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"azureMap\",\"projections\":{\"Y\":[{\"queryRef\":\"dimChicagoEvents.Lat\"}],\"X\":[{\"queryRef\":\"dimChicagoEvents.Long\"}],\"Series\":[{\"queryRef\":\"dimChicagoEvents. Community\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"dimChicagoEvents\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Lat\"},\"Name\":\"dimChicagoEvents.Lat\",\"NativeReferenceName\":\"Lat\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Long\"},\"Name\":\"dimChicagoEvents.Long\",\"NativeReferenceName\":\"Long\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\" Community\"},\"Name\":\"dimChicagoEvents. Community\",\"NativeReferenceName\":\" Community\"}]},\"drillFilterOtherVisuals\":true,\"objects\":{\"mapControls\":[{\"properties\":{\"zoom\":{\"expr\":{\"Literal\":{\"Value\":\"9.69D\"}}},\"centerLatitude\":{\"expr\":{\"Literal\":{\"Value\":\"41.83976425922884D\"}}},\"centerLongitude\":{\"expr\":{\"Literal\":{\"Value\":\"-87.67323398500002D\"}}}}}]}}}",
+          "filters": "[]",
+          "height": 696.83,
+          "width": 1211.06,
+          "x": 42.85,
+          "y": 11.18,
           "z": 0.00
         }
       ],

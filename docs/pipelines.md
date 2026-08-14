@@ -158,13 +158,13 @@ graph TD
 
 > - [Workspace Change Detection](../docs/scripts/detect_workspace_changes.md)
 >
-> - [Workspace Sync and Deploy Dev Test](../ci/scripts/sync_workspace.md)
+> - [Workspace Sync and Deploy Dev Test](../docs/scripts/sync_workspace.md)
 >
-> - [Generate Audit Log File](../ci/scripts/log_deployment_pipeline.md)
+> - [Generate Audit Log File](../docs/scripts/log_deployment_pipeline.md)
 > 
-> - [Save Log in Fabric](../ci/scripts/save_log_fabric.md)
+> - [Save Log in Fabric](../docs/scripts/save_log_fabric.md)
 > 
-> - [Dataset Refresh Trigger](../ci/scripts/trigger_semantic_model_refreshes.md)
+> - [Dataset Refresh Trigger](../docs/scripts/trigger_semantic_model_refreshes.md)
 
 
 ---

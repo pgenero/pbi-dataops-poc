@@ -1,0 +1,256 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "5f295fc97a7f12f14109",
+  "displayName": "Page 1",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "autoPageGenerationConfig": {
+    "selectedFields": [
+      {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "AirFareCarrier"
+            }
+          },
+          "Property": "year"
+        }
+      },
+      {
+        "Aggregation": {
+          "Expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "AirFareCarrier"
+                }
+              },
+              "Property": "average_market_yield_real"
+            }
+          },
+          "Function": 0
+        }
+      }
+    ],
+    "visualContainerConfigurations": [
+      {
+        "name": "9217d558f7a9e1df115c",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "AirFareCarrier"
+                }
+              },
+              "Property": "year"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "average_market_yield_real"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "7eca244c98baf728c4b5",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "AirFareCarrier"
+                }
+              },
+              "Property": "year"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "average_market_fare_real"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "a5148ec430873dafb1f1",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "dim_Calendar"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "average_market_yield_real"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "1d2dc39938b7a0345be4",
+        "fields": [
+          {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "AirFareCarrier"
+                }
+              },
+              "Property": "year"
+            }
+          },
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "market_passengers"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "989dc1420698569d58da",
+        "fields": []
+      },
+      {
+        "name": "fe8007314bea040e64a0",
+        "fields": []
+      },
+      {
+        "name": "6b084e36d7a63c7b887d",
+        "fields": []
+      },
+      {
+        "name": "7b4b04ffaeae5cc39ac5",
+        "fields": []
+      },
+      {
+        "name": "f6bd8ee0ee7fe3c7d15c",
+        "fields": []
+      },
+      {
+        "name": "c17f6c7de418ce3feecd",
+        "fields": []
+      },
+      {
+        "name": "0e54a9d6993ea8630b95",
+        "fields": []
+      },
+      {
+        "name": "bfd53af6b08d4cb2d008",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "average_market_yield_real"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "640ccd1f8115d816c83c",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "average_market_fare_real"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "6180fd0ca3019b877a91",
+        "fields": [
+          {
+            "Aggregation": {
+              "Expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AirFareCarrier"
+                    }
+                  },
+                  "Property": "market_passengers"
+                }
+              },
+              "Function": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "59705daf882c2aedfe97",
+        "fields": []
+      }
+    ],
+    "layout": {
+      "related": {
+        "version": 1
+      }
+    }
+  }
+}

@@ -108,6 +108,6 @@ sequenceDiagram
 
 ## 📄 Dependencies & Prerequisites
 
-- Fabric Notebook to Save Logs in the Lakehouse: [docs/scripts/Fabric/nb_save_deployment_log.md](../../docs/scripts/Fabric/nb_git_prod_deploy.md)
+- Fabric Notebook to Deploy from Test to Production: [docs/scripts/Fabric/nb_git_prod_deploy.md](../../docs/scripts/Fabric/nb_git_prod_deploy.md)
 
 **Built-in Modules:** `json`, `os`, `requests`, `time`, `logging`,  `sys`

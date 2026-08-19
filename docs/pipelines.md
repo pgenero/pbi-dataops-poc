@@ -226,10 +226,27 @@ graph TD
 | **1** | Checkout repository | `actions/checkout@v4` (`fetch-depth: 0`) | Checks out the code into the runner workspace. |
 | **2** | Call Fabric Notebook | python `ci/scripts/run_nb_git_prod_deploy.py` | Authenticates via Service Principal, passes `BRANCH_NAME` and `GITHUB_TOKEN`, and triggers the Fabric Deployment Notebook via Microsoft Fabric REST API. |
 
+### ⚠️ Key Points
+
+- The workflow **Fabric CICD - Prod Deploy** is triggered **manually** from GitHub Actions.
+
+- The requirement is an input parameter that is the **exact name** of the `feature branch` associated with the changes being deployed.
+
+- The process sends the branch name as a parameter to a Fabric notebook that executes the deployment process (inside the Fabric environment).
+
+- The script running on GitHub Actions receives the deployment status response from Fabric once the deployment is complete.
+
+> 💡 ***Why is the deployment notebook run on Fabric?*** 
+>
+> - To perform the deploy from Test to Prod, we need to identify the **specific items** that should be deployed from Test. 
+> - This information is stored in the **Fabric Lakehouse** in JSON files that are saved as logs during the deployment process from Dev to Test. 
+> - Since the log files are located in Fabric, the script for deploying to Prod runs in a Fabric notebook, which retrieves the data from those JSON files and executes the requests to the `Fabric API` right there to perform the deployment. 
+> - Otherwise, if we wanted to run the script within GitHub, we would have to go to the Lakehouse, retrieve the deployment information from the JSON files, bring that information back to GitHub, execute the deployment (also on GitHub), and then send the information back to the Fabric Lakehouse to save the logs for the deployment to production. 
+
 ---
 ### 🔗 Related Files and Documentation
 
 
 > - 🐍 Python Run Fabric NB File : [run_nb_git_prod_deploy.py](../ci/scripts/run_nb_git_prod_deploy.py)
 >
-> - 📝 [Run Fabric NB Documentation](../ci/scripts/run_nb_git_prod_deploy.md)
+> - 📝 [Run Fabric NB Documentation](../docs/scripts/run_nb_git_prod_deploy.md)

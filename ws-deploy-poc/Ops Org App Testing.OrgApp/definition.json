@@ -47,6 +47,13 @@
       "elements": [
         {
           "elementType": "item",
+          "elementId": "031250a4-24d5-4993-823b-3600bf15977f",
+          "itemType": "Report",
+          "itemLogicalId": "08112bf9-665d-c4fc-1341-1f0a5f8492c2",
+          "displayName": "Peanuts Report - Eli"
+        },
+        {
+          "elementType": "item",
           "elementId": "8aaafea3-edab-4af2-95a3-6184fac7e31b",
           "itemType": "Report",
           "itemLogicalId": "60db4044-defd-474c-811b-bf8a18959909",

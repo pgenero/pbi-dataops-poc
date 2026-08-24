@@ -32,6 +32,8 @@ env:
 
 jobs:
   deploy_to_prod:
+    environment:
+      name: prod
     name: Execute Production Deployment
     runs-on: ubuntu-latest
 

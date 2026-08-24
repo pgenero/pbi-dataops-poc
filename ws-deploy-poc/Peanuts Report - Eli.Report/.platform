@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Peanuts Report - Eli"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "08112bf9-665d-c4fc-1341-1f0a5f8492c2"
+  }
+}

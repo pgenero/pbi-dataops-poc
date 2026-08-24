@@ -1,0 +1,112 @@
+expression priceIndex_pistachios =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190106&scale=left&cosd=1991-12-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=diamond&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1991-12-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Pistachios", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190106", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: a9cefcb5-ff90-4aad-ad2e-3aea66cd4b3b
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_almonds =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190102&scale=left&cosd=1991-12-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=none&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1991-12-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Almonds", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190102", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: eab3dadc-8510-41ec-9b23-90157840d5a6
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_pecans =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190101&scale=left&cosd=1967-11-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=diamond&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1967-11-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Pecans", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190101", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 9bf04557-be17-41ca-a1fe-8229362e5059
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_treeNuts =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU0119&scale=left&cosd=1971-11-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=diamond&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1971-11-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Tree Nuts", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU0119", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: e36593f7-3e99-40f8-985a-09a671b39eed
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_macadamia =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190105&scale=left&cosd=1991-12-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=diamond&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1991-12-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Macadamias", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190105", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 2f1db116-2e21-4c7e-af46-4bb647c257d1
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_filberts =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190103&scale=left&cosd=1991-12-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=none&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1991-12-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Filberts", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190103", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: db7a8206-9cce-420e-bae8-29a555d0eb7c
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression priceIndex_walnut =
+		let
+		    Source = Csv.Document(Web.Contents("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23ebf3fb&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=WPU01190104&scale=left&cosd=1991-12-01&coed=2026-06-01&line_color=%230073e6&link_values=false&line_style=solid&mark_type=none&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2026-07-27&revision_date=2026-07-27&nd=1991-12-01"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Added Custom" = Table.AddColumn(#"Promoted Headers", "peanut_type", each "Walnuts", type text),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"WPU01190104", "producer_price"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"producer_price", Currency.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 3cd7a491-4d63-4ea2-a532-a84b3e169ab7
+	queryGroup: ProducerPriceIndex
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

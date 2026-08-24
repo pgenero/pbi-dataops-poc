@@ -2,31 +2,42 @@ import os
 import requests
 import time
 import json
+import logging
 
-# ========================
-# 1. SETUP - ENV VARIABLES
-# ========================
+# ==============================================================================
+# 0. LOGGING CONFIGURATION
+# ==============================================================================
+# GitHub Actions automatically sets ACTIONS_STEP_DEBUG to 'true' if "Enable debug logging" is checked
+if os.getenv("ACTIONS_STEP_DEBUG") == "true":
+    log_level = logging.DEBUG
+else:
+    log_level = logging.INFO
+
+logging.basicConfig(level=log_level, format="%(asctime)s - %(levelname)s - %(message)s")
+
+
+# ==============================================================================
+# 1. ENVIRONMENT SETUP & CONFIGURATION
+# ==============================================================================
 token = os.getenv("TOKEN")
 connection_id = os.getenv("GIT_CONNECTION_ID")
 remote_commit = os.getenv("GITHUB_SHA")
-branch = os.getenv("GITHUB_HEAD_REF") # os.getenv("GITHUB_REF_NAME")
-approver = os.getenv("GITHUB_ACTOR") # Person that approves the PR
-author = os.getenv("GITHUB_AUTHOR") # Contributor that creates the PR
+branch = os.getenv("GITHUB_HEAD_REF")
+approver = os.getenv("GITHUB_ACTOR")  # User approving the PR
+author = os.getenv("GITHUB_AUTHOR")    # PR creator/contributor
 message = os.getenv("PR_TITLE")
 targets = os.getenv("TARGETS", "").split()
 
-# Load the targets from config JSON
+# Load workspace targets mapping configuration
 CONFIG_FILE_PATH = "ci/config/fabric_targets.json"
 try:
     with open(CONFIG_FILE_PATH, "r", encoding="utf-8") as f:
         TARGETS_CONFIG = json.load(f)
 except Exception as e:
-    print(f"❌ Error loading the config file {CONFIG_FILE_PATH}: {e}")
+    logging.error(f"❌ Failed to load target configuration file ({CONFIG_FILE_PATH}): {e}")
     exit(1)
 
-# Debug Detail
-print("Debug #1")
-print("Targets detected:", targets)
+logging.info(f"Target workspaces detected: {targets}")
 
 headers = {
     "Authorization": f"Bearer {token}",
@@ -35,91 +46,89 @@ headers = {
 
 results = []
 
-# =========================
-# 2. BUILD FUNCTION
-# =========================
-# --- 2.1 Get Items from a given Workspace ---
+
+# ==============================================================================
+# 2. HELPER FUNCTIONS
+# ==============================================================================
 def get_items(workspace_id, token):
+    """Fetches all items existing within a specific Fabric workspace."""
     url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/items"
 
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
     }
-    # --- Execute the HTTP request ---
+    
     response = requests.get(url, headers=headers)
 
     if response.status_code != 200:
-        print(f"❌ Error fetching items: {response.status_code} - {response.text}")
+        logging.error(f"❌ Failed to fetch workspace items: {response.status_code} - {response.text}")
         return []
 
     data = response.json()
     items = data.get("value", [])
 
-    print(f"✅ Items retrieved: {len(items)}")
     return items
 
-# =========================
-# 3. MAIN LOOP - PER TARGET
-# =========================
+# ==============================================================================
+# 3. MAIN EXECUTION LOOP (PER TARGET WORKSPACE)
+# ==============================================================================
 for target in targets:
-    print(f"\n=== Processing target: {target} ===\n")
+    logging.info(f"=== Processing target: {target} ===")
 
     try:
-        # --- 3.1 Target-Specific Configuration Mapping (JSON) ---
+        # --- 3.1 Load Target Configuration ---
         target_info = TARGETS_CONFIG.get(target.lower())
 
         if not target_info:
-            raise ValueError(f"The target '{target}' is missing in {CONFIG_FILE_PATH}")
+            raise ValueError(f"Target '{target}' missing in configuration file ({CONFIG_FILE_PATH})")
 
         pipeline_id = target_info.get("pipeline_id")
         workspace_id = target_info.get("workspace_id")
         dev_stage_id = target_info.get("dev_stage_id")
         test_stage_id = target_info.get("test_stage_id")
 
-        # Debug
-        print("Debug #2")
-        print(f"""
+        # Debug #1 for Re-run in Git Actions
+        logging.debug(
+            f"""[ DEBUG #1 - INITIAL CONFIGURATION ]
         TARGET: {target}
         PIPELINE: {pipeline_id}
         WORKSPACE: {workspace_id}
         DEV_STAGE: {dev_stage_id}
-        TEST_STAGE: {test_stage_id}
-        """)
+        TEST_STAGE: {test_stage_id}"""
+        )
 
-        #-------------------------------------------
-        # --- 3.2 Git Credentials Configuration  ---
+        # --- 3.2 Configure Git Credentials ---
         cred_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/myGitCredentials"
-
         cred_payload = {
             "source": "ConfiguredConnection",
             "connectionId": connection_id
         }
 
         cred_response = requests.patch(cred_url, headers=headers, json=cred_payload)
-        print("Git credentials configured:", cred_response.text)
+        logging.info(f"Git credentials configured for workspace {workspace_id}: {cred_response.text}")
 
-        # -----------------------------------------------------------
-        # --- 3.3 Get Workspace Git status before Synchronization ---
+        # --- 3.3 Get Workspace Git Status Before Sync ---
         status_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/status"
-
         status_response = requests.get(status_url, headers=headers)
         status_data = status_response.json()
 
-        print("Workspace status BEFORE sync:", status_data)
+        # Debug #2 for Re-run in Git Actions
+        logging.debug(
+            f"""[ DEBUG #2 - PRE-SYNC STATUS ]
+        Workspace status BEFORE sync: {status_data}"""
+        )
 
         workspace_head = status_data.get("workspaceHead") or ""
 
         # --- Capture the status changes for potential deploy operation later ---
         changes = status_data.get("changes", [])
 
-        # ----------------------------------------------
-        # --- 3.4 Sync Workspace with Git Repository ---
-        print(f"\n=== Start sync Workspace ←→ GitHub: {target} ===\n")
+        # --- 3.4 Trigger Sync (Workspace <-> Git Repository) ---
+        logging.info(f"Starting workspace sync with GitHub for target: {target}")
         
         sync_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/git/updateFromGit"
-
-        payload = {
+        sync_payload = {
             "remoteCommitHash": remote_commit,
             "workspaceHead": workspace_head,
             "options": {
@@ -127,12 +136,9 @@ for target in targets:
             }
         }
 
-        sync_response = requests.post(sync_url, headers=headers, json=payload)
+        sync_response = requests.post(sync_url, headers=headers, json=sync_payload)
 
-        print("Sync response:", sync_response.text)
-
-        # ---------------------------------
-        # --- 3.5 Wait Sync to complete ---
+        # --- 3.5 Wait for Sync Completion ---
         for i in range(10):
             status_check = requests.get(status_url, headers=headers).json()
 
@@ -140,25 +146,24 @@ for target in targets:
             remote_head = status_check.get("remoteCommitHash")
 
             if workspace_head == remote_head:
-                print(f"✅ Sync completed → {workspace_head}")
+                logging.info(f"✅ Sync completed -> Commit: {workspace_head}")
                 break
 
             if i == 0:
-                print(f"🔄 Sync started → {workspace_head} → {remote_head}")
+                logging.info(f"🔄 Syncing in progress -> Current: {workspace_head} | Target: {remote_head}")
 
             time.sleep(5)
 
-        # ---------------------------------------------------
-        # --- 3.6 Store Workspace Commit Head before sync ---
-        print(f"WORKSPACE_HEAD_BEFORE={workspace_head}")
-
+        # --- 3.6 Save Pre-Sync Workspace Commit Head ---
         with open(os.environ['GITHUB_ENV'], 'a') as f:
             f.write(f"WORKSPACE_HEAD_BEFORE={workspace_head}\n")
 
         if not workspace_head:
-            raise Exception("WORKSPACE_HEAD_BEFORE not found")
+            raise Exception("WORKSPACE_HEAD_BEFORE identifier was not retrieved.")
 
-        # ---------------------------------------------------
+        # Debug #3 for Re-run in Git Actions
+        logging.debug(f"[ DEBUG #3 ] WORKSPACE_HEAD_BEFORE={workspace_head}")
+
         # --- 3.7. Build the list of Items for Deployment ---
         # Load the item type mapping from file
         with open("ci/config/item_type_mapping.json") as f:
@@ -173,6 +178,7 @@ for target in targets:
         # Request the workspace existing items to use in case of Added objects from the Git repo
         workspace_items = get_items(workspace_id, token)
 
+        # Process Git changes
         # Get the items from the sync git output or for the get_items function
         for change in changes:
             metadata = change.get("itemMetadata", {})
@@ -210,9 +216,8 @@ for target in targets:
                         found = True
                         break
                 
-                # Debug Output
                 if not found:
-                    print(f"⚠️ No match found for: {display_name} ({mapped_type})")
+                    logging.warning(f"⚠️ No matching workspace item found for: {display_name} ({mapped_type})")
 
             # Scenario 3 → Workspace items Deleted from Git repo 
             # Store the items removed in the Dev to create a log json file
@@ -225,49 +230,52 @@ for target in targets:
                 }
                 deleted_items.append(item)
 
-        print("Items to deploy:", items_to_deploy)
+        logging.debug(f"Items prepared for deployment: {items_to_deploy}")
 
-        # Debug
-        print( "Debug #3")
+        # Debug #4 for Re-run in Git Actions
         for change in changes:
-            print("RAW CHANGE:", change)
+            logging.debug(
+                f"""[ DEBUG #4 - DETECTED CHANGES ]
+            RAW CHANGE: {change}"""
+            )
 
+        # Debug #5 for Re-run in Git Actions
         if changes:
-            print(f"RAW TYPE: {raw_type}")
-            print(f"MAPPED TYPE: {mapped_type}")
+            logging.debug(
+                f"""[ DEBUG #5 - TYPE MAPPING ]
+            RAW TYPE: {raw_type}
+            MAPPED TYPE: {mapped_type}"""
+            )
 
-        # -----------------------------------------------------
-        # --- 3.8 Executing the deployment from Dev to Test ---
+        # --- 3.8 Execute Deployment (Dev -> Test) ---
         # Create the deployment note from the commit message
         note = f"commit={remote_commit[:7]} | branch={branch} | approver={approver} | author={author} | msg={message}"
-        print("Deployment note:", note)
+        logging.info(f"Deployment note: {note}")
 
-        # Execute Deploy
         has_items = len(items_to_deploy) > 0
         has_deleted = len(deleted_items) > 0
 
         # Save the list of deleted items if exist
         if has_deleted:
-            print("Deleted items detected → skipping deployment")
+            logging.warning("⚠️ Deleted items detected -> Skipping deployment step")
             file_name = f"deletion_log_{target}.json"
             with open(file_name, "w") as f:
                 json.dump(deleted_items, f)
-            print("Deletion JSON stored")
+            logging.info("Deletion JSON stored")
 
         elif not has_items:
-            print("No items to deploy → skipping deployment")
+            logging.warning("⚠️ No items to deploy -> Skipping deployment step")
 
         else:
-            url = f"https://api.fabric.microsoft.com/v1/deploymentPipelines/{pipeline_id}/deploy"
-
-            payload = {
+            deploy_url = f"https://api.fabric.microsoft.com/v1/deploymentPipelines/{pipeline_id}/deploy"
+            deploy_payload = {
                 "sourceStageId": dev_stage_id,
                 "targetStageId": test_stage_id,
                 "items": items_to_deploy,
                 "note": note
             }
 
-            response = requests.post(url, headers=headers, json=payload)
+            response = requests.post(deploy_url, headers=headers, json=deploy_payload)
 
             deployment_id = None
             for key, value in response.headers.items():
@@ -275,43 +283,49 @@ for target in targets:
                     deployment_id = value.strip()
                     break
             
-            # Debug
-            print("Debug #4")
-            print("All headers:", dict(response.headers))
-            print("Deployment ID:", deployment_id)
+            # Debug #6 for Re-run in Git Actions
+            logging.debug(
+                f"""[ DEBUG #6 - RESPONSE HEADERS ]
+            All headers: {dict(response.headers)}"""
+            )
             
             if deployment_id:
-                print(f"Deployment ID for {target}: {deployment_id}")
+                logging.info(f"Deployment ID for {target}: {deployment_id}")
                 with open(os.environ["GITHUB_ENV"], "a") as f:
                     f.write(f"OPERATION_ID_{target.upper()}={deployment_id}\n")
 
-            print("Debug #5")
-            print(response.status_code)
-            print(response.headers)
-            print("FINAL PAYLOAD:", payload)
+            # # Debug #7 for Re-run in Git Actions
+            logging.debug(
+                f"""[ DEBUG #7 - DEPLOYMENT OPERATION DETAILS ]
+            STATUS CODE: {response.status_code}
+            HEADERS: {response.headers}
+            FINAL PAYLOAD: {deploy_payload}"""
+            )
 
             results.append((target, "SUCCESS"))
 
     except Exception as e:
-        print(f"❌ Error in {target}: {str(e)}")
+        logging.error(f"❌ Error processing target '{target}': {str(e)}")
         results.append((target, "FAILED"))
 
 
-# ======================
+# ==============================================================================
 # 4. EXECUTION SUMMARY
-# =====================
-print("\n=== Execution Summary ===")
+# ==============================================================================
+logging.info("==================================================")
+logging.info("               EXECUTION SUMMARY                  ")
+logging.info("==================================================")
 
 failures = [r for r in results if r[1] == "FAILED"]
 
 for target, status in results:
-    print(f"{target}: {status}")
+    logging.info(f"Target '{target}': {status}")
 
 if failures:
-    print("\n❌ Some targets failed:")
-    for f in failures:
-        print(f"- {f[0]}")
+    logging.error("❌ Execution completed with failures:")
+    for target, _ in failures:
+        logging.error(f"  - {target}")
     exit(1)
 else:
-    print("\n✅ All targets succeeded")
+    logging.info("✅ All target operations completed successfully.")
     exit(0)

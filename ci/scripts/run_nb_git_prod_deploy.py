@@ -1,33 +1,54 @@
 import json
+import logging
+import os
+import sys
 import time
 import requests
-import os
 
-# ========================
-# 1. SETUP & SETUP VARS
-# ========================
+# ==============================================================================
+# 0. LOGGING CONFIGURATION
+# ==============================================================================
+# GitHub Actions automatically sets ACTIONS_STEP_DEBUG to 'true' if "Enable debug logging" is checked
+if os.getenv("ACTIONS_STEP_DEBUG") == "true":
+    log_level = logging.DEBUG
+else:
+    log_level = logging.INFO
+
+logging.basicConfig(level=log_level, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# ==============================================================================
+# 1. SETUP & VARIABLES
+# ==============================================================================
 tenant_id = os.getenv("TENANT_ID")
 client_id = os.getenv("APP_CLIENT_ID")
 client_secret = os.getenv("APP_SECRET_KEY")
 branch = os.getenv("BRANCH_NAME")
 gh_token = os.getenv("GITHUB_TOKEN")
-workspace_id = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
-notebook_id = "11035ea6-bfbb-4223-ac4d-65045a0aeb18"
-lakehouse_id = "85602e65-4d1f-47a3-9bf8-20a0f229eb55"
 
-repo = "pgenero/pbi-dataops-poc"
+# Fixed Fabric Infrastructure Identifiers for Production Deployment
+WORKSPACE_ID = "4a71978c-aecb-4b5d-a028-5433c07a99c9"
+NOTEBOOK_ID = "11035ea6-bfbb-4223-ac4d-65045a0aeb18"
+LAKEHOUSE_ID = "85602e65-4d1f-47a3-9bf8-20a0f229eb55"
+REPO = "pgenero/pbi-dataops-poc"
 
-# --- 1.1 Branch Name Validation ---
-git_url = f"https://api.github.com/repos/{repo}/branches/{branch}"
+logging.info("==================================================")
+logging.info(f"🚀 STARTING PROD DEPLOYMENT PROCESS FOR BRANCH: [{branch}]")
+logging.info("==================================================")
+
+# --- 1.1 Branch Name Validation in GitHub ---
+git_url = f"https://api.github.com/repos/{REPO}/branches/{branch}"
 headers_gh = {
     "Authorization": f"Bearer {gh_token}"
 }
 
 res = requests.get(git_url, headers=headers_gh)
 if res.status_code != 200:
-    raise Exception(f"❌ Branch does not exist: {branch}")
+    logging.error(f"❌ Branch '{branch}' does not exist in repository '{REPO}' (HTTP {res.status_code}). Aborting.")
+    sys.exit(1)
 
-# --- 1.2 Get Fabric API Token ---
+logging.info(f"✅ Branch '{branch}' validated successfully in GitHub.")
+
+# --- 1.2 Get Fabric API OAuth2 Token ---
 token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
 payload = {
     "client_id": client_id,
@@ -38,18 +59,19 @@ payload = {
 
 response = requests.post(token_url, data=payload)
 if response.status_code != 200:
-    raise Exception(f"❌ Error getting token: {response.text}")
+    logging.error(f"❌ Failed to obtain Fabric API bearer token: {response.text}")
+    sys.exit(1)
 
-token = response.json()["access_token"]
+token = response.json().get("access_token")
 headers = {
     "Authorization": f"Bearer {token}", 
     "Content-Type": "application/json"
 }
 
-# ==========================================
+# ==============================================================================
 # 2. RUN FABRIC NOTEBOOK (PROD DEPLOY)
-# ==========================================
-fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}/jobs/execute/instances?jobType=RunNotebook"
+# ==============================================================================
+fabric_url = f"https://api.fabric.microsoft.com/v1/workspaces/{WORKSPACE_ID}/notebooks/{NOTEBOOK_ID}/jobs/execute/instances?jobType=RunNotebook"
 payload = {
     "executionData": {
         "parameters": {
@@ -61,56 +83,56 @@ payload = {
     }
 }
 
-print(f"🚀 Running Prod Deployment Notebook in Fabric for branch: {branch}...")
+logging.info(f"🚀 Triggering Fabric Production Deployment Notebook...")
 response = requests.post(fabric_url, headers=headers, json=payload)
 
 if response.status_code not in [200, 201, 202]:
-    print(f"❌ Error starting Notebook: {response.text}")
-    exit(1)
+    logging.error(f"❌ Failed to trigger Fabric Notebook (HTTP {response.status_code}): {response.text}")
+    sys.exit(1)
 
 job_location_url = response.headers.get("Location")
 
+if not job_location_url:
+    logging.error("❌ Fabric API response missing mandatory 'Location' header.")
+    sys.exit(1)
+
 try:
     retry_after = int(response.headers.get("Retry-After", 15))
-except ValueError:
+except (ValueError, TypeError):
     retry_after = 15
 
-if not job_location_url:
-    raise Exception("❌ No Location header returned from Fabric API")
+logging.info(f"📍 Job accepted by Fabric API. Status URL: {job_location_url}")
 
-print(f"✅ Job Accepted! Monitoring URL: {job_location_url}")
-
-# ==========================================
+# ==============================================================================
 # 3. MONITORING LOOP & SUMMARY CHECK
-# ==========================================
+# ==============================================================================
+logging.info(f"⏳ Monitoring Notebook execution status for branch [{branch}]...")
+
 while True:
-    print("\n=== WAITING FOR NOTEBOOK EXECUTION ===")
-    print(f"Waiting {retry_after} seconds before status check...")
     time.sleep(retry_after)
     
     # Check Job Instance status
     status_response = requests.get(job_location_url, headers=headers)
     
     if status_response.status_code != 200:
-        print(f"❌ Error checking status: {status_response.status_code} - {status_response.text}")
-        exit(1)
+        logging.error(f"❌ Status check failed (HTTP {status_response.status_code}): {status_response.text}")
+        sys.exit(1)
         
     job_status_data = status_response.json()
     current_status = job_status_data.get("status")
     
-    print(f"Fabric Notebook current state: [{current_status}]")
+    logging.info(f"📊 Fabric Notebook Status: [{current_status}]")
     
-    # --- NOTEBOOK EXECUTION --- 
-    # Fabric Notebook Success → Delete Git Feature Branch
+    # --- NOTEBOOK SUCCEEDED ---
     if current_status in ["Completed", "Succeeded"]:
-        print("\n=======================================================")
-        print("         FABRIC EXECUTION SUMMARY RESULTS              ")
-        print("=======================================================")
+        logging.info("=======================================================")
+        logging.info("         FABRIC EXECUTION SUMMARY RESULTS              ")
+        logging.info("=======================================================")
 
-        # 3.1 Build the file name from the branch name
+        # 3.1 Build the execution log filename
         file_name = f"execution_log_{branch}.json"
 
-        # 3.2 Request token with scope Azure Storage / OneLake
+        # 3.2 Request Token for OneLake Access Scope
         onelake_token_payload = {
             "client_id": client_id,
             "client_secret": client_secret,
@@ -120,17 +142,18 @@ while True:
 
         token_res = requests.post(token_url, data=onelake_token_payload)
         if token_res.status_code != 200:
-            raise Exception(f"❌ Error getting OneLake token: {token_res.text}")
+            logging.error(f"❌ Failed to obtain OneLake API bearer token: {token_res.text}")
+            sys.exit(1)
 
-        onelake_token = token_res.json()["access_token"]
+        onelake_token = token_res.json().get("access_token")
 
-        # 3.3. Read summary file from OneLake
-        onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{workspace_id}/{lakehouse_id}/Files/ci_cd_results/{file_name}"
+        # 3.3 Read Summary File directly from OneLake DFS API
+        onelake_url = f"https://onelake.dfs.fabric.microsoft.com/{WORKSPACE_ID}/{LAKEHOUSE_ID}/Files/ci_cd_results/{file_name}"
         headers_onelake = {
             "Authorization": f"Bearer {onelake_token}"
         }
 
-        print(f"📥 Fetching summary file from OneLake: {file_name}...")
+        logging.info(f"📥 Fetching execution summary log from OneLake: '{file_name}'...")
         onelake_res = requests.get(onelake_url, headers=headers_onelake)
 
         has_internal_errors = False
@@ -139,7 +162,7 @@ while True:
             try:
                 execution_summary = onelake_res.json()
                 
-                # Print read format for the GitHub Actions
+                # Format and print execution summary in GitHub Actions logs
                 for item in execution_summary:
                     target = item.get("target", "Unknown")
                     deploy_st = item.get("deploy_status", "N/A")
@@ -147,47 +170,48 @@ while True:
                     refresh_st = item.get("refresh_status", "Not Triggered")
                     err_msg = item.get("error_message")
 
-                    print(f"\n📌 Target: {target}")
-                    print(f"   ├─ Deploy Status:     {deploy_st}")
-                    print(f"   ├─ Git Push Status:   {git_st}")
+                    logging.info(f"📌 Target Workspace: [{target}]")
+                    logging.info(f"   ├─ Deploy Status:     {deploy_st}")
+                    logging.info(f"   ├─ Git Push Status:   {git_st}")
                     
-                    # Condicional: solo se imprime si hubo un modelo semántico en el deploy
                     if refresh_st not in ["No Models Deployed", "Not Triggered"]:
-                        print(f"   ├─ Model Refresh:     {refresh_st}")
+                        logging.info(f"   ├─ Model Refresh:     {refresh_st}")
 
                     if err_msg:
-                        print(f"   └─ ⚠️ Error Detail:    {err_msg}")
+                        logging.warning(f"   └─ ⚠️ Error Detail:    {err_msg}")
                         has_internal_errors = True
                     else:
-                        print(f"   └─ Status:            ✅ All OK")
+                        logging.info(f"   └─ Status:            ✅ All OK")
 
             except json.JSONDecodeError:
-                print(f"⚠️ Failed to parse JSON from OneLake. Raw content: {onelake_res.text}")
+                logging.warning(f"⚠️ Failed to parse JSON summary from OneLake. Raw content: {onelake_res.text}")
                 has_internal_errors = True
         else:
-            print(f"❌ Error fetching summary file from OneLake (HTTP {onelake_res.status_code}): {onelake_res.text}")
+            logging.error(f"❌ Error fetching summary file from OneLake (HTTP {onelake_res.status_code}): {onelake_res.text}")
             has_internal_errors = True
 
-        print("=======================================================\n")
+        logging.info("=======================================================")
 
-        # --- Delete Git Branch ---
+        # --- Delete Git Branch upon success ---
         if not has_internal_errors:
-            print(f"🗑️ Deleting Git Branch: {branch}...")
-            git_delete_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{branch}"
+            logging.info(f"🗑️ Deleting feature branch '{branch}' from GitHub...")
+            git_delete_url = f"https://api.github.com/repos/{REPO}/git/refs/heads/{branch}"
             git_delete_response = requests.delete(git_delete_url, headers=headers_gh)
       
             if git_delete_response.status_code == 204:
-                print(f"✅ Git Branch '{branch}' deleted successfully.")
+                logging.info(f"✅ Git branch '{branch}' deleted successfully. Pipeline finished!")
             else:
-                print(f"❌ Failed to delete Git branch: {git_delete_response.text}")
+                logging.error(f"❌ Failed to delete Git branch '{branch}' (HTTP {git_delete_response.status_code}): {git_delete_response.text}")
+                sys.exit(1)
         else:
-            print(f"⚠️ Branch '{branch}' was NOT deleted because one or more targets failed internally.")
-            exit(1) # Fail pipeline in GitHub Actions if internal errors were detected
+            logging.error(f"❌ Pipeline failed: Feature branch '{branch}' was NOT deleted due to internal errors reported in OneLake log.")
+            sys.exit(1)
 
         break
 
     # --- Fabric Notebook Fail → Keep Git Feature Branch ---
     elif current_status in ["Failed", "Canceled"]:
-        print("❌ Fabric Notebook execution failed at infrastructure level.")
-        print(f"Failure reason: {job_status_data.get('failureReason', 'No specified')}")
-        exit(1)
+        failure_reason = job_status_data.get('failureReason', 'No failure details provided')
+        logging.error("❌ Fabric Notebook execution failed at infrastructure level.")
+        logging.error(f"Failure Reason: {failure_reason}")
+        sys.exit(1)

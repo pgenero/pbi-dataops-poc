@@ -65,11 +65,6 @@ jobs:
         run: |
           PR_BODY="${{ github.event.pull_request.body }}"
           
-          # Print PR body for traceability
-          echo "=== PR BODY START ==="
-          echo "$PR_BODY"
-          echo "=== PR BODY END ==="
-          
           # Inspect PR body for selected '[x]' checkbox requesting model refresh in TEST
           if echo "$PR_BODY" | grep -iE "\[x\].*Trigger Semantic Model Refresh in TEST"; then
             echo "PR Option: Refresh in TEST is ENABLED"

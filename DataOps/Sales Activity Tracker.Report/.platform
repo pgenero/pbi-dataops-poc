@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sales Activity Tracker"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "55b96eb0-fc4e-81d9-4bb5-0f4711d2a05f"
+  }
+}

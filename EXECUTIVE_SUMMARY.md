@@ -30,7 +30,7 @@
 
 ## ♻️ Architecture Flow
 
-![Flow Summary](../pbi-dataops-poc/docs/assets/executive_summary_flow.png)
+![Flow Summary](./docs/assets/executive_summary_flow.png)
 
 ---
 
